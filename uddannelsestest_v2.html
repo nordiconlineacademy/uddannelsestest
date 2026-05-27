@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uddannelsestest — Find din rette uddannelse | uddannelsestest.dk</title>
+<meta name="description" content="Tag vores gratis uddannelsestest og find ud af hvilken online uddannelse der passer til dig. Svar på 6 spørgsmål og få en personlig anbefaling.">
+<meta property="og:title" content="Uddannelsestest — Find din rette uddannelse">
+<meta property="og:description" content="Svar på 6 spørgsmål og få en personlig anbefaling til din næste uddannelse.">
+<meta property="og:url" content="https://uddannelsestest.dk">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:        #141210;
+  --ink-2:      #4A4540;
+  --ink-3:      #8A837A;
+  --cream:      #F9F6F1;
+  --cream-2:    #F1EDE5;
+  --cream-3:    #E5DFD5;
+  --white:      #FFFFFF;
+  --green:      #1F6B4E;
+  --green-2:    #2A8F68;
+  --green-light:#E5F2EC;
+  --green-dark: #144535;
+  --teal:       #1A6068;
+  --amber:      #C47B1A;
+  --amber-light:#FBF0DC;
+  --purple:     #4E3F8F;
+  --purple-light:#ECEAF8;
+  --border:     rgba(20,18,16,0.09);
+  --border-2:   rgba(20,18,16,0.16);
+  --r:          18px;
+  --r-sm:       10px;
+  --r-pill:     100px;
+  --ease:       cubic-bezier(0.4,0,0.2,1);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font-body); background: var(--cream); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+/* ══════════════════════════════
+   NAV
+══════════════════════════════ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: rgba(249,246,241,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  height: 60px;
+  display: flex; align-items: center;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto; width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; flex-shrink: 0;
+}
+.nav-logo-dot {
+  width: 32px; height: 32px;
+  background: var(--green);
+  border-radius: 9px;
+  display: grid; place-items: center;
+}
+.nav-logo-dot svg { width: 18px; height: 18px; fill: white; }
+.nav-logo-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.nav-logo-tld { color: var(--green); }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--green); color: white;
+  font-family: var(--font-body); font-size: 13px; font-weight: 500;
+  padding: 8px 18px;
+  border-radius: var(--r-pill);
+  text-decoration: none;
+  border: none; cursor: pointer;
+  transition: background 0.18s var(--ease);
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--green-dark); }
+.nav-links {
+  display: flex; align-items: center; gap: 1.5rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 14px; color: var(--ink-2);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--green); }
+@media (max-width: 640px) { .nav-links { display: none; } }
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero {
+  padding-top: 60px;
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background: var(--cream);
+}
+.hero-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.4;
+}
+.hero-bg-circle.c1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, #C5E8DA 0%, transparent 70%);
+  top: -100px; right: -150px;
+}
+.hero-bg-circle.c2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, #E5DFD5 0%, transparent 70%);
+  bottom: 0; left: -100px;
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto; width: 100%;
+  padding: clamp(3rem, 8vw, 7rem) clamp(1rem, 4vw, 3rem);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+}
+@media (max-width: 820px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero-visual { display: none; }
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--green-light); color: var(--green-dark);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: var(--r-pill);
+  margin-bottom: 1.25rem;
+}
+.hero-eyebrow-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--green); flex-shrink: 0;
+}
+
+.hero-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 68px);
+  font-weight: 400; line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+.hero-h1 em { font-style: italic; color: var(--green); }
+
+.hero-lead {
+  font-size: clamp(15px, 2vw, 17px);
+  color: var(--ink-2);
+  font-weight: 300; line-height: 1.75;
+  margin-bottom: 2rem;
+  max-width: 440px;
+}
+
+.hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-hero {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: var(--r-pill);
+  font-family: var(--font-body); font-size: 15px; font-weight: 500;
+  cursor: pointer; text-decoration: none;
+  transition: all 0.18s var(--ease); border: none;
+}
+.btn-hero.primary { background: var(--green); color: white; }
+.btn-hero.primary:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(31,107,78,0.28); }
+.btn-hero.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--border-2); }
+.btn-hero.ghost:hover { background: var(--cream-2); }
+
+.hero-stats {
+  display: flex; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap;
+}
+.hero-stat-num {
+  font-family: var(--font-display); font-size: 28px; font-weight: 400; color: var(--ink);
+  line-height: 1;
+}
+.hero-stat-label { font-size: 12px; color: var(--ink-3); margin-top: 3px; font-weight: 300; }
+
+/* ── HERO VISUAL ── */
+.hero-visual { display: flex; justify-content: flex-end; }
+@media (max-width: 820px) { .hero-visual { justify-content: flex-start; } }
+
+.hero-card-stack { position: relative; width: 340px; height: 380px; }
+@media (max-width: 480px) { .hero-card-stack { width: 300px; height: 340px; } }
+
+.hcard {
+  position: absolute;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+}
+.hcard-1 {
+  width: 280px; top: 0; left: 0;
+  transform: rotate(-3deg);
+  background: var(--white);
+}
+.hcard-2 {
+  width: 280px; top: 60px; left: 50px;
+  transform: rotate(1.5deg);
+  background: var(--green); color: white;
+}
+.hcard-3 {
+  width: 220px; top: 200px; left: 30px;
+  transform: rotate(-1deg);
+  background: var(--amber-light); border-color: rgba(196,123,26,0.2);
+}
+.hcard-label {
+  font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em;
+  opacity: 0.6; margin-bottom: 6px;
+}
+.hcard-title {
+  font-family: var(--font-display); font-size: 18px; font-weight: 400; line-height: 1.3;
+}
+.hcard-1 .hcard-title { color: var(--ink); }
+.hcard-2 .hcard-title { color: white; }
+.hcard-3 .hcard-title { font-size: 15px; color: var(--ink); }
+.hcard-tags {
+  display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px;
+}
+.hcard-tag {
+  font-size: 11px; padding: 3px 9px; border-radius: var(--r-pill);
+}
+.hcard-1 .hcard-tag { background: var(--cream-2); color: var(--ink-2); }
+.hcard-2 .hcard-tag { background: rgba(255,255,255,0.2); color: white; }
+.hcard-3 .hcard-tag { background: rgba(196,123,26,0.12); color: var(--amber); }
+.hcard-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; padding: 3px 10px; border-radius: var(--r-pill);
+  margin-bottom: 8px;
+}
+.hcard-2 .hcard-badge { background: rgba(255,255,255,0.2); color: white; }
+
+/* ══════════════════════════════
+   HOW IT WORKS
+══════════════════════════════ */
+.how {
+  background: var(--white);
+  padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 3rem);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-eyebrow {
+  font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--green); margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: var(--font-display); font-size: clamp(26px, 4vw, 40px);
+  font-weight: 400; color: var(--ink); line-height: 1.2; letter-spacing: -0.01em;
+  margin-bottom: 3rem;
+  max-width: 500px;
+}
+.how-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+@media (max-width: 680px) { .how-grid { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .om-grid { grid-template-columns: 1fr !important; } }
+
+.how-card {
+  padding: 1.5rem;
+  background: var(--cream);
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+}
+.how-num {
+  font-family: var(--font-display); font-size: 40px; font-weight: 400;
+  color: var(--cream-3); line-height: 1; margin-bottom: 0.75rem;
+}
+.how-card-title { font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 0.4rem; }
+.how-card-desc { font-size: 14px; color: var(--ink-2); font-weight: 300; line-height: 1.65; }
+
+/* ══════════════════════════════
+   QUIZ SECTION
+══════════════════════════════ */
+.quiz-section {
+  padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 3rem);
+}
+.quiz-section-inner { max-width: 1100px; margin: 0 auto; }
+.quiz-layout {
+  display: grid; grid-template-columns: 280px 1fr; gap: 3rem; align-items: start;
+}
+@media (max-width: 900px) {
+  .quiz-layout { grid-template-columns: 1fr; }
+  .quiz-sidebar { display: none; }
+}
+
+/* sidebar */
+.quiz-sidebar { position: sticky; top: 80px; }
+.sidebar-heading {
+  font-family: var(--font-display); font-size: 22px; font-weight: 400;
+  color: var(--ink); margin-bottom: 0.5rem; line-height: 1.3;
+}
+.sidebar-sub { font-size: 14px; color: var(--ink-2); font-weight: 300; line-height: 1.7; margin-bottom: 1.5rem; }
+.sidebar-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.sidebar-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--ink-2); font-weight: 300;
+}
+.sidebar-icon {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--green-light); color: var(--green);
+  display: grid; place-items: center; font-size: 14px; flex-shrink: 0;
+}
+.sidebar-noa {
+  margin-top: 2rem;
+  background: var(--cream-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1rem 1.15rem;
+}
+.sidebar-noa-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); margin-bottom: 6px; font-weight: 500; }
+.sidebar-noa-name { font-family: var(--font-display); font-size: 16px; color: var(--ink); margin-bottom: 4px; }
+.sidebar-noa-link { font-size: 12px; color: var(--green); text-decoration: none; }
+.sidebar-noa-link:hover { text-decoration: underline; }
+
+/* ── QUIZ BOX ── */
+.quiz-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+}
+.quiz-box-top {
+  background: var(--green);
+  padding: 1.5rem 2rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.quiz-box-top-title {
+  font-family: var(--font-display); font-size: 18px; font-weight: 400;
+  color: white; line-height: 1.3;
+}
+.quiz-box-top-sub { font-size: 13px; color: rgba(255,255,255,0.75); font-weight: 300; margin-top: 2px; }
+.quiz-box-badge {
+  background: rgba(255,255,255,0.15); color: white;
+  font-size: 11px; font-weight: 500; padding: 4px 11px; border-radius: var(--r-pill);
+  white-space: nowrap; flex-shrink: 0;
+}
+.quiz-body { padding: 2rem; }
+@media (max-width: 520px) { .quiz-body { padding: 1.25rem; } }
+
+/* progress inside quiz */
+.qprogress-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.qprogress-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); font-weight: 500; }
+.qprogress-count { font-size: 11px; color: var(--ink-3); }
+.qprogress-track { height: 3px; background: var(--cream-2); border-radius: 2px; overflow: hidden; margin-bottom: 2rem; }
+.qprogress-fill { height: 100%; background: var(--green-2); border-radius: 2px; transition: width 0.5s var(--ease); width: 0%; }
+
+/* steps */
+.step { display: none; animation: fadeUp 0.32s var(--ease) both; }
+.step.active { display: block; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+
+/* intro inside quiz */
+.qi-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--green-light); color: var(--green-dark);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+  padding: 4px 10px; border-radius: var(--r-pill); margin-bottom: 1rem;
+}
+.qi-eyebrow::before { content:''; width:5px; height:5px; background:var(--green); border-radius:50%; display:inline-block; }
+
+.qi-title {
+  font-family: var(--font-display); font-size: clamp(22px, 4vw, 30px);
+  font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 0.75rem;
+}
+.qi-title em { font-style: italic; color: var(--green); }
+.qi-sub { font-size: 14px; color: var(--ink-2); font-weight: 300; line-height: 1.7; margin-bottom: 1.5rem; }
+
+.qi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 2rem; }
+@media (max-width: 560px) { .qi-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 380px) { .qi-grid { grid-template-columns: 1fr; } }
+.qi-card {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: var(--r-sm); padding: 1rem;
+}
+.qi-card-icon { font-size: 20px; margin-bottom: 6px; display: block; }
+.qi-card-t { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+.qi-card-d { font-size: 11px; color: var(--ink-2); font-weight: 300; line-height: 1.5; }
+
+/* question */
+.q-meta { display: flex; align-items: center; gap: 9px; margin-bottom: 0.75rem; }
+.q-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--green); color: white;
+  font-size: 12px; font-weight: 500;
+  display: grid; place-items: center; flex-shrink: 0;
+}
+.q-meta-text { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); font-weight: 500; }
+.q-title {
+  font-family: var(--font-display); font-size: clamp(18px, 3vw, 24px);
+  font-weight: 400; color: var(--ink); margin-bottom: 0.4rem; line-height: 1.3;
+}
+.q-hint { font-size: 13px; color: var(--ink-2); font-weight: 300; margin-bottom: 1.5rem; }
+
+/* options */
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 1.75rem; }
+.opts.single { grid-template-columns: 1fr; }
+@media (max-width: 480px) { .opts { grid-template-columns: 1fr; } }
+.opt {
+  background: var(--cream); border: 1.5px solid var(--border);
+  border-radius: var(--r-sm); padding: 13px 14px;
+  cursor: pointer; display: flex; align-items: flex-start; gap: 11px;
+  text-align: left;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease), transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+.opt:hover { border-color: var(--green-2); transform: translateY(-1px); box-shadow: 0 3px 12px rgba(31,107,78,0.1); background: var(--white); }
+.opt:active { transform: scale(0.99); }
+.opt.selected { border-color: var(--green); background: var(--green-light); box-shadow: 0 0 0 1px var(--green); }
+.opt-ic { font-size: 20px; flex-shrink: 0; margin-top: 1px; line-height: 1; }
+.opt-t { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.3; margin-bottom: 2px; }
+.opt-d { font-size: 12px; color: var(--ink-2); font-weight: 300; line-height: 1.45; }
+
+/* nav buttons */
+.btn-row { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 10px 20px; border-radius: var(--r-pill);
+  font-family: var(--font-body); font-size: 13px; font-weight: 500;
+  cursor: pointer; border: 1.5px solid var(--border-2);
+  background: transparent; color: var(--ink);
+  transition: background 0.15s var(--ease), transform 0.1s;
+  text-decoration: none;
+}
+.btn:hover { background: var(--cream-2); }
+.btn:active { transform: scale(0.97); }
+.btn.primary { background: var(--green); color: white; border-color: var(--green); }
+.btn.primary:hover { background: var(--green-dark); border-color: var(--green-dark); }
+.btn.lg { padding: 13px 26px; font-size: 14px; }
+.btn[disabled], .btn.disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+
+/* ── RESULT ── */
+.result-hero-card {
+  background: var(--green);
+  border-radius: var(--r);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  position: relative; overflow: hidden;
+}
+.result-hero-card::before {
+  content:''; position:absolute; top:-80px; right:-80px;
+  width:220px; height:220px;
+  background: rgba(255,255,255,0.06); border-radius:50%;
+}
+.result-hero-card::after {
+  content:''; position:absolute; bottom:-50px; right:40px;
+  width:140px; height:140px;
+  background: rgba(255,255,255,0.04); border-radius:50%;
+}
+.res-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,0.2); color: white;
+  font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: var(--r-pill);
+  margin-bottom: 0.75rem;
+}
+.res-title {
+  font-family: var(--font-display); font-size: clamp(22px, 4vw, 32px);
+  font-weight: 400; color: white; line-height: 1.2; margin-bottom: 4px;
+}
+.res-cat { font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 0.75rem; font-weight: 300; }
+.res-desc { font-size: 14px; color: rgba(255,255,255,0.88); font-weight: 300; line-height: 1.7; margin-bottom: 1.1rem; }
+.res-traits { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
+.res-trait { background: rgba(255,255,255,0.15); color: white; font-size: 12px; padding: 4px 10px; border-radius: var(--r-pill); }
+
+.alt-card {
+  background: var(--cream); border: 1.5px solid var(--border);
+  border-radius: var(--r); padding: 1.25rem; margin-bottom: 1rem;
+}
+.alt-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--purple-light); color: var(--purple);
+  font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: var(--r-pill);
+  margin-bottom: 0.65rem;
+}
+.alt-title {
+  font-family: var(--font-display); font-size: 20px; font-weight: 400;
+  color: var(--ink); margin-bottom: 3px; line-height: 1.2;
+}
+.alt-cat { font-size: 12px; color: var(--ink-3); margin-bottom: 0.65rem; }
+.alt-desc { font-size: 13px; color: var(--ink-2); font-weight: 300; line-height: 1.7; margin-bottom: 0.9rem; }
+.alt-traits { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 1rem; }
+.alt-trait { background: var(--white); border: 1px solid var(--border); color: var(--ink-2); font-size: 11px; padding: 3px 9px; border-radius: var(--r-pill); }
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 1.75rem 0; }
+
+/* ── CONTACT FORM ── */
+.form-ttl {
+  font-family: var(--font-display); font-size: 22px; font-weight: 400;
+  color: var(--ink); margin-bottom: 0.4rem;
+}
+.form-sub { font-size: 13px; color: var(--ink-2); font-weight: 300; line-height: 1.7; margin-bottom: 1.25rem; }
+.advisor-strip {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--cream); border: 1px solid var(--border); border-radius: var(--r-sm);
+  padding: 12px 14px; margin-bottom: 1.25rem;
+}
+.av-wrap { display: flex; }
+.av {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--green-light); color: var(--green-dark);
+  border: 2px solid var(--white); display: grid; place-items: center;
+  font-size: 13px; font-weight: 500; flex-shrink: 0;
+}
+.av:nth-child(2) { background: var(--purple-light); color: var(--purple); margin-left: -10px; }
+.av-text { margin-left: 10px; font-size: 12px; color: var(--ink-2); font-weight: 300; line-height: 1.5; }
+.av-text strong { color: var(--ink); font-weight: 500; }
+.av-text a { color: var(--green); text-decoration: none; }
+.av-text a:hover { text-decoration: underline; }
+
+.fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .fgrid { grid-template-columns: 1fr; } }
+.fgroup { margin-bottom: 12px; }
+label { display: block; font-size: 12px; font-weight: 500; color: var(--ink-2); margin-bottom: 4px; }
+input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+  width: 100%; padding: 9px 13px;
+  border: 1.5px solid var(--border-2); border-radius: var(--r-sm);
+  font-family: var(--font-body); font-size: 13px;
+  color: var(--ink); background: var(--white);
+  transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+  outline: none; -webkit-appearance: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(31,107,78,0.1);
+}
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A837A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; cursor: pointer;
+}
+textarea { min-height: 90px; resize: vertical; }
+.consent-txt { font-size: 11px; color: var(--ink-3); line-height: 1.6; margin-top: 1rem; }
+.consent-txt a { color: var(--green); text-decoration: none; }
+
+.success-box {
+  display: none; text-align: center; padding: 2.5rem 1rem;
+}
+.success-circle {
+  width: 56px; height: 56px; background: var(--green-light); border-radius: 50%;
+  display: grid; place-items: center; margin: 0 auto 1rem;
+  font-size: 24px;
+}
+.success-t { font-family: var(--font-display); font-size: 22px; margin-bottom: 0.5rem; }
+.success-s { font-size: 13px; color: var(--ink-2); font-weight: 300; line-height: 1.7; }
+
+/* ══════════════════════════════
+   TRUST BAR
+══════════════════════════════ */
+.trust-bar {
+  background: var(--cream-2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem clamp(1rem, 4vw, 3rem);
+}
+.trust-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(1.5rem, 4vw, 4rem); flex-wrap: wrap;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--ink-2); font-weight: 300; white-space: nowrap;
+}
+.trust-item-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--green-light); color: var(--green);
+  display: grid; place-items: center; font-size: 13px; flex-shrink: 0;
+}
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+.footer {
+  background: var(--ink);
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem);
+}
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem;
+}
+@media (max-width: 700px) { .footer-inner { grid-template-columns: 1fr; gap: 2rem; } }
+
+.footer-logo {
+  font-family: var(--font-display); font-size: 20px; font-weight: 400;
+  color: white; margin-bottom: 0.65rem; line-height: 1.2;
+}
+.footer-logo span { color: var(--green-2); }
+.footer-tagline { font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.6; max-width: 280px; }
+.footer-col-title { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.55); text-decoration: none; font-weight: 300; transition: color 0.15s; }
+.footer-links a:hover { color: white; }
+.footer-bottom {
+  max-width: 1100px; margin: 2rem auto 0;
+  padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+}
+.footer-bottom-text { font-size: 12px; color: rgba(255,255,255,0.35); font-weight: 300; }
+.footer-noa {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: rgba(255,255,255,0.35); font-weight: 300;
+  text-decoration: none;
+}
+.footer-noa:hover { color: rgba(255,255,255,0.7); }
+.footer-noa-dot { width: 18px; height: 18px; background: var(--green); border-radius: 5px; display: grid; place-items: center; }
+.footer-noa-dot svg { width: 10px; height: 10px; fill: white; }
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-dot">
+        <svg viewBox="0 0 20 20"><path d="M10 2L3 7v6l7 4 7-4V7L10 2zm0 2.4L15.2 8 10 11.6 4.8 8 10 4.4zM4.5 9.2l5.5 3.2 5.5-3.2V14L10 17.2 4.5 14V9.2z"/></svg>
+      </div>
+      <span class="nav-logo-name">uddannelses<span class="nav-logo-tld">test</span>.dk</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#hvordan">Hvordan det virker</a></li>
+      <li><a href="#quiz">Tag testen</a></li>
+
+    </ul>
+    <a href="#quiz" class="nav-cta">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Tag testen
+    </a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-circle c1"></div>
+    <div class="hero-bg-circle c2"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Gratis uddannelsestest</div>
+      <h1 class="hero-h1">Find din<br><em>rette uddannelse</em><br>på 2 minutter</h1>
+      <p class="hero-lead">Svar på 6 korte spørgsmål og få en personlig anbefaling til den online uddannelse, der passer præcis til dine interesser, mål og hverdag.</p>
+      <div class="hero-btns">
+        <a href="#quiz" class="btn-hero primary">
+          Start testen gratis
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card-stack">
+        <div class="hcard hcard-1">
+          <div class="hcard-label">Anbefaling</div>
+          <div class="hcard-title">Indretningskonsulent</div>
+          <div class="hcard-tags">
+            <span class="hcard-tag">Kreativitet</span>
+            <span class="hcard-tag">Design</span>
+            <span class="hcard-tag">Selvstændig</span>
+          </div>
+        </div>
+        <div class="hcard hcard-2">
+          <div class="hcard-badge">★ Bedste match</div>
+          <div class="hcard-title">Parterapeut</div>
+          <div class="hcard-tags">
+            <span class="hcard-tag">Terapi</span>
+            <span class="hcard-tag">Klinik</span>
+            <span class="hcard-tag">Mennesker</span>
+          </div>
+        </div>
+        <div class="hcard hcard-3">
+          <div class="hcard-label">Din profil</div>
+          <div class="hcard-title">Empatisk · Kreativ · Selvstændig</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TRUST BAR ══ -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item"><span class="trust-item-icon">⚡</span>Klar på 2 minutter</div>
+    <div class="trust-item"><span class="trust-item-icon">🎯</span>Personlig anbefaling</div>
+    <div class="trust-item"><span class="trust-item-icon">🆓</span>Helt gratis</div>
+    <div class="trust-item"><span class="trust-item-icon">💬</span>Gratis studievejledning</div>
+
+  </div>
+</div>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="how" id="hvordan">
+  <div class="section-inner">
+    <div class="section-eyebrow">Sådan fungerer det</div>
+    <h2 class="section-title">Fra spørgsmål til din personlige anbefaling</h2>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">01</div>
+        <div class="how-card-title">Svar på 6 spørgsmål</div>
+        <div class="how-card-desc">Vi spørger ind til dine interesser, mål, livssituation og personlighed. Det tager under 2 minutter og kræver ingen forberedelse.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-num">02</div>
+        <div class="how-card-title">Få din anbefaling</div>
+        <div class="how-card-desc">Vores matchlogik finder den bedste uddannelse til dig — og foreslår desuden et godt alternativ.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-num">03</div>
+        <div class="how-card-title">Book en gratis samtale</div>
+        <div class="how-card-desc">Usikker? Book en uforpligtende 1:1 samtale med en studievejleder, der kan hjælpe dig med at træffe den rigtige beslutning.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ OM TESTEN ══ -->
+<section class="how" id="om" style="background: var(--cream); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-eyebrow">Om testen</div>
+    <div class="om-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+      <div>
+        <h2 class="section-title" style="margin-bottom: 1.25rem;">Testen er til dig, der ikke ved hvor du skal starte</h2>
+        <p style="font-size: 16px; color: var(--ink-2); font-weight: 300; line-height: 1.8; margin-bottom: 1rem;">Mange ved godt, at de vil noget andet — men ved ikke præcis hvad. Måske overvejer du et karriereskifte, vil opkvalificere dig, eller har en interesse du aldrig har fulgt til dørs.</p>
+        <p style="font-size: 16px; color: var(--ink-2); font-weight: 300; line-height: 1.8;">Testen er bygget til at hjælpe dig med at afklare retningen — ikke sælge dig noget. Du svarer ærligt på 6 spørgsmål om dig selv, og så giver vi dig et konkret udgangspunkt at arbejde videre fra.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; gap: 14px; align-items: flex-start; background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 1.15rem 1.25rem;">
+          <span style="font-size: 22px; flex-shrink:0; margin-top:2px;">🔄</span>
+          <div>
+            <div style="font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 3px;">Overvejer du et karriereskifte?</div>
+            <div style="font-size: 13px; color: var(--ink-2); font-weight: 300; line-height: 1.55;">Testen hjælper dig med at finde en ny retning, der matcher hvem du er — ikke bare hvad markedet efterspørger.</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 14px; align-items: flex-start; background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 1.15rem 1.25rem;">
+          <span style="font-size: 22px; flex-shrink:0; margin-top:2px;">💡</span>
+          <div>
+            <div style="font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 3px;">Har du en interesse du vil forfølge?</div>
+            <div style="font-size: 13px; color: var(--ink-2); font-weight: 300; line-height: 1.55;">Måske ved du godt hvad du brænder for — men mangler at se det som en konkret uddannelsesvej. Det hjælper vi med.</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 14px; align-items: flex-start; background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 1.15rem 1.25rem;">
+          <span style="font-size: 22px; flex-shrink:0; margin-top:2px;">🕐</span>
+          <div>
+            <div style="font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 3px;">Travl hverdag?</div>
+            <div style="font-size: 13px; color: var(--ink-2); font-weight: 300; line-height: 1.55;">Testen er designet til dig der har job, familie eller andet på programmet — det tager under 2 minutter.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ QUIZ SECTION ══ -->
+<section class="quiz-section" id="quiz">
+  <div class="quiz-section-inner">
+    <div class="quiz-layout">
+
+      <!-- sidebar -->
+      <aside class="quiz-sidebar">
+        <div class="sidebar-heading">Find din vej</div>
+        <p class="sidebar-sub">Testen tager under 2 minutter og giver dig en personlig anbefaling baseret på dine interesser, mål og hverdag.</p>
+        <ul class="sidebar-list">
+          <li class="sidebar-item"><span class="sidebar-icon">⚡</span>6 korte spørgsmål</li>
+          <li class="sidebar-item"><span class="sidebar-icon">🎯</span>Personlig match til dig</li>
+          <li class="sidebar-item"><span class="sidebar-icon">✌️</span>Primær anbefaling + 1 alternativ</li>
+          <li class="sidebar-item"><span class="sidebar-icon">💬</span>Gratis vejledning bagefter</li>
+          <li class="sidebar-item"><span class="sidebar-icon">🆓</span>Helt gratis og uforpligtende</li>
+        </ul>
+      </aside>
+
+      <!-- quiz box -->
+      <div class="quiz-box">
+        <div class="quiz-box-top">
+          <div>
+            <div class="quiz-box-top-title">Uddannelsesfinder</div>
+            <div class="quiz-box-top-sub">Find din personlige match på under 2 minutter</div>
+          </div>
+          <div class="quiz-box-badge">Gratis test</div>
+        </div>
+
+        <div class="quiz-body">
+          <div id="progress-wrap-q" style="display:none; margin-bottom:1.5rem;">
+            <div class="qprogress-row">
+              <span class="qprogress-label">Fremskridt</span>
+              <span class="qprogress-count" id="qprogress-count">Spørgsmål 1 af 6</span>
+            </div>
+            <div class="qprogress-track">
+              <div class="qprogress-fill" id="qprogress-fill"></div>
+            </div>
+          </div>
+
+          <!-- INTRO -->
+          <div class="step active" id="step-0">
+            <div class="qi-eyebrow">Gratis uddannelsestest</div>
+            <h2 class="qi-title">Hvilken uddannelse passer til <em>dig?</em></h2>
+            <p class="qi-sub">Svar på 6 spørgsmål og få en personlig anbefaling baseret på dine interesser, mål og hverdag.</p>
+            <div class="qi-grid">
+              <div class="qi-card"><span class="qi-card-icon">⚡</span><div class="qi-card-t">Klar på 2 minutter</div><div class="qi-card-d">6 korte spørgsmål om dig og dine mål</div></div>
+              <div class="qi-card"><span class="qi-card-icon">🎯</span><div class="qi-card-t">Personlig anbefaling</div><div class="qi-card-d">Vi matcher dig med den rette uddannelse</div></div>
+              <div class="qi-card"><span class="qi-card-icon">🗂️</span><div class="qi-card-t">15+ fagområder</div><div class="qi-card-d">Terapi, design, tech, medier & mere</div></div>
+            </div>
+            <div class="btn-row">
+              <button class="btn primary lg" onclick="goTo(1)">Start testen
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Q1 -->
+          <div class="step" id="step-1">
+            <div class="q-meta"><span class="q-num">1</span><span class="q-meta-text">Spørgsmål 1 af 6</span></div>
+            <h2 class="q-title">Hvad tiltrækker dig mest?</h2>
+            <p class="q-hint">Vælg den kategori, der resonerer mest med dig.</p>
+            <div class="opts" id="q1-opts">
+              <div class="opt" data-q="1" data-v="terapi" onclick="selectOpt(this)"><span class="opt-ic">🤝</span><div><div class="opt-t">Hjælpe mennesker</div><div class="opt-d">Rådgivning, terapi og samtaler</div></div></div>
+              <div class="opt" data-q="1" data-v="kreativ" onclick="selectOpt(this)"><span class="opt-ic">🎨</span><div><div class="opt-t">Skabe og designe</div><div class="opt-d">Æstetik, rum og visuelle udtryk</div></div></div>
+              <div class="opt" data-q="1" data-v="tech" onclick="selectOpt(this)"><span class="opt-ic">💻</span><div><div class="opt-t">Bygge og kode</div><div class="opt-d">Teknologi og digitale løsninger</div></div></div>
+              <div class="opt" data-q="1" data-v="medie" onclick="selectOpt(this)"><span class="opt-ic">📸</span><div><div class="opt-t">Fortælle og vise</div><div class="opt-d">Foto, video og skrivning</div></div></div>
+              <div class="opt" data-q="1" data-v="sundhed" onclick="selectOpt(this)"><span class="opt-ic">🥗</span><div><div class="opt-t">Sundhed og krop</div><div class="opt-d">Kost, velvære og et sundt liv</div></div></div>
+            </div>
+            <div class="btn-row"><button class="btn" onclick="goTo(0)">← Tilbage</button><button class="btn primary disabled" id="next-1" onclick="goTo(2)">Næste →</button></div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="step" id="step-2">
+            <div class="q-meta"><span class="q-num">2</span><span class="q-meta-text">Spørgsmål 2 af 6</span></div>
+            <h2 class="q-title">Hvad er dit primære mål?</h2>
+            <p class="q-hint">Vær ærlig — det hjælper os med den bedste match.</p>
+            <div class="opts single" id="q2-opts">
+              <div class="opt" data-q="2" data-v="selvstaendig" onclick="selectOpt(this)"><span class="opt-ic">🏢</span><div><div class="opt-t">Starte min egen praksis eller virksomhed</div><div class="opt-d">Jeg drømmer om at arbejde for mig selv</div></div></div>
+              <div class="opt" data-q="2" data-v="job" onclick="selectOpt(this)"><span class="opt-ic">💼</span><div><div class="opt-t">Finde nyt job eller skifte branche</div><div class="opt-d">Jeg vil ind på et nyt arbejdsmarked</div></div></div>
+              <div class="opt" data-q="2" data-v="opkvalificering" onclick="selectOpt(this)"><span class="opt-ic">📈</span><div><div class="opt-t">Opkvalificere mig i mit nuværende job</div><div class="opt-d">Styrke min faglighed og måske avancere</div></div></div>
+              <div class="opt" data-q="2" data-v="personlig" onclick="selectOpt(this)"><span class="opt-ic">✨</span><div><div class="opt-t">Personlig interesse og udvikling</div><div class="opt-d">Lære noget nyt der giver mening for mig</div></div></div>
+            </div>
+            <div class="btn-row"><button class="btn" onclick="goTo(1)">← Tilbage</button><button class="btn primary disabled" id="next-2" onclick="goTo(3)">Næste →</button></div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="step" id="step-3">
+            <div class="q-meta"><span class="q-num">3</span><span class="q-meta-text">Spørgsmål 3 af 6</span></div>
+            <h2 class="q-title">Hvem vil du arbejde med?</h2>
+            <p class="q-hint">Tænk på din ideelle arbejdsdag.</p>
+            <div class="opts" id="q3-opts">
+              <div class="opt" data-q="3" data-v="mennesker" onclick="selectOpt(this)"><span class="opt-ic">👥</span><div><div class="opt-t">Direkte med mennesker</div><div class="opt-d">Klienter, patienter og kunder</div></div></div>
+              <div class="opt" data-q="3" data-v="kreativt" onclick="selectOpt(this)"><span class="opt-ic">🖌️</span><div><div class="opt-t">Med kreative projekter</div><div class="opt-d">Rum, billeder og tekst</div></div></div>
+              <div class="opt" data-q="3" data-v="data" onclick="selectOpt(this)"><span class="opt-ic">⚙️</span><div><div class="opt-t">Med systemer og teknologi</div><div class="opt-d">Kode og digitale løsninger</div></div></div>
+              <div class="opt" data-q="3" data-v="blandet" onclick="selectOpt(this)"><span class="opt-ic">🔄</span><div><div class="opt-t">En blanding af alt</div><div class="opt-d">Variation er vigtig for mig</div></div></div>
+            </div>
+            <div class="btn-row"><button class="btn" onclick="goTo(2)">← Tilbage</button><button class="btn primary disabled" id="next-3" onclick="goTo(4)">Næste →</button></div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="step" id="step-4">
+            <div class="q-meta"><span class="q-num">4</span><span class="q-meta-text">Spørgsmål 4 af 6</span></div>
+            <h2 class="q-title">Hvilken livssituation er du i?</h2>
+            <p class="q-hint">Uddannelsestest.dk er skabt til hverdagslivet.</p>
+            <div class="opts single" id="q4-opts">
+              <div class="opt" data-q="4" data-v="job_og_studie" onclick="selectOpt(this)"><span class="opt-ic">⚡</span><div><div class="opt-t">Arbejder og vil studere ved siden af</div><div class="opt-d">Fleksibilitet er afgørende for mig</div></div></div>
+              <div class="opt" data-q="4" data-v="ledig" onclick="selectOpt(this)"><span class="opt-ic">🔍</span><div><div class="opt-t">Ledig og søger ny retning</div><div class="opt-d">Jeg har tid og vil i gang med noget nyt</div></div></div>
+              <div class="opt" data-q="4" data-v="familie" onclick="selectOpt(this)"><span class="opt-ic">👶</span><div><div class="opt-t">Barsel eller travl familietid</div><div class="opt-d">Studerer i korte bidder, når det passer</div></div></div>
+              <div class="opt" data-q="4" data-v="karriereskifte" onclick="selectOpt(this)"><span class="opt-ic">🚀</span><div><div class="opt-t">Klar til et fuldt karriereskifte</div><div class="opt-d">Motiveret og klar til at investere seriøst</div></div></div>
+            </div>
+            <div class="btn-row"><button class="btn" onclick="goTo(3)">← Tilbage</button><button class="btn primary disabled" id="next-4" onclick="goTo(5)">Næste →</button></div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="step" id="step-5">
+            <div class="q-meta"><span class="q-num">5</span><span class="q-meta-text">Spørgsmål 5 af 6</span></div>
+            <h2 class="q-title">Hvad motiverer dig i læring?</h2>
+            <p class="q-hint">Vælg den sætning der passer bedst på dig.</p>
+            <div class="opts" id="q5-opts">
+              <div class="opt" data-q="5" data-v="praksis" onclick="selectOpt(this)"><span class="opt-ic">🛠️</span><div><div class="opt-t">Lære ved at gøre</div><div class="opt-d">Praksis og redskaber jeg kan bruge nu</div></div></div>
+              <div class="opt" data-q="5" data-v="teori" onclick="selectOpt(this)"><span class="opt-ic">📚</span><div><div class="opt-t">Forstå baggrunden</div><div class="opt-d">Teori og dybere forståelse</div></div></div>
+              <div class="opt" data-q="5" data-v="kreativitet" onclick="selectOpt(this)"><span class="opt-ic">💡</span><div><div class="opt-t">Kreativ udforskning</div><div class="opt-d">Eksperimenter og personlig stil</div></div></div>
+              <div class="opt" data-q="5" data-v="resultater" onclick="selectOpt(this)"><span class="opt-ic">🏆</span><div><div class="opt-t">Se konkrete resultater</div><div class="opt-d">Mærkbare fremskridt og synlige succeser</div></div></div>
+            </div>
+            <div class="btn-row"><button class="btn" onclick="goTo(4)">← Tilbage</button><button class="btn primary disabled" id="next-5" onclick="goTo(6)">Næste →</button></div>
+          </div>
+
+          <!-- Q6 -->
+          <div class="step" id="step-6">
+            <div class="q-meta"><span class="q-num">6</span><span class="q-meta-text">Sidste spørgsmål!</span></div>
+            <h2 class="q-title">Hvilken beskrivelse passer på dig?</h2>
+            <p class="q-hint">Og så er din anbefaling klar.</p>
+            <div class="opts single" id="q6-opts">
+              <div class="opt" data-q="6" data-v="empatisk" onclick="selectOpt(this)"><span class="opt-ic">💛</span><div><div class="opt-t">Empatisk og god til at lytte</div><div class="opt-d">Mennesker søger mig for råd — det giver mig mening</div></div></div>
+              <div class="opt" data-q="6" data-v="analytisk" onclick="selectOpt(this)"><span class="opt-ic">🔬</span><div><div class="opt-t">Analytisk og løsningsorienteret</div><div class="opt-d">Jeg elsker at finde svar på komplekse problemer</div></div></div>
+              <div class="opt" data-q="6" data-v="aestetisk" onclick="selectOpt(this)"><span class="opt-ic">🌿</span><div><div class="opt-t">Stærkt æstetisk blik</div><div class="opt-d">Jeg lægger mærke til detaljer andre overser</div></div></div>
+              <div class="opt" data-q="6" data-v="fortaeller" onclick="selectOpt(this)"><span class="opt-ic">✍️</span><div><div class="opt-t">Elsker at skabe og fortælle</div><div class="opt-d">Ord, billeder og historier er mit udtryksform</div></div></div>
+            </div>
+            <div class="btn-row"><button class="btn" onclick="goTo(5)">← Tilbage</button><button class="btn primary disabled" id="next-6" onclick="showResult()">Se mit resultat →</button></div>
+          </div>
+
+          <!-- RESULT -->
+          <div class="step" id="step-result">
+            <div class="result-hero-card">
+              <div class="res-badge">★ Bedste match</div>
+              <div class="res-title" id="res-title"></div>
+              <div class="res-cat" id="res-cat"></div>
+              <div class="res-desc" id="res-desc"></div>
+              <div class="res-traits" id="res-traits"></div>
+              <button class="btn" id="res-link" style="background:white;color:var(--green);border-color:white;font-weight:500;">Se uddannelsen →</button>
+            </div>
+
+            <div class="alt-card">
+              <div class="alt-badge">Alternativ anbefaling</div>
+              <div class="alt-title" id="alt-title"></div>
+              <div class="alt-cat" id="alt-cat"></div>
+              <div class="alt-desc" id="alt-desc"></div>
+              <div class="alt-traits" id="alt-traits"></div>
+              <button class="btn" id="alt-link">Se uddannelsen →</button>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Contact form -->
+            <div class="form-ttl">Book en gratis 1:1 samtale</div>
+            <p class="form-sub">Usikker på valget? Studievejlederne Kristoffer og Mikkel hjælper dig — helt uforpligtende.</p>
+
+            <div class="advisor-strip">
+              <div class="av-wrap"><div class="av">K</div><div class="av">M</div></div>
+              <div class="av-text"><strong>Kristoffer &amp; Mikkel</strong> — studievejledere, klar på hverdage 09–15<br><a href="tel:+4570604948">70 60 49 48</a> · <a href="mailto:kontakt@onlineuddannelse.dk">kontakt@onlineuddannelse.dk</a></div>
+            </div>
+
+            <div class="btn-row" style="margin-top:1.5rem;">
+              <button class="btn" onclick="resetQuiz()">← Tag testen igen</button>
+              <a href="https://onlineuddannelse.dk/online-uddannelser/" target="_blank" class="btn">Se alle uddannelser</a>
+            </div>
+          </div>
+
+        </div><!-- /quiz-body -->
+      </div><!-- /quiz-box -->
+    </div><!-- /quiz-layout -->
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">uddannelses<span>test</span>.dk</div>
+      <p class="footer-tagline">En gratis uddannelsesfinder — find din rette online uddannelse på under 2 minutter.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigation</div>
+      <ul class="footer-links">
+        <li><a href="#quiz">Tag testen</a></li>
+        <li><a href="#hvordan">Hvordan det virker</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Kontakt</div>
+      <ul class="footer-links">
+        <li><a href="tel:+4570604948">70 60 49 48</a></li>
+        <li><a href="mailto:kontakt@onlineuddannelse.dk">kontakt@onlineuddannelse.dk</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-bottom-text">© 2026 uddannelsestest.dk</span>
+
+  </div>
+</footer>
+
+<script>
+const answers = {};
+const educations = {
+  parterapeut: { title:"Parterapeut", category:"Terapeutisk", desc:"Parterapeut-uddannelsen giver dig kompetencer til at hjælpe par med at styrke deres relation, kommunikere bedre og overvinde udfordringer. Du lærer om kommunikation, tilknytningsteorier og konfliktløsning — og mange etablerer efterfølgende egen klinik.", traits:["Menneskekontakt","Selvstændig praksis","Kommunikation","Psykologi"], url:"https://onlineuddannelse.dk/online-uddannelser/parterapeut/" },
+  sexolog: { title:"Sexolog", category:"Terapeutisk", desc:"Sexolog-uddannelsen dækker seksuel sundhed og terapeutiske tilgange til det hele menneske. Velegnet til dig, der ønsker at arbejde professionelt med menneskers velvære og seksualitet.", traits:["Seksuel sundhed","Terapi","Menneskekontakt","Selvstændig praksis"], url:"https://onlineuddannelse.dk/online-uddannelser/sexolog/" },
+  coach: { title:"Coach", category:"Terapeutisk", desc:"Coaching-uddannelsen giver dig redskaber til at guide mennesker mod personlig og professionel vækst. Du lærer coachingmetoder, motivationspsykologi og samtaleværktøjer — og kan arbejde som coach ved siden af dit nuværende job.", traits:["Personlig udvikling","Motivation","Fleksibel","Selvstændig"], url:"https://onlineuddannelse.dk/online-uddannelser/coach/" },
+  familiebehandler: { title:"Familiebehandler", category:"Terapeutisk", desc:"Familiebehandler-uddannelsen klæder dig på til at arbejde med familier i sårbare situationer. Du får viden om familiemønstre, systemisk tænkning og professionelle interventioner.", traits:["Socialt arbejde","Familier","Empati","Systemisk tænkning"], url:"https://onlineuddannelse.dk/online-uddannelser/familiebehandler/" },
+  indretningskonsulent: { title:"Indretningskonsulent", category:"Kreativitet", desc:"Indretningskonsulent-uddannelsen giver dig et stærkt fundament i indretning, farvelære, ruminddeling og kundehåndtering. Mange studerende starter efterfølgende deres egen konsulentvirksomhed.", traits:["Æstetik","Rådgivning","Kreativitet","Selvstændig virksomhed"], url:"https://onlineuddannelse.dk/online-uddannelser/indretningskonsulent/" },
+  indretningsarkitekt: { title:"Indretningsarkitekt", category:"Kreativitet", desc:"Indretningsarkitekt-uddannelsen er en overbygning med dybere fokus på arkitektoniske principper, planløsninger og projektledelse — ideel til større professionelle indretningsprojekter.", traits:["Arkitektur","Projekter","Design","Professionel rådgivning"], url:"https://onlineuddannelse.dk/online-uddannelser/indretningsarkitekt/" },
+  programmor: { title:"Grundlæggende programmør", category:"Tech", desc:"Programmør-uddannelsen introducerer dig til kodningens verden med fokus på praksisnære kompetencer. Du lærer at bygge digitale løsninger fra bunden — ideel for dig der vil skifte til tech-branchen.", traits:["Kode","Problemløsning","Tech","Digital fremtid"], url:"https://onlineuddannelse.dk/online-uddannelser/grundlaeggende-programmoer/" },
+  fotograf: { title:"Fotograf", category:"Medier og kommunikation", desc:"Fotograf-uddannelsen giver dig tekniske og kreative kompetencer til professionelle billeder. Du lærer kameraindstillinger, komposition, lys og efterbehandling.", traits:["Kreativitet","Visuel fortælling","Freelance","Teknik"], url:"https://onlineuddannelse.dk/online-uddannelser/fotograf/" },
+  videograf: { title:"Videograf", category:"Medier og kommunikation", desc:"Videograf-uddannelsen dækker optagelse, redigering og produktion af professionelle videoer — en stærkt efterspurgt kompetence i en verden der elsker videoindhold.", traits:["Video","Historiefortælling","Kreativ produktion","Freelance"], url:"https://onlineuddannelse.dk/online-uddannelser/videograf/" },
+  forfatter: { title:"Forfatter", category:"Medier og kommunikation", desc:"Forfatter-uddannelsen guider dig igennem manuskriptets opbygning, karakterudvikling og fortælleteknik — for dig der drømmer om at skrive romaner, novellesamlinger eller scripts.", traits:["Kreativ skrivning","Storytelling","Manuskript","Udtryk"], url:"https://onlineuddannelse.dk/online-uddannelser/forfatter/" },
+  kostvejleder: { title:"Kostvejleder", category:"Sundhed og skønhed", desc:"Kostvejleder-uddannelsen giver dig faglig viden om ernæring, kostplaner og sund livsstil. Du kan efterfølgende rådgive klienter som selvstændig kostvejleder.", traits:["Ernæring","Sundhed","Rådgivning","Velvære"], url:"https://onlineuddannelse.dk/online-uddannelser/kostvejleder/" }
+};
+
+function getRecommendation() {
+  const q1=answers[1],q2=answers[2],q3=answers[3],q6=answers[6];
+  if(q1==='terapi'||q3==='mennesker'){
+    if(q6==='empatisk') return['familiebehandler','coach'];
+    if(q2==='selvstaendig') return['parterapeut','sexolog'];
+    return['coach','parterapeut'];
+  }
+  if(q1==='kreativ'||q3==='kreativt'){
+    if(q6==='aestetisk') return['indretningskonsulent','indretningsarkitekt'];
+    if(q6==='fortaeller') return['fotograf','indretningskonsulent'];
+    return['indretningskonsulent','fotograf'];
+  }
+  if(q1==='tech'||q3==='data') return['programmor','videograf'];
+  if(q1==='medie'){
+    if(q6==='fortaeller') return['forfatter','fotograf'];
+    return['fotograf','videograf'];
+  }
+  if(q1==='sundhed') return['kostvejleder','coach'];
+  return['coach','indretningskonsulent'];
+}
+
+function showResult(){
+  const [pk,ak]=getRecommendation();
+  const p=educations[pk],a=educations[ak];
+  document.getElementById('res-title').textContent=p.title;
+  document.getElementById('res-cat').textContent='Kategori: '+p.category;
+  document.getElementById('res-desc').textContent=p.desc;
+  document.getElementById('res-traits').innerHTML=p.traits.map(t=>`<span class="res-trait">${t}</span>`).join('');
+  document.getElementById('res-link').onclick=()=>window.open(p.url,'_blank');
+  document.getElementById('alt-title').textContent=a.title;
+  document.getElementById('alt-cat').textContent='Kategori: '+a.category;
+  document.getElementById('alt-desc').textContent=a.desc;
+  document.getElementById('alt-traits').innerHTML=a.traits.map(t=>`<span class="alt-trait">${t}</span>`).join('');
+  document.getElementById('alt-link').onclick=()=>window.open(a.url,'_blank');
+  goTo('result');
+}
+
+function selectOpt(el){
+  const q=el.dataset.q;
+  document.querySelectorAll(`[data-q="${q}"]`).forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[q]=el.dataset.v;
+  const btn=document.getElementById('next-'+q);
+  if(btn) btn.classList.remove('disabled');
+}
+
+function goTo(step){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-'+step).classList.add('active');
+  const wrap=document.getElementById('progress-wrap-q');
+  const fill=document.getElementById('qprogress-fill');
+  const count=document.getElementById('qprogress-count');
+  if(step===0){ wrap.style.display='none'; }
+  else if(step==='result'){ wrap.style.display='block'; fill.style.width='100%'; count.textContent='Fuldfør!'; }
+  else{ wrap.style.display='block'; fill.style.width=Math.round((step/6)*100)+'%'; count.textContent=`Spørgsmål ${step} af 6`; }
+  const quizBox=document.querySelector('.quiz-box');
+  if(quizBox){ setTimeout(()=>{ quizBox.scrollIntoView({behavior:'smooth',block:'start'}); },50); }
+}
+
+function resetQuiz(){
+  Object.keys(answers).forEach(k=>delete answers[k]);
+  document.querySelectorAll('.opt').forEach(c=>c.classList.remove('selected'));
+  for(let i=1;i<=6;i++){ const b=document.getElementById('next-'+i); if(b) b.classList.add('disabled'); }
+  goTo(0);
+}
+</script>
+</body>
+</html>
