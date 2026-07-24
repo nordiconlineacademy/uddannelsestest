@@ -104,7 +104,7 @@ body { font-family: var(--font-body); background: var(--cream); color: var(--ink
   transition: color 0.15s;
 }
 .nav-links a:hover { color: var(--green); }
-@media (max-width: 640px) { .nav-links { display: none; } }
+@media (max-width: 640px) { .nav-links-dup { display: none; } }
 
 /* ══════════════════════════════
    HERO
@@ -641,7 +641,7 @@ textarea { min-height: 90px; resize: vertical; }
     </a>
     <ul class="nav-links">
       <li><a href="#hvordan">Hvordan virker det?</a></li>
-      <li><a href="#quiz">Tag testen</a></li>
+      <li class="nav-links-dup"><a href="#quiz">Tag testen</a></li>
 
     </ul>
     <a href="#quiz" class="nav-cta">
@@ -835,11 +835,11 @@ textarea { min-height: 90px; resize: vertical; }
             <h2 class="q-title">Hvad tiltrækker dig mest?</h2>
             <p class="q-hint">Vælg den kategori, der resonerer mest med dig.</p>
             <div class="opts" id="q1-opts">
-              <div class="opt" data-q="1" data-v="terapi" onclick="selectOpt(this)"><span class="opt-ic">🤝</span><div><div class="opt-t">Hjælpe mennesker</div><div class="opt-d">Rådgivning, terapi og samtaler</div></div></div>
-              <div class="opt" data-q="1" data-v="kreativ" onclick="selectOpt(this)"><span class="opt-ic">🎨</span><div><div class="opt-t">Skabe og designe</div><div class="opt-d">Æstetik, rum og visuelle udtryk</div></div></div>
-              <div class="opt" data-q="1" data-v="tech" onclick="selectOpt(this)"><span class="opt-ic">💻</span><div><div class="opt-t">Bygge og kode</div><div class="opt-d">Teknologi og digitale løsninger</div></div></div>
-              <div class="opt" data-q="1" data-v="medie" onclick="selectOpt(this)"><span class="opt-ic">📸</span><div><div class="opt-t">Fortælle og vise</div><div class="opt-d">Foto, video og skrivning</div></div></div>
-              <div class="opt" data-q="1" data-v="sundhed" onclick="selectOpt(this)"><span class="opt-ic">🥗</span><div><div class="opt-t">Sundhed og krop</div><div class="opt-d">Kost, velvære og et sundt liv</div></div></div>
+              <div class="opt" data-q="1" data-v="terapi" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🤝</span><div><div class="opt-t">Hjælpe mennesker</div><div class="opt-d">Rådgivning, terapi og samtaler</div></div></div>
+              <div class="opt" data-q="1" data-v="kreativ" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🎨</span><div><div class="opt-t">Skabe og designe</div><div class="opt-d">Æstetik, rum og visuelle udtryk</div></div></div>
+              <div class="opt" data-q="1" data-v="tech" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">💻</span><div><div class="opt-t">Bygge og kode</div><div class="opt-d">Teknologi og digitale løsninger</div></div></div>
+              <div class="opt" data-q="1" data-v="medie" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">📸</span><div><div class="opt-t">Fortælle og vise</div><div class="opt-d">Foto, video og skrivning</div></div></div>
+              <div class="opt" data-q="1" data-v="sundhed" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🥗</span><div><div class="opt-t">Sundhed og krop</div><div class="opt-d">Kost, velvære og et sundt liv</div></div></div>
             </div>
             <div class="btn-row"><button class="btn" onclick="goTo(0)">← Tilbage</button><button class="btn primary disabled" id="next-1" onclick="goTo(2)">Næste →</button></div>
           </div>
@@ -850,10 +850,10 @@ textarea { min-height: 90px; resize: vertical; }
             <h2 class="q-title">Hvad er dit primære mål?</h2>
             <p class="q-hint">Vær ærlig — det hjælper os med den bedste match.</p>
             <div class="opts single" id="q2-opts">
-              <div class="opt" data-q="2" data-v="selvstaendig" onclick="selectOpt(this)"><span class="opt-ic">🏢</span><div><div class="opt-t">Starte min egen praksis eller virksomhed</div><div class="opt-d">Jeg drømmer om at arbejde for mig selv</div></div></div>
-              <div class="opt" data-q="2" data-v="job" onclick="selectOpt(this)"><span class="opt-ic">💼</span><div><div class="opt-t">Finde nyt job eller skifte branche</div><div class="opt-d">Jeg vil ind på et nyt arbejdsmarked</div></div></div>
-              <div class="opt" data-q="2" data-v="opkvalificering" onclick="selectOpt(this)"><span class="opt-ic">📈</span><div><div class="opt-t">Opkvalificere mig i mit nuværende job</div><div class="opt-d">Styrke min faglighed og måske avancere</div></div></div>
-              <div class="opt" data-q="2" data-v="personlig" onclick="selectOpt(this)"><span class="opt-ic">✨</span><div><div class="opt-t">Personlig interesse og udvikling</div><div class="opt-d">Lære noget nyt der giver mening for mig</div></div></div>
+              <div class="opt" data-q="2" data-v="selvstaendig" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🏢</span><div><div class="opt-t">Starte min egen praksis eller virksomhed</div><div class="opt-d">Jeg drømmer om at arbejde for mig selv</div></div></div>
+              <div class="opt" data-q="2" data-v="job" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">💼</span><div><div class="opt-t">Finde nyt job eller skifte branche</div><div class="opt-d">Jeg vil ind på et nyt arbejdsmarked</div></div></div>
+              <div class="opt" data-q="2" data-v="opkvalificering" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">📈</span><div><div class="opt-t">Opkvalificere mig i mit nuværende job</div><div class="opt-d">Styrke min faglighed og måske avancere</div></div></div>
+              <div class="opt" data-q="2" data-v="personlig" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">✨</span><div><div class="opt-t">Personlig interesse og udvikling</div><div class="opt-d">Lære noget nyt der giver mening for mig</div></div></div>
             </div>
             <div class="btn-row"><button class="btn" onclick="goTo(1)">← Tilbage</button><button class="btn primary disabled" id="next-2" onclick="goTo(3)">Næste →</button></div>
           </div>
@@ -864,10 +864,10 @@ textarea { min-height: 90px; resize: vertical; }
             <h2 class="q-title">Hvem vil du arbejde med?</h2>
             <p class="q-hint">Tænk på din ideelle arbejdsdag.</p>
             <div class="opts" id="q3-opts">
-              <div class="opt" data-q="3" data-v="mennesker" onclick="selectOpt(this)"><span class="opt-ic">👥</span><div><div class="opt-t">Direkte med mennesker</div><div class="opt-d">Klienter, patienter og kunder</div></div></div>
-              <div class="opt" data-q="3" data-v="kreativt" onclick="selectOpt(this)"><span class="opt-ic">🖌️</span><div><div class="opt-t">Med kreative projekter</div><div class="opt-d">Rum, billeder og tekst</div></div></div>
-              <div class="opt" data-q="3" data-v="data" onclick="selectOpt(this)"><span class="opt-ic">⚙️</span><div><div class="opt-t">Med systemer og teknologi</div><div class="opt-d">Kode og digitale løsninger</div></div></div>
-              <div class="opt" data-q="3" data-v="blandet" onclick="selectOpt(this)"><span class="opt-ic">🔄</span><div><div class="opt-t">En blanding af alt</div><div class="opt-d">Variation er vigtig for mig</div></div></div>
+              <div class="opt" data-q="3" data-v="mennesker" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">👥</span><div><div class="opt-t">Direkte med mennesker</div><div class="opt-d">Klienter, patienter og kunder</div></div></div>
+              <div class="opt" data-q="3" data-v="kreativt" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🖌️</span><div><div class="opt-t">Med kreative projekter</div><div class="opt-d">Rum, billeder og tekst</div></div></div>
+              <div class="opt" data-q="3" data-v="data" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">⚙️</span><div><div class="opt-t">Med systemer og teknologi</div><div class="opt-d">Kode og digitale løsninger</div></div></div>
+              <div class="opt" data-q="3" data-v="blandet" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🔄</span><div><div class="opt-t">En blanding af alt</div><div class="opt-d">Variation er vigtig for mig</div></div></div>
             </div>
             <div class="btn-row"><button class="btn" onclick="goTo(2)">← Tilbage</button><button class="btn primary disabled" id="next-3" onclick="goTo(4)">Næste →</button></div>
           </div>
@@ -878,10 +878,10 @@ textarea { min-height: 90px; resize: vertical; }
             <h2 class="q-title">Hvilken livssituation er du i?</h2>
             <p class="q-hint">Uddannelsestest.dk er skabt til hverdagslivet.</p>
             <div class="opts single" id="q4-opts">
-              <div class="opt" data-q="4" data-v="job_og_studie" onclick="selectOpt(this)"><span class="opt-ic">⚡</span><div><div class="opt-t">Arbejder og vil studere ved siden af</div><div class="opt-d">Fleksibilitet er afgørende for mig</div></div></div>
-              <div class="opt" data-q="4" data-v="ledig" onclick="selectOpt(this)"><span class="opt-ic">🔍</span><div><div class="opt-t">Ledig og søger ny retning</div><div class="opt-d">Jeg har tid og vil i gang med noget nyt</div></div></div>
-              <div class="opt" data-q="4" data-v="familie" onclick="selectOpt(this)"><span class="opt-ic">👶</span><div><div class="opt-t">Barsel eller travl familietid</div><div class="opt-d">Studerer i korte bidder, når det passer</div></div></div>
-              <div class="opt" data-q="4" data-v="karriereskifte" onclick="selectOpt(this)"><span class="opt-ic">🚀</span><div><div class="opt-t">Klar til et fuldt karriereskifte</div><div class="opt-d">Motiveret og klar til at investere seriøst</div></div></div>
+              <div class="opt" data-q="4" data-v="job_og_studie" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">⚡</span><div><div class="opt-t">Arbejder og vil studere ved siden af</div><div class="opt-d">Fleksibilitet er afgørende for mig</div></div></div>
+              <div class="opt" data-q="4" data-v="ledig" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🔍</span><div><div class="opt-t">Ledig og søger ny retning</div><div class="opt-d">Jeg har tid og vil i gang med noget nyt</div></div></div>
+              <div class="opt" data-q="4" data-v="familie" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">👶</span><div><div class="opt-t">Barsel eller travl familietid</div><div class="opt-d">Studerer i korte bidder, når det passer</div></div></div>
+              <div class="opt" data-q="4" data-v="karriereskifte" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🚀</span><div><div class="opt-t">Klar til et fuldt karriereskifte</div><div class="opt-d">Motiveret og klar til at investere seriøst</div></div></div>
             </div>
             <div class="btn-row"><button class="btn" onclick="goTo(3)">← Tilbage</button><button class="btn primary disabled" id="next-4" onclick="goTo(5)">Næste →</button></div>
           </div>
@@ -892,10 +892,10 @@ textarea { min-height: 90px; resize: vertical; }
             <h2 class="q-title">Hvad motiverer dig i læring?</h2>
             <p class="q-hint">Vælg den sætning der passer bedst på dig.</p>
             <div class="opts" id="q5-opts">
-              <div class="opt" data-q="5" data-v="praksis" onclick="selectOpt(this)"><span class="opt-ic">🛠️</span><div><div class="opt-t">Lære ved at gøre</div><div class="opt-d">Praksis og redskaber jeg kan bruge nu</div></div></div>
-              <div class="opt" data-q="5" data-v="teori" onclick="selectOpt(this)"><span class="opt-ic">📚</span><div><div class="opt-t">Forstå baggrunden</div><div class="opt-d">Teori og dybere forståelse</div></div></div>
-              <div class="opt" data-q="5" data-v="kreativitet" onclick="selectOpt(this)"><span class="opt-ic">💡</span><div><div class="opt-t">Kreativ udforskning</div><div class="opt-d">Eksperimenter og personlig stil</div></div></div>
-              <div class="opt" data-q="5" data-v="resultater" onclick="selectOpt(this)"><span class="opt-ic">🏆</span><div><div class="opt-t">Se konkrete resultater</div><div class="opt-d">Mærkbare fremskridt og synlige succeser</div></div></div>
+              <div class="opt" data-q="5" data-v="praksis" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🛠️</span><div><div class="opt-t">Lære ved at gøre</div><div class="opt-d">Praksis og redskaber jeg kan bruge nu</div></div></div>
+              <div class="opt" data-q="5" data-v="teori" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">📚</span><div><div class="opt-t">Forstå baggrunden</div><div class="opt-d">Teori og dybere forståelse</div></div></div>
+              <div class="opt" data-q="5" data-v="kreativitet" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">💡</span><div><div class="opt-t">Kreativ udforskning</div><div class="opt-d">Eksperimenter og personlig stil</div></div></div>
+              <div class="opt" data-q="5" data-v="resultater" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🏆</span><div><div class="opt-t">Se konkrete resultater</div><div class="opt-d">Mærkbare fremskridt og synlige succeser</div></div></div>
             </div>
             <div class="btn-row"><button class="btn" onclick="goTo(4)">← Tilbage</button><button class="btn primary disabled" id="next-5" onclick="goTo(6)">Næste →</button></div>
           </div>
@@ -906,10 +906,10 @@ textarea { min-height: 90px; resize: vertical; }
             <h2 class="q-title">Hvilken beskrivelse passer på dig?</h2>
             <p class="q-hint">Og så er din anbefaling klar.</p>
             <div class="opts single" id="q6-opts">
-              <div class="opt" data-q="6" data-v="empatisk" onclick="selectOpt(this)"><span class="opt-ic">💛</span><div><div class="opt-t">Empatisk og god til at lytte</div><div class="opt-d">Mennesker søger mig for råd — det giver mig mening</div></div></div>
-              <div class="opt" data-q="6" data-v="analytisk" onclick="selectOpt(this)"><span class="opt-ic">🔬</span><div><div class="opt-t">Analytisk og løsningsorienteret</div><div class="opt-d">Jeg elsker at finde svar på komplekse problemer</div></div></div>
-              <div class="opt" data-q="6" data-v="aestetisk" onclick="selectOpt(this)"><span class="opt-ic">🌿</span><div><div class="opt-t">Stærkt æstetisk blik</div><div class="opt-d">Jeg lægger mærke til detaljer andre overser</div></div></div>
-              <div class="opt" data-q="6" data-v="fortaeller" onclick="selectOpt(this)"><span class="opt-ic">✍️</span><div><div class="opt-t">Elsker at skabe og fortælle</div><div class="opt-d">Ord, billeder og historier er mit udtryksform</div></div></div>
+              <div class="opt" data-q="6" data-v="empatisk" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">💛</span><div><div class="opt-t">Empatisk og god til at lytte</div><div class="opt-d">Mennesker søger mig for råd — det giver mig mening</div></div></div>
+              <div class="opt" data-q="6" data-v="analytisk" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🔬</span><div><div class="opt-t">Analytisk og løsningsorienteret</div><div class="opt-d">Jeg elsker at finde svar på komplekse problemer</div></div></div>
+              <div class="opt" data-q="6" data-v="aestetisk" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🌿</span><div><div class="opt-t">Stærkt æstetisk blik</div><div class="opt-d">Jeg lægger mærke til detaljer andre overser</div></div></div>
+              <div class="opt" data-q="6" data-v="fortaeller" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">✍️</span><div><div class="opt-t">Elsker at skabe og fortælle</div><div class="opt-d">Ord, billeder og historier er mit udtryksform</div></div></div>
             </div>
             <div class="btn-row"><button class="btn" onclick="goTo(5)">← Tilbage</button><button class="btn primary disabled" id="next-6" onclick="showResult()">Se mit resultat →</button></div>
           </div>
@@ -1040,12 +1040,20 @@ function showResult(){
 
 function selectOpt(el){
   const q=el.dataset.q;
-  document.querySelectorAll(`[data-q="${q}"]`).forEach(o=>o.classList.remove('selected'));
+  document.querySelectorAll(`[data-q="${q}"]`).forEach(o=>{o.classList.remove('selected');o.setAttribute('aria-pressed','false');});
   el.classList.add('selected');
+  el.setAttribute('aria-pressed','true');
   answers[q]=el.dataset.v;
   const btn=document.getElementById('next-'+q);
   if(btn) btn.classList.remove('disabled');
 }
+
+document.addEventListener('keydown', function(e){
+  if((e.key==='Enter'||e.key===' ') && e.target.classList.contains('opt')){
+    e.preventDefault();
+    e.target.click();
+  }
+});
 
 function goTo(step){
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
