@@ -552,7 +552,21 @@ select {
 }
 textarea { min-height: 90px; resize: vertical; }
 .consent-txt { font-size: 11px; color: var(--ink-3); line-height: 1.6; margin-top: 1rem; }
-.consent-txt a { color: var(--green); text-decoration: none; }
+.consent-txt a { color: var(--green); text-decoration: underline; }
+.consent-check { display: flex; gap: 10px; align-items: flex-start; margin-top: 1rem; padding: 12px 14px; background: var(--cream); border: 1px solid var(--border); border-radius: var(--r-sm); }
+.consent-check input { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; accent-color: var(--green); }
+.consent-check label { margin: 0; font-size: 12px; font-weight: 300; line-height: 1.6; color: var(--ink-2); cursor: pointer; }
+.cookie-banner { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 300; max-width: 720px; margin: 0 auto; background: var(--white); border: 1px solid var(--border-2); border-radius: var(--r); box-shadow: 0 10px 40px rgba(0,0,0,0.18); padding: 1rem 1.25rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.cookie-banner[hidden] { display: none; }
+.cookie-banner-text { flex: 1 1 300px; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+.cookie-banner-text strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 2px; }
+.cookie-banner-text p { margin: 0; }
+.cookie-banner-text a { color: var(--green); }
+.cookie-banner-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-error { display: none; margin-top: 12px; padding: 10px 12px; border-radius: var(--r-sm); background: #FBE9E7; color: #8A2A1B; font-size: 13px; }
+.form-error.show { display: block; }
+input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
 
 .success-box {
   display: none; text-align: center; padding: 2.5rem 1rem;
@@ -911,7 +925,41 @@ textarea { min-height: 90px; resize: vertical; }
               <div class="opt" data-q="6" data-v="aestetisk" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🌿</span><div><div class="opt-t">Stærkt æstetisk blik</div><div class="opt-d">Jeg lægger mærke til detaljer andre overser</div></div></div>
               <div class="opt" data-q="6" data-v="fortaeller" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">✍️</span><div><div class="opt-t">Elsker at skabe og fortælle</div><div class="opt-d">Ord, billeder og historier er mit udtryksform</div></div></div>
             </div>
-            <div class="btn-row"><button class="btn" onclick="goTo(5)">← Tilbage</button><button class="btn primary disabled" id="next-6" onclick="showResult()">Se mit resultat →</button></div>
+            <div class="btn-row"><button class="btn" onclick="goTo(5)">← Tilbage</button><button class="btn primary disabled" id="next-6" onclick="goTo('gate')">Næste →</button></div>
+          </div>
+
+          <!-- GATE: oplysninger før resultatet vises -->
+          <div class="step" id="step-gate">
+            <div class="qi-eyebrow">Dit resultat er klar</div>
+            <h2 class="qi-title">Hvor skal vi sende <em>dit resultat</em>?</h2>
+            <p class="qi-sub">Udfyld dine oplysninger for at se din personlige anbefaling.</p>
+            <form id="gate-form" novalidate>
+              <div class="fgrid">
+                <div class="fgroup"><label for="g-first">Fornavn *</label><input type="text" id="g-first" name="first_name" autocomplete="given-name" required maxlength="80"></div>
+                <div class="fgroup"><label for="g-last">Efternavn *</label><input type="text" id="g-last" name="last_name" autocomplete="family-name" required maxlength="80"></div>
+              </div>
+              <div class="fgroup"><label for="g-email">E-mail *</label><input type="email" id="g-email" name="email" autocomplete="email" inputmode="email" required maxlength="200"></div>
+              <div class="fgroup">
+                <label for="g-gender">Køn (valgfrit)</label>
+                <select id="g-gender" name="gender">
+                  <option value="">Vil ikke oplyse</option>
+                  <option value="Mand">Mand</option>
+                  <option value="Kvinde">Kvinde</option>
+                  <option value="Andet">Andet</option>
+                </select>
+              </div>
+              <div class="hp-field" aria-hidden="true"><label for="g-website">Website</label><input type="text" id="g-website" name="website" tabindex="-1" autocomplete="off"></div>
+              <div class="consent-check">
+                <input type="checkbox" id="g-consent" name="marketing_consent">
+                <label for="g-consent" id="g-consent-label">Ja tak, send mig nyheder og tilbud om online uddannelser fra Nordic Online Academy (onlineuddannelse.dk) på e-mail. Du kan til enhver tid afmelde dig.</label>
+              </div>
+              <p class="consent-txt">Når du får dit resultat, gemmer Nordic Online Academy dine svar og oplysninger for at kunne give dig en anbefaling og tilbyde vejledning. Du behøver ikke sige ja til nyheder og tilbud for at se dit resultat. Læs mere i vores <a href="privatliv.html" target="_blank" rel="noopener">privatlivspolitik</a>.</p>
+              <div class="form-error" id="gate-error" role="alert"></div>
+              <div class="btn-row" style="margin-top:1.25rem;">
+                <button type="button" class="btn" onclick="goTo(6)">← Tilbage</button>
+                <button type="submit" class="btn primary lg" id="gate-submit">Se mit resultat →</button>
+              </div>
+            </form>
           </div>
 
           <!-- RESULT -->
@@ -969,6 +1017,8 @@ textarea { min-height: 90px; resize: vertical; }
       <ul class="footer-links">
         <li><a href="#quiz">Tag testen</a></li>
         <li><a href="#hvordan">Hvordan virker det?</a></li>
+        <li><a href="privatliv.html">Privatlivspolitik</a></li>
+        <li><a href="#" id="cookie-settings">Cookie-indstillinger</a></li>
       </ul>
     </div>
     <div>
@@ -1038,6 +1088,84 @@ function showResult(){
   goTo('result');
 }
 
+/* ── Klaviyo (DK-kontoen, offentlig client-nøgle — den er beregnet til at ligge i frontend) ──
+   Deltagere tilmeldes brochure-listen for den anbefalede uddannelse (kun hvis de har givet
+   samtykke), og eventet "Uddannelsestest gennemført" gør, at de dukker op som lead i backoffice. */
+const KLAVIYO_COMPANY_ID = 'RtCNbE';
+const KLAVIYO_REVISION = '2024-10-15';
+const TEST_EVENT_NAME = 'Uddannelsestest gennemført';
+const CONSENT_VERSION = '2026-10-12';
+const EDU_LISTS = {
+  parterapeut:'XpgTt7', sexolog:'SpB2yZ', coach:'Urirfn', familiebehandler:'T6hzYb',
+  indretningskonsulent:'Tp8QWi', indretningsarkitekt:'YatsTR', programmor:'XZMsnY',
+  fotograf:'RN6Yj7', videograf:'UrhVkq', forfatter:'RByK2j', kostvejleder:'TTB29R'
+};
+
+function klaviyoPost(path, body){
+  return fetch('https://a.klaviyo.com/client/'+path+'/?company_id='+KLAVIYO_COMPANY_ID, {
+    method:'POST',
+    headers:{ 'Content-Type':'application/vnd.api+json', 'revision':KLAVIYO_REVISION },
+    body:JSON.stringify(body),
+    keepalive:true
+  }).then(r=>{ if(!r.ok) throw new Error('Klaviyo '+r.status); return r; });
+}
+
+function trackingParams(){
+  const out={}, q=new URLSearchParams(location.search);
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(k=>{ if(q.get(k)) out[k]=q.get(k).slice(0,120); });
+  if(document.referrer) out.referrer=document.referrer.slice(0,200);
+  return out;
+}
+
+function sendLead(d){
+  const [pk,ak]=getRecommendation();
+  const profile={ data:{ type:'profile', attributes:{
+    email:d.email, first_name:d.first, last_name:d.last,
+    properties:Object.assign({ 'Køn':d.gender||'', 'Kilde':'uddannelsestest.dk', 'Anbefalet uddannelse (test)':educations[pk].title }, trackingParams())
+  }}};
+  const event={ data:{ type:'event', attributes:{
+    properties:Object.assign({
+      Email:d.email, Fornavn:d.first, Efternavn:d.last, 'Køn':d.gender||'',
+      Anbefaling:educations[pk].title, Alternativ:educations[ak].title, Svar:Object.assign({},answers),
+      'Samtykke marketing':d.consent, 'Samtykke tekst version':CONSENT_VERSION, Kilde:'uddannelsestest.dk'
+    }, trackingParams()),
+    metric:{ data:{ type:'metric', attributes:{ name:TEST_EVENT_NAME }}},
+    profile:profile
+  }}};
+  const calls=[klaviyoPost('events',event)];
+  if(d.consent && EDU_LISTS[pk]){
+    calls.push(klaviyoPost('subscriptions',{ data:{ type:'subscription', attributes:{
+      custom_source:'uddannelsestest.dk', profile:profile
+    }, relationships:{ list:{ data:{ type:'list', id:EDU_LISTS[pk] }}}}}));
+  }
+  return Promise.allSettled(calls);
+}
+
+function showGateError(msg){ const e=document.getElementById('gate-error'); e.textContent=msg; e.classList.add('show'); }
+
+document.getElementById('gate-form').addEventListener('submit', async function(ev){
+  ev.preventDefault();
+  document.getElementById('gate-error').classList.remove('show');
+  const d={
+    first:document.getElementById('g-first').value.trim(),
+    last:document.getElementById('g-last').value.trim(),
+    email:document.getElementById('g-email').value.trim(),
+    gender:document.getElementById('g-gender').value,
+    consent:document.getElementById('g-consent').checked
+  };
+  if(!d.first||!d.last){ showGateError('Udfyld både fornavn og efternavn.'); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)){ showGateError('Skriv en gyldig e-mailadresse.'); return; }
+  const btn=document.getElementById('gate-submit');
+  btn.disabled=true; btn.textContent='Et øjeblik…';
+  // Honeypot: robotter udfylder det skjulte felt — de får resultatet, men oprettes ikke som lead.
+  if(!document.getElementById('g-website').value){
+    // Vis resultatet efter max 4 sek., også hvis Klaviyo er langsom/nede — vi blokerer ikke brugeren.
+    await Promise.race([sendLead(d), new Promise(r=>setTimeout(r,4000))]);
+  }
+  btn.disabled=false; btn.textContent='Se mit resultat →';
+  showResult();
+});
+
 function selectOpt(el){
   const q=el.dataset.q;
   document.querySelectorAll(`[data-q="${q}"]`).forEach(o=>{o.classList.remove('selected');o.setAttribute('aria-pressed','false');});
@@ -1062,6 +1190,7 @@ function goTo(step){
   const fill=document.getElementById('qprogress-fill');
   const count=document.getElementById('qprogress-count');
   if(step===0){ wrap.style.display='none'; }
+  else if(step==='gate'){ wrap.style.display='block'; fill.style.width='100%'; count.textContent='Næsten færdig'; }
   else if(step==='result'){ wrap.style.display='block'; fill.style.width='100%'; count.textContent='Fuldfør!'; }
   else{ wrap.style.display='block'; fill.style.width=Math.round((step/6)*100)+'%'; count.textContent=`Spørgsmål ${step} af 6`; }
   const quizBox=document.querySelector('.quiz-box');
@@ -1075,15 +1204,39 @@ function resetQuiz(){
   goTo(0);
 }
 </script>
-<!-- Intercom messenger -->
+<!-- Cookie-samtykke + Intercom (indlæses først efter samtykke) -->
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
+  <div class="cookie-banner-text">
+    <strong id="cookie-title">Cookies til chat</strong>
+    <p>Vi bruger en chat-widget (Intercom), som gemmer cookies, så vi kan svare på dine spørgsmål. Siden virker uden. Du kan ændre dit valg når som helst. Læs mere i <a href="privatliv.html#cookies">privatlivspolitikken</a>.</p>
+  </div>
+  <div class="cookie-banner-btns">
+    <button type="button" class="btn" id="cookie-decline">Kun nødvendige</button>
+    <button type="button" class="btn primary" id="cookie-accept">Accepter chat</button>
+  </div>
+</div>
 <script>
-  window.intercomSettings = {
-    api_base: "https://api-iam.intercom.io",
-    app_id: "v1hmg946",
-  };
-</script>
-<script>
-  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/v1hmg946';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+(function(){
+  var KEY='ut_cookie_consent';
+  var banner=document.getElementById('cookie-banner');
+  function read(){ try{ return localStorage.getItem(KEY); }catch(e){ return null; } }
+  function write(v){ try{ localStorage.setItem(KEY,v); }catch(e){} }
+  function loadIntercom(){
+    window.intercomSettings={ api_base:"https://api-iam.intercom.io", app_id:"v1hmg946" };
+    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/v1hmg946';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+  }
+  function show(){ banner.hidden=false; }
+  function hide(){ banner.hidden=true; }
+  var current=read();
+  if(current==='accepted'){ loadIntercom(); } else if(current===null){ show(); }
+  document.getElementById('cookie-accept').addEventListener('click',function(){ write('accepted'); hide(); loadIntercom(); });
+  document.getElementById('cookie-decline').addEventListener('click',function(){
+    var was=read(); write('declined'); hide();
+    if(was==='accepted'){ location.reload(); } // fjerner den allerede indlæste widget
+  });
+  var link=document.getElementById('cookie-settings');
+  if(link) link.addEventListener('click',function(e){ e.preventDefault(); show(); });
+})();
 </script>
 </body>
 </html>
