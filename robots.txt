@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /privatliv.html
+
+Sitemap: https://uddannelsestest.dk/sitemap.xml
