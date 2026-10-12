@@ -8,6 +8,7 @@
 <meta property="og:title" content="Uddannelsestest — Find din rette uddannelse">
 <meta property="og:description" content="Svar på 6 spørgsmål og få en personlig anbefaling til din næste uddannelse.">
 <meta property="og:url" content="https://uddannelsestest.dk">
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="85cb953d-1a6f-4699-96c6-8bc50a665a29" data-blockingmode="auto" type="text/javascript"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
@@ -556,13 +557,6 @@ textarea { min-height: 90px; resize: vertical; }
 .consent-check { display: flex; gap: 10px; align-items: flex-start; margin-top: 1rem; padding: 12px 14px; background: var(--cream); border: 1px solid var(--border); border-radius: var(--r-sm); }
 .consent-check input { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; accent-color: var(--green); }
 .consent-check label { margin: 0; font-size: 12px; font-weight: 300; line-height: 1.6; color: var(--ink-2); cursor: pointer; }
-.cookie-banner { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 300; max-width: 720px; margin: 0 auto; background: var(--white); border: 1px solid var(--border-2); border-radius: var(--r); box-shadow: 0 10px 40px rgba(0,0,0,0.18); padding: 1rem 1.25rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-.cookie-banner[hidden] { display: none; }
-.cookie-banner-text { flex: 1 1 300px; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
-.cookie-banner-text strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 2px; }
-.cookie-banner-text p { margin: 0; }
-.cookie-banner-text a { color: var(--green); }
-.cookie-banner-btns { display: flex; gap: 8px; flex-wrap: wrap; }
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-error { display: none; margin-top: 12px; padding: 10px 12px; border-radius: var(--r-sm); background: #FBE9E7; color: #8A2A1B; font-size: 13px; }
 .form-error.show { display: block; }
@@ -1018,7 +1012,7 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
         <li><a href="#quiz">Tag testen</a></li>
         <li><a href="#hvordan">Hvordan virker det?</a></li>
         <li><a href="privatliv.html">Privatlivspolitik</a></li>
-        <li><a href="#" id="cookie-settings">Cookie-indstillinger</a></li>
+        <li><a href="#" id="cookie-settings" onclick="if(window.Cookiebot){Cookiebot.renew();}return false;">Cookie-indstillinger</a></li>
       </ul>
     </div>
     <div>
@@ -1204,39 +1198,10 @@ function resetQuiz(){
   goTo(0);
 }
 </script>
-<!-- Cookie-samtykke + Intercom (indlæses først efter samtykke) -->
-<div class="cookie-banner" id="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-live="polite" hidden>
-  <div class="cookie-banner-text">
-    <strong id="cookie-title">Cookies til chat</strong>
-    <p>Vi bruger en chat-widget (Intercom), som gemmer cookies, så vi kan svare på dine spørgsmål. Siden virker uden. Du kan ændre dit valg når som helst. Læs mere i <a href="privatliv.html#cookies">privatlivspolitikken</a>.</p>
-  </div>
-  <div class="cookie-banner-btns">
-    <button type="button" class="btn" id="cookie-decline">Kun nødvendige</button>
-    <button type="button" class="btn primary" id="cookie-accept">Accepter chat</button>
-  </div>
-</div>
-<script>
-(function(){
-  var KEY='ut_cookie_consent';
-  var banner=document.getElementById('cookie-banner');
-  function read(){ try{ return localStorage.getItem(KEY); }catch(e){ return null; } }
-  function write(v){ try{ localStorage.setItem(KEY,v); }catch(e){} }
-  function loadIntercom(){
-    window.intercomSettings={ api_base:"https://api-iam.intercom.io", app_id:"v1hmg946" };
-    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/v1hmg946';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
-  }
-  function show(){ banner.hidden=false; }
-  function hide(){ banner.hidden=true; }
-  var current=read();
-  if(current==='accepted'){ loadIntercom(); } else if(current===null){ show(); }
-  document.getElementById('cookie-accept').addEventListener('click',function(){ write('accepted'); hide(); loadIntercom(); });
-  document.getElementById('cookie-decline').addEventListener('click',function(){
-    var was=read(); write('declined'); hide();
-    if(was==='accepted'){ location.reload(); } // fjerner den allerede indlæste widget
-  });
-  var link=document.getElementById('cookie-settings');
-  if(link) link.addEventListener('click',function(e){ e.preventDefault(); show(); });
-})();
+<!-- Intercom: aktiveres af Cookiebot først efter samtykke til "Præferencer" -->
+<script type="text/plain" data-cookieconsent="preferences">
+  window.intercomSettings = { api_base: "https://api-iam.intercom.io", app_id: "v1hmg946" };
+  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/v1hmg946';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
 </script>
 </body>
 </html>
