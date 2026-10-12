@@ -828,7 +828,7 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
             <div class="qi-grid">
               <div class="qi-card"><span class="qi-card-icon">⚡</span><div class="qi-card-t">Klar på 2 minutter</div><div class="qi-card-d">6 korte spørgsmål om dig og dine mål</div></div>
               <div class="qi-card"><span class="qi-card-icon">🎯</span><div class="qi-card-t">Personlig anbefaling</div><div class="qi-card-d">Vi matcher dig med den rette uddannelse</div></div>
-              <div class="qi-card"><span class="qi-card-icon">🗂️</span><div class="qi-card-t">15+ fagområder</div><div class="qi-card-d">Terapi, design, tech, medier & mere</div></div>
+              <div class="qi-card"><span class="qi-card-icon">🗂️</span><div class="qi-card-t">16 uddannelser</div><div class="qi-card-d">Terapi, design, tech, medier & mere</div></div>
             </div>
             <div class="btn-row">
               <button class="btn primary lg" onclick="goTo(1)">Start testen
@@ -848,6 +848,7 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
               <div class="opt" data-q="1" data-v="tech" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">💻</span><div><div class="opt-t">Bygge og kode</div><div class="opt-d">Teknologi og digitale løsninger</div></div></div>
               <div class="opt" data-q="1" data-v="medie" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">📸</span><div><div class="opt-t">Fortælle og vise</div><div class="opt-d">Foto, video og skrivning</div></div></div>
               <div class="opt" data-q="1" data-v="sundhed" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🥗</span><div><div class="opt-t">Sundhed og krop</div><div class="opt-d">Kost, velvære og et sundt liv</div></div></div>
+              <div class="opt" data-q="1" data-v="business" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🧭</span><div><div class="opt-t">Ledelse og forretning</div><div class="opt-d">HR, mennesker i organisationer og at drive virksomhed</div></div></div>
             </div>
             <div class="btn-row"><button class="btn" onclick="goTo(0)">← Tilbage</button><button class="btn primary disabled" id="next-1" onclick="goTo(2)">Næste →</button></div>
           </div>
@@ -872,7 +873,9 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
             <h2 class="q-title">Hvem vil du arbejde med?</h2>
             <p class="q-hint">Tænk på din ideelle arbejdsdag.</p>
             <div class="opts" id="q3-opts">
-              <div class="opt" data-q="3" data-v="mennesker" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">👥</span><div><div class="opt-t">Direkte med mennesker</div><div class="opt-d">Klienter, patienter og kunder</div></div></div>
+              <div class="opt" data-q="3" data-v="par" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">💞</span><div><div class="opt-t">Par og relationer</div><div class="opt-d">Parforhold, intimitet og samliv</div></div></div>
+              <div class="opt" data-q="3" data-v="enkelt" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">👤</span><div><div class="opt-t">Voksne enkeltpersoner</div><div class="opt-d">Samtaler, coaching og personlig udvikling</div></div></div>
+              <div class="opt" data-q="3" data-v="boern" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">👨‍👩‍👧</span><div><div class="opt-t">Børn, unge og familier</div><div class="opt-d">Familier og børn med særlige behov</div></div></div>
               <div class="opt" data-q="3" data-v="kreativt" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🖌️</span><div><div class="opt-t">Med kreative projekter</div><div class="opt-d">Rum, billeder og tekst</div></div></div>
               <div class="opt" data-q="3" data-v="data" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">⚙️</span><div><div class="opt-t">Med systemer og teknologi</div><div class="opt-d">Kode og digitale løsninger</div></div></div>
               <div class="opt" data-q="3" data-v="blandet" onclick="selectOpt(this)" tabindex="0" role="button"><span class="opt-ic">🔄</span><div><div class="opt-t">En blanding af alt</div><div class="opt-d">Variation er vigtig for mig</div></div></div>
@@ -1031,40 +1034,96 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
 
 <script>
 const answers = {};
+/* ANBEFALING:START — data + pointmodel. Testes af tests/recommendation.test.mjs (udtrækker blokken mellem START/SLUT). */
+const U = 'https://onlineuddannelse.dk/online-uddannelser/';
+// sales = antal solgte uddannelser seneste 12 mdr. (backoffice, okt. 2026). Bruges til at fremhæve de mest solgte — opdatér et par gange om året.
 const educations = {
-  parterapeut: { title:"Parterapeut", category:"Terapeutisk", desc:"Parterapeut-uddannelsen giver dig kompetencer til at hjælpe par med at styrke deres relation, kommunikere bedre og overvinde udfordringer. Du lærer om kommunikation, tilknytningsteorier og konfliktløsning — og mange etablerer efterfølgende egen klinik.", traits:["Menneskekontakt","Selvstændig praksis","Kommunikation","Psykologi"], url:"https://onlineuddannelse.dk/online-uddannelser/parterapeut/" },
-  sexolog: { title:"Sexolog", category:"Terapeutisk", desc:"Sexolog-uddannelsen dækker seksuel sundhed og terapeutiske tilgange til det hele menneske. Velegnet til dig, der ønsker at arbejde professionelt med menneskers velvære og seksualitet.", traits:["Seksuel sundhed","Terapi","Menneskekontakt","Selvstændig praksis"], url:"https://onlineuddannelse.dk/online-uddannelser/sexolog/" },
-  coach: { title:"Coach", category:"Terapeutisk", desc:"Coaching-uddannelsen giver dig redskaber til at guide mennesker mod personlig og professionel vækst. Du lærer coachingmetoder, motivationspsykologi og samtaleværktøjer — og kan arbejde som coach ved siden af dit nuværende job.", traits:["Personlig udvikling","Motivation","Fleksibel","Selvstændig"], url:"https://onlineuddannelse.dk/online-uddannelser/coach/" },
-  familiebehandler: { title:"Familiebehandler", category:"Terapeutisk", desc:"Familiebehandler-uddannelsen klæder dig på til at arbejde med familier i sårbare situationer. Du får viden om familiemønstre, systemisk tænkning og professionelle interventioner.", traits:["Socialt arbejde","Familier","Empati","Systemisk tænkning"], url:"https://onlineuddannelse.dk/online-uddannelser/familiebehandler/" },
-  indretningskonsulent: { title:"Indretningskonsulent", category:"Kreativitet", desc:"Indretningskonsulent-uddannelsen giver dig et stærkt fundament i indretning, farvelære, ruminddeling og kundehåndtering. Mange studerende starter efterfølgende deres egen konsulentvirksomhed.", traits:["Æstetik","Rådgivning","Kreativitet","Selvstændig virksomhed"], url:"https://onlineuddannelse.dk/online-uddannelser/indretningskonsulent/" },
-  indretningsarkitekt: { title:"Indretningsarkitekt", category:"Kreativitet", desc:"Indretningsarkitekt-uddannelsen er en overbygning med dybere fokus på arkitektoniske principper, planløsninger og projektledelse — ideel til større professionelle indretningsprojekter.", traits:["Arkitektur","Projekter","Design","Professionel rådgivning"], url:"https://onlineuddannelse.dk/online-uddannelser/indretningsarkitekt/" },
-  programmor: { title:"Grundlæggende programmør", category:"Tech", desc:"Programmør-uddannelsen introducerer dig til kodningens verden med fokus på praksisnære kompetencer. Du lærer at bygge digitale løsninger fra bunden — ideel for dig der vil skifte til tech-branchen.", traits:["Kode","Problemløsning","Tech","Digital fremtid"], url:"https://onlineuddannelse.dk/online-uddannelser/grundlaeggende-programmoer/" },
-  fotograf: { title:"Fotograf", category:"Medier og kommunikation", desc:"Fotograf-uddannelsen giver dig tekniske og kreative kompetencer til professionelle billeder. Du lærer kameraindstillinger, komposition, lys og efterbehandling.", traits:["Kreativitet","Visuel fortælling","Freelance","Teknik"], url:"https://onlineuddannelse.dk/online-uddannelser/fotograf/" },
-  videograf: { title:"Videograf", category:"Medier og kommunikation", desc:"Videograf-uddannelsen dækker optagelse, redigering og produktion af professionelle videoer — en stærkt efterspurgt kompetence i en verden der elsker videoindhold.", traits:["Video","Historiefortælling","Kreativ produktion","Freelance"], url:"https://onlineuddannelse.dk/online-uddannelser/videograf/" },
-  forfatter: { title:"Forfatter", category:"Medier og kommunikation", desc:"Forfatter-uddannelsen guider dig igennem manuskriptets opbygning, karakterudvikling og fortælleteknik — for dig der drømmer om at skrive romaner, novellesamlinger eller scripts.", traits:["Kreativ skrivning","Storytelling","Manuskript","Udtryk"], url:"https://onlineuddannelse.dk/online-uddannelser/forfatter/" },
-  kostvejleder: { title:"Kostvejleder", category:"Sundhed og skønhed", desc:"Kostvejleder-uddannelsen giver dig faglig viden om ernæring, kostplaner og sund livsstil. Du kan efterfølgende rådgive klienter som selvstændig kostvejleder.", traits:["Ernæring","Sundhed","Rådgivning","Velvære"], url:"https://onlineuddannelse.dk/online-uddannelser/kostvejleder/" }
+  parterapeut: { title:"Parterapeut", category:"Terapeutisk", sales:40, desc:"Parterapeut-uddannelsen giver dig kompetencer til at hjælpe par med at styrke deres relation, kommunikere bedre og overvinde udfordringer. Du lærer om kommunikation, tilknytningsteorier og konfliktløsning — og mange etablerer efterfølgende egen klinik.", traits:["Menneskekontakt","Selvstændig praksis","Kommunikation","Psykologi"], url:U+"parterapeut/" },
+  sexolog: { title:"Sexolog", category:"Terapeutisk", sales:72, desc:"Sexolog-uddannelsen dækker seksuel sundhed og terapeutiske tilgange til det hele menneske. Velegnet til dig, der ønsker at arbejde professionelt med menneskers velvære og seksualitet.", traits:["Seksuel sundhed","Terapi","Menneskekontakt","Selvstændig praksis"], url:U+"sexolog/" },
+  coach: { title:"Coach", category:"Terapeutisk", sales:59, desc:"Coaching-uddannelsen giver dig redskaber til at guide mennesker mod personlig og professionel vækst. Du lærer coachingmetoder, motivationspsykologi og samtaleværktøjer — og kan arbejde som coach ved siden af dit nuværende job.", traits:["Personlig udvikling","Motivation","Fleksibel","Selvstændig"], url:U+"coach/" },
+  familiebehandler: { title:"Familiebehandler", category:"Terapeutisk", sales:187, desc:"Familiebehandler-uddannelsen klæder dig på til at arbejde med familier i sårbare situationer. Du får viden om familiemønstre, systemisk tænkning og professionelle interventioner.", traits:["Socialt arbejde","Familier","Empati","Systemisk tænkning"], url:U+"familiebehandler/" },
+  adhd: { title:"ADHD- og autismevejleder", category:"Terapeutisk", sales:51, desc:"ADHD- og autismevejleder-uddannelsen giver dig både et teoretisk og et praktisk fundament med direkte anvendelige værktøjer til at skabe forandring for børn og unge med ADHD og autisme. Uddannelsen består af 10 moduler, du gennemfører i dit eget tempo.", traits:["ADHD","Autisme","Børn og unge","Praksisnær"], url:U+"adhd-og-autismevejleder/" },
+  selvvaerd: { title:"Selvværdsvejleder", category:"Terapeutisk", sales:20, desc:"Selvværdsvejleder-uddannelsen er til dig, der vil arbejde professionelt med mennesker og hjælpe dem med at styrke deres selvværd. Du får et teoretisk fundament og praktiske værktøjer fordelt på 8 moduler, som du gennemfører i dit eget tempo.", traits:["Selvværd","Menneskekontakt","Rådgivning","Praksisnær"], url:U+"selvvaerdsvejleder/" },
+  terapiiv: { title:"Terapeutisk iværksætter", category:"Terapeutisk", sales:2, desc:"Uddannelsen gør dig klar til at starte din egen virksomhed inden for det terapeutiske område. Den består af 8 moduler, som du gennemfører i dit eget tempo.", traits:["Egen praksis","Forretning","Selvstændig","Terapeutisk"], url:U+"terapeutisk-ivaerksaetter/" },
+  indretningskonsulent: { title:"Indretningskonsulent", category:"Kreativitet", sales:74, desc:"Indretningskonsulent-uddannelsen giver dig et stærkt fundament i indretning, farvelære, ruminddeling og kundehåndtering. Mange studerende starter efterfølgende deres egen konsulentvirksomhed.", traits:["Æstetik","Rådgivning","Kreativitet","Selvstændig virksomhed"], url:U+"indretningskonsulent/" },
+  indretningsarkitekt: { title:"Indretningsarkitekt", category:"Kreativitet", sales:86, desc:"Indretningsarkitekt-uddannelsen er en overbygning med dybere fokus på arkitektoniske principper, planløsninger og projektledelse — ideel til større professionelle indretningsprojekter.", traits:["Arkitektur","Projekter","Design","Professionel rådgivning"], url:U+"indretningsarkitekt/" },
+  dekoratoer: { title:"Dekoratør", category:"Kreativitet", sales:11, desc:"Dekoratør-uddannelsen giver dig grundlæggende kompetencer, der klæder dig på til at arbejde som professionel dekoratør. Uddannelsen består af 10 moduler, som du gennemfører i dit eget tempo.", traits:["Styling","Æstetik","Kreativitet","Selvstændig"], url:U+"dekoratoer/" },
+  programmor: { title:"Grundlæggende programmør", category:"Tech", sales:27, desc:"Programmør-uddannelsen introducerer dig til kodningens verden med fokus på praksisnære kompetencer. Du lærer at bygge digitale løsninger fra bunden — ideel for dig der vil skifte til tech-branchen.", traits:["Kode","Problemløsning","Tech","Digital fremtid"], url:U+"grundlaeggende-programmering/" },
+  fotograf: { title:"Fotograf", category:"Medier og kommunikation", sales:69, desc:"Fotograf-uddannelsen giver dig tekniske og kreative kompetencer til professionelle billeder. Du lærer kameraindstillinger, komposition, lys og efterbehandling.", traits:["Kreativitet","Visuel fortælling","Freelance","Teknik"], url:U+"fotograf/" },
+  videograf: { title:"Videograf", category:"Medier og kommunikation", sales:17, desc:"Videograf-uddannelsen dækker optagelse, redigering og produktion af professionelle videoer — en stærkt efterspurgt kompetence i en verden der elsker videoindhold.", traits:["Video","Historiefortælling","Kreativ produktion","Freelance"], url:U+"videograf/" },
+  forfatter: { title:"Forfatter", category:"Medier og kommunikation", sales:18, desc:"Forfatter-uddannelsen guider dig igennem manuskriptets opbygning, karakterudvikling og fortælleteknik — for dig der drømmer om at skrive romaner, novellesamlinger eller scripts.", traits:["Kreativ skrivning","Storytelling","Manuskript","Udtryk"], url:U+"forfatter/" },
+  hr: { title:"HR-konsulent", category:"Medier og kommunikation", sales:69, desc:"HR-konsulent-uddannelsen giver dig faglig viden og praktiske værktøjer til at arbejde professionelt med HR. Uddannelsen består af 10 moduler, du gennemfører i dit eget tempo, og er skræddersyet til erhvervslivet.", traits:["HR","Erhvervsliv","Rådgivning","Eget tempo"], url:U+"hr-konsulent/" },
+  kostvejleder: { title:"Kostvejleder", category:"Sundhed og skønhed", sales:56, desc:"Kostvejleder-uddannelsen giver dig faglig viden om ernæring, kostplaner og sund livsstil. Du kan efterfølgende rådgive klienter som selvstændig kostvejleder.", traits:["Ernæring","Sundhed","Rådgivning","Velvære"], url:U+"kostvejleder/" }
 };
 
-function getRecommendation() {
-  const q1=answers[1],q2=answers[2],q3=answers[3],q6=answers[6];
-  if(q1==='terapi'||q3==='mennesker'){
-    if(q6==='empatisk') return['familiebehandler','coach'];
-    if(q2==='selvstaendig') return['parterapeut','sexolog'];
-    return['coach','parterapeut'];
+// Hvert svar giver point til de uddannelser, det peger på. Vægtene afspejler, hvor meget spørgsmålet siger om retningen:
+// Q1 (interesse) og Q3 (hvem) og Q6 (personlighed) vejer tungest, Q2 (mål) mellem, Q4 (livssituation) og Q5 (læring) finjusterer.
+const WEIGHTS = {
+  1: {
+    terapi:   { parterapeut:3, sexolog:3, coach:2.5, familiebehandler:3, adhd:3, selvvaerd:3, terapiiv:2.5 },
+    kreativ:  { indretningskonsulent:3.2, indretningsarkitekt:3, dekoratoer:3, fotograf:1, videograf:1, forfatter:1 },
+    tech:     { programmor:3 },
+    medie:    { fotograf:3, videograf:3, forfatter:3 },
+    sundhed:  { kostvejleder:3, coach:1, selvvaerd:1, sexolog:1 },
+    business: { hr:3, terapiiv:.7, coach:1.5 }
+  },
+  2: {
+    selvstaendig:    { terapiiv:2.5, parterapeut:1.5, sexolog:1.5, coach:1.5, selvvaerd:1, kostvejleder:1.5, indretningskonsulent:1.5, dekoratoer:1.5, fotograf:1.4, videograf:1.1, forfatter:.5, familiebehandler:.5, adhd:.5 },
+    job:             { familiebehandler:2, hr:1.8, adhd:1.5, programmor:1.5, indretningsarkitekt:1, videograf:1, fotograf:.7 },
+    opkvalificering: { hr:1.5, familiebehandler:1.5, adhd:1.5, coach:1, indretningsarkitekt:1.5, programmor:1, selvvaerd:1, parterapeut:.5, videograf:.4 },
+    personlig:       { forfatter:2, fotograf:1.5, selvvaerd:1.5, dekoratoer:1.5, kostvejleder:1, sexolog:1.3, parterapeut:1, coach:1 }
+  },
+  3: {
+    par:       { parterapeut:3, sexolog:2.3, familiebehandler:1, coach:.5 },
+    enkelt:    { coach:2.2, sexolog:2.6, selvvaerd:2.5, parterapeut:1.5, terapiiv:2, hr:1, kostvejleder:1.5 },
+    boern:     { adhd:3.6, familiebehandler:2.8, selvvaerd:1 },
+    kreativt:  { indretningskonsulent:2.4, indretningsarkitekt:2, dekoratoer:2, fotograf:2, videograf:1.7, forfatter:2 },
+    data:      { programmor:2.5, hr:.5, kostvejleder:.5 },
+    blandet:   { coach:1, hr:.5, kostvejleder:1, terapiiv:1, fotograf:.5, videograf:.5, forfatter:.5, indretningskonsulent:.5 }
+  },
+  4: {
+    job_og_studie:  { coach:.8, kostvejleder:.8, forfatter:.8, dekoratoer:.8, fotograf:.5, hr:.6, selvvaerd:.6, videograf:.4, programmor:.3 },
+    ledig:          { programmor:.8, hr:.8, familiebehandler:1, adhd:.8, indretningsarkitekt:.6, kostvejleder:.4, videograf:.3 },
+    familie:        { forfatter:.8, coach:.8, kostvejleder:.8, dekoratoer:.8, selvvaerd:.8, fotograf:.5, indretningskonsulent:.4 },
+    karriereskifte: { parterapeut:1, sexolog:1.3, familiebehandler:1, adhd:1, indretningsarkitekt:1, programmor:.8, indretningskonsulent:.8, hr:.6, terapiiv:.8, videograf:.4 }
+  },
+  5: {
+    praksis:     { fotograf:1, videograf:1, programmor:.8, indretningskonsulent:1, dekoratoer:1, kostvejleder:1, coach:.7, terapiiv:.8 },
+    teori:       { familiebehandler:1.2, parterapeut:1.2, sexolog:1.2, adhd:1.2, selvvaerd:1, hr:.8, indretningsarkitekt:.8 },
+    kreativitet: { forfatter:1.2, dekoratoer:1.2, fotograf:1.1, videograf:1.1, indretningskonsulent:1.2, indretningsarkitekt:1, selvvaerd:.5 },
+    resultater:  { coach:1.2, terapiiv:1.2, hr:.8, kostvejleder:1, programmor:.6, selvvaerd:.8, adhd:.5, familiebehandler:.5 }
+  },
+  6: {
+    empatisk:   { familiebehandler:2.5, parterapeut:2.5, selvvaerd:2.5, adhd:2.5, coach:1.8, sexolog:2.3, hr:.5, kostvejleder:.5 },
+    analytisk:  { programmor:2.5, hr:2, kostvejleder:1.5, terapiiv:1.5, adhd:1.5, sexolog:1, indretningsarkitekt:1 },
+    aestetisk:  { indretningskonsulent:2.7, indretningsarkitekt:2.5, dekoratoer:2.5, fotograf:1.8, videograf:2 },
+    fortaeller: { forfatter:2.5, fotograf:1.8, videograf:2, coach:1, parterapeut:.5, selvvaerd:.5 }
   }
-  if(q1==='kreativ'||q3==='kreativt'){
-    if(q6==='aestetisk') return['indretningskonsulent','indretningsarkitekt'];
-    if(q6==='fortaeller') return['fotograf','indretningskonsulent'];
-    return['indretningskonsulent','fotograf'];
+};
+
+// De mest solgte uddannelser får et bonus (kvadratrod, så en bestseller ikke overdøver alt andet). Max = BOOST_MAX point.
+const BOOST_MAX = 2.4;
+const MAX_SALES = Math.max(...Object.values(educations).map(e => e.sales));
+function boost(key){ return BOOST_MAX * Math.sqrt(educations[key].sales / MAX_SALES); }
+
+function scoreAll(ans){
+  const score = {};
+  Object.keys(educations).forEach(k => { score[k] = boost(k); });
+  for (const q in ans) {
+    const w = WEIGHTS[q] && WEIGHTS[q][ans[q]];
+    if (w) for (const k in w) score[k] += w[k];
   }
-  if(q1==='tech'||q3==='data') return['programmor','videograf'];
-  if(q1==='medie'){
-    if(q6==='fortaeller') return['forfatter','fotograf'];
-    return['fotograf','videograf'];
-  }
-  if(q1==='sundhed') return['kostvejleder','coach'];
-  return['coach','indretningskonsulent'];
+  return score;
 }
+
+function getRecommendation(){
+  const score = scoreAll(answers);
+  const ranked = Object.keys(educations).sort((a, b) => (score[b] - score[a]) || (educations[b].sales - educations[a].sales));
+  return [ranked[0], ranked[1]];
+}
+/* ANBEFALING:SLUT */
+
+function withUtm(url,slot){ return url+'?utm_source=uddannelsestest.dk&utm_medium=test&utm_campaign=anbefaling&utm_content='+slot; }
 
 function showResult(){
   const [pk,ak]=getRecommendation();
@@ -1073,12 +1132,12 @@ function showResult(){
   document.getElementById('res-cat').textContent='Kategori: '+p.category;
   document.getElementById('res-desc').textContent=p.desc;
   document.getElementById('res-traits').innerHTML=p.traits.map(t=>`<span class="res-trait">${t}</span>`).join('');
-  document.getElementById('res-link').onclick=()=>window.open(p.url,'_blank');
+  const rl=document.getElementById('res-link'); rl.textContent='Se '+p.title+' →'; rl.onclick=()=>window.open(withUtm(p.url,'primaer'),'_blank','noopener');
   document.getElementById('alt-title').textContent=a.title;
   document.getElementById('alt-cat').textContent='Kategori: '+a.category;
   document.getElementById('alt-desc').textContent=a.desc;
   document.getElementById('alt-traits').innerHTML=a.traits.map(t=>`<span class="alt-trait">${t}</span>`).join('');
-  document.getElementById('alt-link').onclick=()=>window.open(a.url,'_blank');
+  const al=document.getElementById('alt-link'); al.textContent='Se '+a.title+' →'; al.onclick=()=>window.open(withUtm(a.url,'alternativ'),'_blank','noopener');
   goTo('result');
 }
 
@@ -1092,7 +1151,8 @@ const CONSENT_VERSION = '2026-10-12';
 const EDU_LISTS = {
   parterapeut:'XpgTt7', sexolog:'SpB2yZ', coach:'Urirfn', familiebehandler:'T6hzYb',
   indretningskonsulent:'Tp8QWi', indretningsarkitekt:'YatsTR', programmor:'XZMsnY',
-  fotograf:'RN6Yj7', videograf:'UrhVkq', forfatter:'RByK2j', kostvejleder:'TTB29R'
+  fotograf:'RN6Yj7', videograf:'UrhVkq', forfatter:'RByK2j', kostvejleder:'TTB29R',
+  adhd:'RCvDye', selvvaerd:'VLdXnr', terapiiv:'VxwMtd', dekoratoer:'V4kvrd', hr:'SYmvdA'
 };
 
 function klaviyoPost(path, body){
