@@ -538,6 +538,36 @@ button.opt { font: inherit; color: inherit; width: 100%; appearance: none; -webk
 .alt-traits { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 1rem; }
 .alt-trait { background: var(--white); border: 1px solid var(--border); color: var(--ink-2); font-size: 11px; padding: 3px 9px; border-radius: var(--r-pill); }
 
+/* ── Resultat: interesseprofil + begrundelser ── */
+.alt-card[hidden] { display: none; }
+.profile-card {
+  background: var(--amber-light); border: 1px solid rgba(196,123,26,0.22);
+  border-radius: var(--r); padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+}
+.profile-eyebrow { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber); margin-bottom: 6px; }
+.profile-title { font-family: var(--font-display); font-size: clamp(22px, 4vw, 28px); font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 6px; }
+.profile-lead { font-size: 14px; color: var(--ink-2); font-weight: 300; line-height: 1.7; margin-bottom: 0.85rem; }
+.profile-drivers { list-style: none; display: grid; gap: 6px; margin-bottom: 0.9rem; }
+.profile-drivers li { position: relative; padding-left: 20px; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+.profile-drivers li::before { content: ''; position: absolute; left: 3px; top: 8px; width: 7px; height: 7px; border-radius: 50%; background: var(--amber); }
+.profile-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.profile-chip { background: rgba(196,123,26,0.14); color: var(--amber); font-size: 12px; font-weight: 500; padding: 4px 11px; border-radius: var(--r-pill); }
+
+.why-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 6px; }
+.why-list { list-style: none; display: grid; gap: 5px; margin: 0 0 0.75rem; }
+.why-list li { position: relative; padding-left: 22px; font-size: 13px; line-height: 1.5; }
+.why-list li::before { content: '✓'; position: absolute; left: 0; top: 0; font-weight: 600; }
+.why-gain { font-size: 13px; line-height: 1.6; margin: 0 0 1rem; }
+.why-gain strong { font-weight: 500; }
+.result-hero-card .why-title { color: rgba(255,255,255,0.7); }
+.result-hero-card .why-list li { color: rgba(255,255,255,0.92); }
+.result-hero-card .why-list li::before { color: #BFE8D4; }
+.result-hero-card .why-gain { color: rgba(255,255,255,0.88); }
+.alt-card .why-title { color: var(--ink-3); }
+.alt-card .why-list li { color: var(--ink-2); }
+.alt-card .why-list li::before { color: var(--green); }
+.alt-card .why-gain { color: var(--ink-2); font-weight: 300; }
+
 .divider { border: none; border-top: 1px solid var(--border); margin: 1.75rem 0; }
 
 /* ── CONTACT FORM ── */
@@ -766,8 +796,8 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
       </div>
       <div class="how-card">
         <div class="how-num">02</div>
-        <div class="how-card-title">Få din anbefaling</div>
-        <div class="how-card-desc">Vores matchlogik finder den bedste uddannelse til dig — og foreslår desuden et godt alternativ.</div>
+        <div class="how-card-title">Få din profil og dine matches</div>
+        <div class="how-card-desc">Du får en personlig interesseprofil og op til tre uddannelser, der passer til dine svar — med en forklaring på, hvorfor.</div>
       </div>
       <div class="how-card">
         <div class="how-num">03</div>
@@ -827,7 +857,7 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
         <ul class="sidebar-list">
           <li class="sidebar-item"><span class="sidebar-icon">⚡</span>6 korte spørgsmål</li>
           <li class="sidebar-item"><span class="sidebar-icon">🎯</span>Personlig match til dig</li>
-          <li class="sidebar-item"><span class="sidebar-icon">✌️</span>Primær anbefaling + 1 alternativ</li>
+          <li class="sidebar-item"><span class="sidebar-icon">✌️</span>Din profil + op til 3 uddannelser</li>
           <li class="sidebar-item"><span class="sidebar-icon">💬</span>Gratis vejledning bagefter</li>
           <li class="sidebar-item"><span class="sidebar-icon">🆓</span>Helt gratis og uforpligtende</li>
         </ul>
@@ -861,7 +891,7 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
             <p class="qi-sub">Svar på 6 spørgsmål og få en personlig anbefaling baseret på dine interesser, mål og hverdag.</p>
             <div class="qi-grid">
               <div class="qi-card"><span class="qi-card-icon">⚡</span><div class="qi-card-t">Klar på 2 minutter</div><div class="qi-card-d">6 korte spørgsmål om dig og dine mål</div></div>
-              <div class="qi-card"><span class="qi-card-icon">🎯</span><div class="qi-card-t">Personlig anbefaling</div><div class="qi-card-d">Vi matcher dig med den rette uddannelse</div></div>
+              <div class="qi-card"><span class="qi-card-icon">🎯</span><div class="qi-card-t">Personlig anbefaling</div><div class="qi-card-d">Din profil og op til tre uddannelser, der passer til dig</div></div>
               <div class="qi-card"><span class="qi-card-icon">🗂️</span><div class="qi-card-t">16 uddannelser</div><div class="qi-card-d">Terapi, design, tech, medier & mere</div></div>
             </div>
             <div class="btn-row">
@@ -995,11 +1025,22 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
 
           <!-- RESULT -->
           <div class="step" id="step-result">
+            <div class="profile-card" id="profile-card">
+              <div class="profile-eyebrow">Din interesseprofil</div>
+              <div class="profile-title" id="profile-title"></div>
+              <p class="profile-lead" id="profile-lead"></p>
+              <ul class="profile-drivers" id="profile-drivers"></ul>
+              <div class="profile-chips" id="profile-chips"></div>
+            </div>
+
             <div class="result-hero-card">
               <div class="res-badge">★ Bedste match</div>
               <div class="res-title" id="res-title"></div>
               <div class="res-cat" id="res-cat"></div>
               <div class="res-desc" id="res-desc"></div>
+              <div class="why-title">Hvorfor passer den til dig?</div>
+              <ul class="why-list" id="res-why"></ul>
+              <p class="why-gain" id="res-gain"></p>
               <div class="res-traits" id="res-traits"></div>
               <button class="btn" id="res-link" style="background:white;color:var(--green);border-color:white;font-weight:500;">Se uddannelsen →</button>
             </div>
@@ -1009,8 +1050,23 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
               <div class="alt-title" id="alt-title"></div>
               <div class="alt-cat" id="alt-cat"></div>
               <div class="alt-desc" id="alt-desc"></div>
+              <div class="why-title">Hvorfor passer den til dig?</div>
+              <ul class="why-list" id="alt-why"></ul>
+              <p class="why-gain" id="alt-gain"></p>
               <div class="alt-traits" id="alt-traits"></div>
               <button class="btn" id="alt-link">Se uddannelsen →</button>
+            </div>
+
+            <div class="alt-card" id="alt2-card" hidden>
+              <div class="alt-badge">Tredje mulighed</div>
+              <div class="alt-title" id="alt2-title"></div>
+              <div class="alt-cat" id="alt2-cat"></div>
+              <div class="alt-desc" id="alt2-desc"></div>
+              <div class="why-title">Hvorfor passer den til dig?</div>
+              <ul class="why-list" id="alt2-why"></ul>
+              <p class="why-gain" id="alt2-gain"></p>
+              <div class="alt-traits" id="alt2-traits"></div>
+              <button class="btn" id="alt2-link">Se uddannelsen →</button>
             </div>
 
             <div class="divider"></div>
@@ -1150,29 +1206,152 @@ function scoreAll(ans){
   return score;
 }
 
-function getRecommendation(){
-  const score = scoreAll(answers);
+// ── Resultatsiden: interesseprofil, op til tre matches og begrundelser ud fra brugerens egne svar ──
+// PITCH: hvad uddannelsen konkret giver dig (baseret på uddannelsernes egne beskrivelser på onlineuddannelse.dk).
+const PITCH = {
+  parterapeut: "Du lærer at hjælpe par med at kommunikere bedre og løse konflikter, bl.a. ud fra tilknytningsteori.",
+  sexolog: "Du får terapeutiske værktøjer til at arbejde professionelt med seksuel sundhed og trivsel.",
+  coach: "Du får coachingmetoder og samtaleværktøjer til at guide mennesker mod personlig og professionel vækst.",
+  familiebehandler: "Du får viden om familiemønstre og systemisk tænkning, så du kan arbejde med familier i sårbare situationer.",
+  adhd: "Du får både teori og praktiske værktøjer til at skabe forandring for børn og unge med ADHD og autisme.",
+  selvvaerd: "Du får et teoretisk fundament og praktiske værktøjer til at hjælpe andre med at styrke deres selvværd.",
+  terapiiv: "Du bliver klar til at starte din egen virksomhed inden for det terapeutiske område.",
+  indretningskonsulent: "Du lærer indretning, farvelære og ruminddeling — og hvordan du rådgiver kunder.",
+  indretningsarkitekt: "Du får dybere indsigt i planløsninger og projektledelse til større indretningsprojekter.",
+  dekoratoer: "Du får grundlæggende kompetencer, der gør dig klar til at arbejde som professionel dekoratør.",
+  programmor: "Du lærer at bygge digitale løsninger fra bunden og får et fundament til at skifte til tech.",
+  fotograf: "Du lærer kamerateknik, komposition, lys og efterbehandling til professionelle billeder.",
+  videograf: "Du lærer at optage, redigere og producere professionelle videoer.",
+  forfatter: "Du lærer manuskriptets opbygning, karakterudvikling og fortælleteknik.",
+  hr: "Du får faglig viden og praktiske værktøjer til at arbejde professionelt med HR i erhvervslivet.",
+  kostvejleder: "Du får faglig viden om ernæring og kostplaner, så du kan rådgive klienter om en sund livsstil."
+};
+
+// Brugerens svar formuleret som en begrundelse. Vises som ✓-punkter under hver anbefaling.
+const REASONS = {
+  1: { terapi: "Du er tiltrukket af at hjælpe mennesker", kreativ: "Du vil skabe og designe", tech: "Du vil bygge og kode", medie: "Du vil fortælle og vise noget til andre", sundhed: "Du brænder for sundhed og krop", business: "Du interesserer dig for ledelse og forretning" },
+  2: { selvstaendig: "Du drømmer om at arbejde for dig selv", job: "Du vil videre til et nyt job eller en ny branche", opkvalificering: "Du vil styrke din faglighed i dit nuværende job", personlig: "Du vil lære noget, der giver mening for dig personligt" },
+  3: { par: "Du vil arbejde med par og relationer", enkelt: "Du vil arbejde med voksne enkeltpersoner", boern: "Du vil arbejde med børn, unge og familier", kreativt: "Du vil arbejde med kreative projekter", data: "Du vil arbejde med systemer og teknologi", blandet: "Du vil have variation i din arbejdsdag" },
+  4: { job_og_studie: "Du skal kunne studere ved siden af dit arbejde", ledig: "Du har tid til at komme i gang med noget nyt", familie: "Du studerer bedst i korte bidder, når hverdagen med familien tillader det", karriereskifte: "Du er klar til at investere seriøst i et karriereskifte" },
+  5: { praksis: "Du lærer bedst ved at gøre og vil have redskaber, du kan bruge nu", teori: "Du vil forstå baggrunden og have et solidt teoretisk fundament", kreativitet: "Du lærer bedst gennem kreativ udforskning", resultater: "Du motiveres af konkrete resultater og synlige fremskridt" },
+  6: { empatisk: "Du er empatisk og god til at lytte", analytisk: "Du er analytisk og løsningsorienteret", aestetisk: "Du har et stærkt æstetisk blik", fortaeller: "Du elsker at skabe og fortælle" }
+};
+// Ved lige point vinder de spørgsmål, der siger mest om retningen.
+const REASON_ORDER = [1, 3, 6, 2, 5, 4];
+
+function rankAll(ans){
+  const score = scoreAll(ans);
   const ranked = Object.keys(educations).sort((a, b) => (score[b] - score[a]) || (educations[b].sales - educations[a].sales));
-  return [ranked[0], ranked[1]];
+  return { score, ranked };
+}
+
+// Bevaret: bruges af Klaviyo-eventet (Anbefaling/Alternativ) og af testene.
+function getRecommendation(){
+  const r = rankAll(answers).ranked;
+  return [r[0], r[1]];
+}
+
+// Den tredje uddannelse vises kun, hvis den reelt er tæt på førstepladsen (højst 2 point efter).
+const THIRD_MATCH_MAX_GAP = 2;
+const POPULAR = Object.keys(educations).sort((a, b) => educations[b].sales - educations[a].sales).slice(0, 3);
+
+// De svar, der faktisk gav point til uddannelsen — de stærkeste først (maks. 3).
+function explain(key, ans, max){
+  const contrib = [];
+  REASON_ORDER.forEach(q => {
+    const w = (WEIGHTS[q] && WEIGHTS[q][ans[q]] && WEIGHTS[q][ans[q]][key]) || 0;
+    if (w > 0) contrib.push({ q: q, a: ans[q], w: w });
+  });
+  contrib.sort((x, y) => y.w - x.w);
+  const strong = contrib.filter(c => c.w >= 0.8);
+  const picked = (strong.length >= 2 ? strong : contrib).slice(0, max || 3);
+  return picked.map(c => REASONS[c.q][c.a]);
+}
+
+function getMatches(ans){
+  const { score, ranked } = rankAll(ans);
+  const keys = ranked.slice(0, 2);
+  if (score[ranked[0]] - score[ranked[2]] <= THIRD_MATCH_MAX_GAP) keys.push(ranked[2]);
+  // Bedste match får op til 3 begrundelser, alternativerne 2 (så kortene ikke gentager sig, når uddannelserne ligger i samme fagområde)
+  return keys.map((key, i) => ({ key: key, reasons: explain(key, ans, i === 0 ? 3 : 2), pitch: PITCH[key], popular: POPULAR.includes(key) }));
+}
+
+// ── Interesseprofil ──
+const PROFILES = {
+  omsorg: { name: "Den empatiske hjælper", lead: "Du får energi af at gøre en forskel for andre mennesker, og du er god til at lytte og skabe tillid." },
+  skaber: { name: "Den æstetiske skaber", lead: "Du ser muligheder i rum, former og detaljer, og du kan få idéer til at blive til noget, andre kan se og mærke." },
+  analyse: { name: "Den analytiske problemløser", lead: "Du går til komplekse problemer med struktur og logik og kan lide at finde løsninger, der virker." },
+  fortaeller: { name: "Den visuelle fortæller", lead: "Du udtrykker dig bedst gennem billeder, video og ord, og du elsker at give andre en oplevelse." },
+  sundhed: { name: "Den livsstilsorienterede vejleder", lead: "Du brænder for krop, kost og trivsel og vil gerne hjælpe andre til en sundere hverdag." },
+  leder: { name: "Den strategiske menneskekender", lead: "Du interesserer dig for, hvordan mennesker og organisationer fungerer, og vil gerne skabe struktur og retning." }
+};
+const MOTIV = { selvstaendig: "Din drøm er at arbejde for dig selv.", job: "Du vil videre til et nyt job eller en ny branche.", opkvalificering: "Du vil styrke din faglighed og komme videre i dit nuværende job.", personlig: "Du vil lære noget nyt, der giver mening for dig selv." };
+const TEMPO = { job_og_studie: "Du skal kunne studere ved siden af dit arbejde, så fleksibilitet er vigtig.", ledig: "Du har tid og energi til at komme i gang med noget nyt.", familie: "Du studerer bedst i korte bidder, når hverdagen med familien tillader det.", karriereskifte: "Du er klar til at investere seriøst i et karriereskifte." };
+const LEARN = { praksis: "Du lærer bedst ved at gøre — med redskaber, du kan bruge med det samme.", teori: "Du vil gerne forstå baggrunden og have et solidt teoretisk fundament.", kreativitet: "Du lærer bedst gennem kreativ udforskning og din egen stil.", resultater: "Du motiveres af konkrete resultater og synlige fremskridt." };
+const CHIPS = {
+  6: { empatisk: "Empatisk", analytisk: "Analytisk", aestetisk: "Æstetisk sans", fortaeller: "Fortæller" },
+  5: { praksis: "Praktisk", teori: "Dybdegående", kreativitet: "Kreativ", resultater: "Resultatorienteret" },
+  2: { selvstaendig: "Selvstændig", job: "Jobfokuseret", opkvalificering: "Ambitiøs", personlig: "Nysgerrig" }
+};
+const Q1_DIM = { terapi: "omsorg", kreativ: "skaber", tech: "analyse", medie: "fortaeller", sundhed: "sundhed", business: "leder" };
+const Q3_DIM = { par: "omsorg", enkelt: "omsorg", boern: "omsorg", kreativt: "skaber", data: "analyse" };
+const Q6_DIM = { empatisk: "omsorg", analytisk: "analyse", aestetisk: "skaber", fortaeller: "fortaeller" };
+
+function profileDimension(ans){
+  const pts = { omsorg: 0, skaber: 0, analyse: 0, fortaeller: 0, sundhed: 0, leder: 0 };
+  [[Q1_DIM[ans[1]], 3], [Q3_DIM[ans[3]], 2], [Q6_DIM[ans[6]], 2]].forEach(p => { if (p[0]) pts[p[0]] += p[1]; });
+  const first = Q1_DIM[ans[1]];
+  return Object.keys(pts).sort((a, b) => (pts[b] - pts[a]) || ((b === first) - (a === first)))[0];
+}
+
+function buildProfile(ans){
+  const p = PROFILES[profileDimension(ans)];
+  return {
+    name: p.name,
+    lead: p.lead,
+    drivers: [MOTIV[ans[2]], TEMPO[ans[4]], LEARN[ans[5]]].filter(Boolean),
+    chips: [CHIPS[6][ans[6]], CHIPS[5][ans[5]], CHIPS[2][ans[2]]].filter(Boolean)
+  };
 }
 /* ANBEFALING:SLUT */
 
 function withUtm(url,slot){ return url+'?utm_source=uddannelsestest.dk&utm_medium=test&utm_campaign=anbefaling&utm_content='+slot; }
 
+function setList(ul, items){
+  ul.textContent = '';
+  items.forEach(function(t){ const li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+}
+
+// Udfylder ét matchkort. prefix: 'res' (bedste match), 'alt' (alternativ) eller 'alt2' (tredje). slot bruges til UTM og måling.
+function fillMatch(prefix, m, slot, traitClass){
+  const e = educations[m.key];
+  document.getElementById(prefix+'-title').textContent = e.title;
+  document.getElementById(prefix+'-cat').textContent = 'Kategori: ' + e.category;
+  document.getElementById(prefix+'-desc').textContent = e.desc;
+  setList(document.getElementById(prefix+'-why'), m.reasons.concat(m.popular ? ['En af vores mest valgte uddannelser'] : []));
+  const gain = document.getElementById(prefix+'-gain');
+  gain.textContent = '';
+  const strong = document.createElement('strong'); strong.textContent = 'Det får du: ';
+  gain.appendChild(strong); gain.appendChild(document.createTextNode(m.pitch));
+  document.getElementById(prefix+'-traits').innerHTML = e.traits.map(t => '<span class="'+traitClass+'">'+t+'</span>').join('');
+  const link = document.getElementById(prefix+'-link');
+  link.textContent = 'Se ' + e.title + ' →';
+  link.onclick = () => { trackEvent('quiz_click_education',{slot:slot,education:m.key}); window.open(withUtm(e.url,slot),'_blank','noopener'); };
+}
+
 function showResult(){
-  const [pk,ak]=getRecommendation();
-  const p=educations[pk],a=educations[ak];
-  document.getElementById('res-title').textContent=p.title;
-  document.getElementById('res-cat').textContent='Kategori: '+p.category;
-  document.getElementById('res-desc').textContent=p.desc;
-  document.getElementById('res-traits').innerHTML=p.traits.map(t=>`<span class="res-trait">${t}</span>`).join('');
-  const rl=document.getElementById('res-link'); rl.textContent='Se '+p.title+' →'; rl.onclick=()=>{ trackEvent('quiz_click_education',{slot:'primaer',education:pk}); window.open(withUtm(p.url,'primaer'),'_blank','noopener'); };
-  document.getElementById('alt-title').textContent=a.title;
-  document.getElementById('alt-cat').textContent='Kategori: '+a.category;
-  document.getElementById('alt-desc').textContent=a.desc;
-  document.getElementById('alt-traits').innerHTML=a.traits.map(t=>`<span class="alt-trait">${t}</span>`).join('');
-  const al=document.getElementById('alt-link'); al.textContent='Se '+a.title+' →'; al.onclick=()=>{ trackEvent('quiz_click_education',{slot:'alternativ',education:ak}); window.open(withUtm(a.url,'alternativ'),'_blank','noopener'); };
-  trackEvent('quiz_result',{recommended:pk,alternative:ak});
+  const matches = getMatches(answers);
+  const prof = buildProfile(answers);
+  document.getElementById('profile-title').textContent = prof.name;
+  document.getElementById('profile-lead').textContent = prof.lead;
+  setList(document.getElementById('profile-drivers'), prof.drivers);
+  document.getElementById('profile-chips').innerHTML = prof.chips.map(c => '<span class="profile-chip">'+c+'</span>').join('');
+  fillMatch('res', matches[0], 'primaer', 'res-trait');
+  fillMatch('alt', matches[1], 'alternativ', 'alt-trait');
+  const third = matches[2];
+  document.getElementById('alt2-card').hidden = !third;
+  if(third){ fillMatch('alt2', third, 'tredje', 'alt-trait'); }
+  trackEvent('quiz_result',{recommended:matches[0].key,alternative:matches[1].key,third:third?third.key:'',profile:prof.name});
   goTo('result');
 }
 
@@ -1220,14 +1399,16 @@ function trackingParams(){
 
 function sendLead(d){
   const [pk,ak]=getRecommendation();
+  const third=getMatches(answers)[2];
+  const profilNavn=buildProfile(answers).name;
   const profile={ data:{ type:'profile', attributes:{
     email:d.email, first_name:d.first, last_name:d.last,
-    properties:Object.assign({ 'Køn':d.gender||'', 'Kilde':'uddannelsestest.dk', 'Anbefalet uddannelse (test)':educations[pk].title }, trackingParams())
+    properties:Object.assign({ 'Køn':d.gender||'', 'Kilde':'uddannelsestest.dk', 'Anbefalet uddannelse (test)':educations[pk].title, 'Interesseprofil (test)':profilNavn }, trackingParams())
   }}};
   const event={ data:{ type:'event', attributes:{
     properties:Object.assign({
       Email:d.email, Fornavn:d.first, Efternavn:d.last, 'Køn':d.gender||'',
-      Anbefaling:educations[pk].title, Alternativ:educations[ak].title, Svar:Object.assign({},answers),
+      Anbefaling:educations[pk].title, Alternativ:educations[ak].title, 'Tredje valg':third?educations[third.key].title:'', Profil:profilNavn, Svar:Object.assign({},answers),
       'Samtykke marketing':d.consent, 'Samtykke tekst version':CONSENT_VERSION, Kilde:'uddannelsestest.dk'
     }, trackingParams()),
     metric:{ data:{ type:'metric', attributes:{ name:TEST_EVENT_NAME }}},
