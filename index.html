@@ -540,6 +540,9 @@ button.opt { font: inherit; color: inherit; width: 100%; appearance: none; -webk
 
 /* ── Resultat: interesseprofil + begrundelser ── */
 .alt-card[hidden] { display: none; }
+.profile-note { font-size: 12px; color: var(--ink-3); line-height: 1.5; margin: 0.85rem 0 0; }
+.about-note { font-size: 12px; color: var(--ink-3); line-height: 1.6; margin: 0.5rem 0 0; }
+.about-note a { color: var(--green); }
 .profile-card {
   background: var(--amber-light); border: 1px solid rgba(196,123,26,0.22);
   border-radius: var(--r); padding: 1.25rem 1.5rem; margin-bottom: 1rem;
@@ -912,39 +915,77 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
               <button type="button" class="opt" data-q="1" data-v="tech" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">💻</span><span class="opt-body"><span class="opt-t">Bygge og kode</span><span class="opt-d">Teknologi og digitale løsninger</span></span></button>
               <button type="button" class="opt" data-q="1" data-v="medie" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">📸</span><span class="opt-body"><span class="opt-t">Fortælle og vise</span><span class="opt-d">Foto, video og skrivning</span></span></button>
               <button type="button" class="opt" data-q="1" data-v="sundhed" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🥗</span><span class="opt-body"><span class="opt-t">Sundhed og krop</span><span class="opt-d">Kost, velvære og et sundt liv</span></span></button>
-              <button type="button" class="opt" data-q="1" data-v="business" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🧭</span><span class="opt-body"><span class="opt-t">Ledelse og forretning</span><span class="opt-d">HR, mennesker i organisationer og at drive virksomhed</span></span></button>
+              <button type="button" class="opt" data-q="1" data-v="business" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🧭</span><span class="opt-body"><span class="opt-t">HR og arbejdsliv</span><span class="opt-d">Rekruttering, medarbejdere og trivsel</span></span></button>
             </div>
-            <div class="btn-row"><button class="btn" onclick="goTo(0)">← Tilbage</button><button class="btn primary disabled" id="next-1" onclick="goTo(2)">Næste →</button></div>
+            <div class="btn-row"><button class="btn" onclick="goTo(0)">← Tilbage</button><button class="btn primary disabled" id="next-1" disabled aria-disabled="true" onclick="goTo(2)">Næste →</button></div>
           </div>
 
-          <!-- Q2 -->
+          <!-- Q2 (afhænger af svaret på spørgsmål 1) -->
           <div class="step" id="step-2">
             <div class="q-meta"><span class="q-num">2</span><span class="q-meta-text">Spørgsmål 2 af 6</span></div>
-            <h2 class="q-title">Hvad er dit primære mål?</h2>
-            <p class="q-hint">Vær ærlig — det hjælper os med den bedste match.</p>
-            <div class="opts single" id="q2-opts">
-              <button type="button" class="opt" data-q="2" data-v="selvstaendig" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🏢</span><span class="opt-body"><span class="opt-t">Starte min egen praksis eller virksomhed</span><span class="opt-d">Jeg drømmer om at arbejde for mig selv</span></span></button>
-              <button type="button" class="opt" data-q="2" data-v="job" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">💼</span><span class="opt-body"><span class="opt-t">Finde nyt job eller skifte branche</span><span class="opt-d">Jeg vil ind på et nyt arbejdsmarked</span></span></button>
-              <button type="button" class="opt" data-q="2" data-v="opkvalificering" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">📈</span><span class="opt-body"><span class="opt-t">Opkvalificere mig i mit nuværende job</span><span class="opt-d">Styrke min faglighed og måske avancere</span></span></button>
-              <button type="button" class="opt" data-q="2" data-v="personlig" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">✨</span><span class="opt-body"><span class="opt-t">Personlig interesse og udvikling</span><span class="opt-d">Lære noget nyt der giver mening for mig</span></span></button>
-            </div>
-            <div class="btn-row"><button class="btn" onclick="goTo(1)">← Tilbage</button><button class="btn primary disabled" id="next-2" onclick="goTo(3)">Næste →</button></div>
+            <h2 class="q-title" id="q2-title">Hvad vil du helst arbejde med?</h2>
+            <p class="q-hint" id="q2-hint">Vælg det, der føles mest meningsfuldt.</p>
+              <div class="opts" id="q2-opts-terapi" data-branch="terapi" hidden>
+                <button type="button" class="opt" data-q="2" data-v="t_par" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">💞</span><span class="opt-body"><span class="opt-t">Parforhold og relationer</span><span class="opt-d">Kommunikation, nærhed og konflikter</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="t_sex" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🌹</span><span class="opt-body"><span class="opt-t">Seksualitet og intimitet</span><span class="opt-d">Seksuel sundhed og trivsel</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="t_selv" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🌱</span><span class="opt-body"><span class="opt-t">Selvværd og trivsel</span><span class="opt-d">At styrke troen på sig selv</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="t_boern" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🧒</span><span class="opt-body"><span class="opt-t">Børn og unges udfordringer</span><span class="opt-d">Fx ADHD og autisme</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="t_fam" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">👨‍👩‍👧</span><span class="opt-body"><span class="opt-t">Familier i sårbare situationer</span><span class="opt-d">Støtte og systemisk indsigt</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="t_udv" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🚀</span><span class="opt-body"><span class="opt-t">Mål og personlig udvikling</span><span class="opt-d">Motivation, forandring og coaching</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="t_praksis" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🏡</span><span class="opt-body"><span class="opt-t">At drive min egen terapeutiske praksis</span><span class="opt-d">Forretning, klienter og at leve af det</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="t_ved" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🤔</span><span class="opt-body"><span class="opt-t">Jeg ved det ikke endnu</span><span class="opt-d">Lidt af hvert</span></span></button>
+              </div>
+              <div class="opts" id="q2-opts-kreativ" data-branch="kreativ" hidden>
+                <button type="button" class="opt" data-q="2" data-v="k_hjem" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🏠</span><span class="opt-body"><span class="opt-t">Hjem og rum</span><span class="opt-d">Indretning af private hjem</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="k_proj" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">📐</span><span class="opt-body"><span class="opt-t">Større indretningsprojekter</span><span class="opt-d">Planløsninger og projektledelse</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="k_butik" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🛍️</span><span class="opt-body"><span class="opt-t">Butikker og vinduer</span><span class="opt-d">Dekoration, skilte og kampagner</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="k_ved" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🤔</span><span class="opt-body"><span class="opt-t">Ved ikke endnu</span><span class="opt-d">Lidt af hvert</span></span></button>
+              </div>
+              <div class="opts" id="q2-opts-medie" data-branch="medie" hidden>
+                <button type="button" class="opt" data-q="2" data-v="m_foto" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">📷</span><span class="opt-body"><span class="opt-t">Gennem fotos</span><span class="opt-d">Billeder, der fortæller en historie</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="m_video" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🎬</span><span class="opt-body"><span class="opt-t">Gennem video</span><span class="opt-d">Levende billeder, lyd og redigering</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="m_tekst" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">✍️</span><span class="opt-body"><span class="opt-t">Gennem tekst og historier</span><span class="opt-d">Bøger, manuskripter og skrivning</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="m_ved" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🤔</span><span class="opt-body"><span class="opt-t">Ved ikke endnu</span><span class="opt-d">Lidt af hvert</span></span></button>
+              </div>
+              <div class="opts" id="q2-opts-tech" data-branch="tech" hidden>
+                <button type="button" class="opt" data-q="2" data-v="x_terapi" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🤝</span><span class="opt-body"><span class="opt-t">Hjælpe mennesker</span><span class="opt-d">Terapi, rådgivning og coaching</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_kreativ" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🎨</span><span class="opt-body"><span class="opt-t">Skabe og designe</span><span class="opt-d">Indretning, styling og æstetik</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_medie" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">📸</span><span class="opt-body"><span class="opt-t">Fortælle og vise</span><span class="opt-d">Foto, video og skrivning</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_sundhed" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🥗</span><span class="opt-body"><span class="opt-t">Sundhed og krop</span><span class="opt-d">Kost, velvære og en sund livsstil</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_business" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🧭</span><span class="opt-body"><span class="opt-t">HR og arbejdsliv</span><span class="opt-d">Rekruttering, medarbejdere og trivsel</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_ingen" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">👍</span><span class="opt-body"><span class="opt-t">Nej, det her er det, jeg vil</span><span class="opt-d">Jeg er afklaret med min hovedinteresse</span></span></button>
+              </div>
+              <div class="opts" id="q2-opts-sundhed" data-branch="sundhed" hidden>
+                <button type="button" class="opt" data-q="2" data-v="x_terapi" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🤝</span><span class="opt-body"><span class="opt-t">Hjælpe mennesker</span><span class="opt-d">Terapi, rådgivning og coaching</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_kreativ" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🎨</span><span class="opt-body"><span class="opt-t">Skabe og designe</span><span class="opt-d">Indretning, styling og æstetik</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_medie" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">📸</span><span class="opt-body"><span class="opt-t">Fortælle og vise</span><span class="opt-d">Foto, video og skrivning</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_tech" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">💻</span><span class="opt-body"><span class="opt-t">Bygge og kode</span><span class="opt-d">Teknologi og digitale løsninger</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_business" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🧭</span><span class="opt-body"><span class="opt-t">HR og arbejdsliv</span><span class="opt-d">Rekruttering, medarbejdere og trivsel</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_ingen" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">👍</span><span class="opt-body"><span class="opt-t">Nej, det her er det, jeg vil</span><span class="opt-d">Jeg er afklaret med min hovedinteresse</span></span></button>
+              </div>
+              <div class="opts" id="q2-opts-business" data-branch="business" hidden>
+                <button type="button" class="opt" data-q="2" data-v="x_terapi" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🤝</span><span class="opt-body"><span class="opt-t">Hjælpe mennesker</span><span class="opt-d">Terapi, rådgivning og coaching</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_kreativ" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🎨</span><span class="opt-body"><span class="opt-t">Skabe og designe</span><span class="opt-d">Indretning, styling og æstetik</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_medie" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">📸</span><span class="opt-body"><span class="opt-t">Fortælle og vise</span><span class="opt-d">Foto, video og skrivning</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_tech" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">💻</span><span class="opt-body"><span class="opt-t">Bygge og kode</span><span class="opt-d">Teknologi og digitale løsninger</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_sundhed" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🥗</span><span class="opt-body"><span class="opt-t">Sundhed og krop</span><span class="opt-d">Kost, velvære og en sund livsstil</span></span></button>
+                <button type="button" class="opt" data-q="2" data-v="x_ingen" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">👍</span><span class="opt-body"><span class="opt-t">Nej, det her er det, jeg vil</span><span class="opt-d">Jeg er afklaret med min hovedinteresse</span></span></button>
+              </div>
+            <div class="btn-row"><button class="btn" onclick="goTo(1)">← Tilbage</button><button class="btn primary disabled" id="next-2" disabled aria-disabled="true" onclick="goTo(3)">Næste →</button></div>
           </div>
 
           <!-- Q3 -->
           <div class="step" id="step-3">
             <div class="q-meta"><span class="q-num">3</span><span class="q-meta-text">Spørgsmål 3 af 6</span></div>
-            <h2 class="q-title">Hvem vil du arbejde med?</h2>
-            <p class="q-hint">Tænk på din ideelle arbejdsdag.</p>
-            <div class="opts" id="q3-opts">
-              <button type="button" class="opt" data-q="3" data-v="par" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">💞</span><span class="opt-body"><span class="opt-t">Par og relationer</span><span class="opt-d">Parforhold, intimitet og samliv</span></span></button>
-              <button type="button" class="opt" data-q="3" data-v="enkelt" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">👤</span><span class="opt-body"><span class="opt-t">Voksne enkeltpersoner</span><span class="opt-d">Samtaler, coaching og personlig udvikling</span></span></button>
-              <button type="button" class="opt" data-q="3" data-v="boern" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">👨‍👩‍👧</span><span class="opt-body"><span class="opt-t">Børn, unge og familier</span><span class="opt-d">Familier og børn med særlige behov</span></span></button>
-              <button type="button" class="opt" data-q="3" data-v="kreativt" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🖌️</span><span class="opt-body"><span class="opt-t">Med kreative projekter</span><span class="opt-d">Rum, billeder og tekst</span></span></button>
-              <button type="button" class="opt" data-q="3" data-v="data" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">⚙️</span><span class="opt-body"><span class="opt-t">Med systemer og teknologi</span><span class="opt-d">Kode og digitale løsninger</span></span></button>
-              <button type="button" class="opt" data-q="3" data-v="blandet" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🔄</span><span class="opt-body"><span class="opt-t">En blanding af alt</span><span class="opt-d">Variation er vigtig for mig</span></span></button>
+            <h2 class="q-title">Hvad er dit primære mål?</h2>
+            <p class="q-hint">Vær ærlig — det hjælper os med den bedste match.</p>
+            <div class="opts single" id="q3-opts">
+              <button type="button" class="opt" data-q="3" data-v="selvstaendig" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🏢</span><span class="opt-body"><span class="opt-t">Starte min egen praksis eller virksomhed</span><span class="opt-d">Jeg drømmer om at arbejde for mig selv</span></span></button>
+              <button type="button" class="opt" data-q="3" data-v="job" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">💼</span><span class="opt-body"><span class="opt-t">Videre til et nyt job, en ny rolle eller en ny branche</span><span class="opt-d">Jeg vil noget mere end det, jeg laver nu</span></span></button>
+              <button type="button" class="opt" data-q="3" data-v="opkvalificering" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">📈</span><span class="opt-body"><span class="opt-t">Styrke min faglighed i det job, jeg har</span><span class="opt-d">Dybere viden og flere kompetencer</span></span></button>
+              <button type="button" class="opt" data-q="3" data-v="personlig" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">✨</span><span class="opt-body"><span class="opt-t">Personlig interesse og udvikling</span><span class="opt-d">Lære noget nyt, der giver mening for mig</span></span></button>
             </div>
-            <div class="btn-row"><button class="btn" onclick="goTo(2)">← Tilbage</button><button class="btn primary disabled" id="next-3" onclick="goTo(4)">Næste →</button></div>
+            <div class="btn-row"><button class="btn" onclick="goTo(2)">← Tilbage</button><button class="btn primary disabled" id="next-3" disabled aria-disabled="true" onclick="goTo(4)">Næste →</button></div>
           </div>
 
           <!-- Q4 -->
@@ -958,35 +999,34 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
               <button type="button" class="opt" data-q="4" data-v="familie" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">👶</span><span class="opt-body"><span class="opt-t">Barsel eller travl familietid</span><span class="opt-d">Studerer i korte bidder, når det passer</span></span></button>
               <button type="button" class="opt" data-q="4" data-v="karriereskifte" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🚀</span><span class="opt-body"><span class="opt-t">Klar til et fuldt karriereskifte</span><span class="opt-d">Motiveret og klar til at investere seriøst</span></span></button>
             </div>
-            <div class="btn-row"><button class="btn" onclick="goTo(3)">← Tilbage</button><button class="btn primary disabled" id="next-4" onclick="goTo(5)">Næste →</button></div>
+            <div class="btn-row"><button class="btn" onclick="goTo(3)">← Tilbage</button><button class="btn primary disabled" id="next-4" disabled aria-disabled="true" onclick="goTo(5)">Næste →</button></div>
           </div>
 
           <!-- Q5 -->
           <div class="step" id="step-5">
             <div class="q-meta"><span class="q-num">5</span><span class="q-meta-text">Spørgsmål 5 af 6</span></div>
-            <h2 class="q-title">Hvad motiverer dig i læring?</h2>
-            <p class="q-hint">Vælg den sætning der passer bedst på dig.</p>
-            <div class="opts" id="q5-opts">
-              <button type="button" class="opt" data-q="5" data-v="praksis" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🛠️</span><span class="opt-body"><span class="opt-t">Lære ved at gøre</span><span class="opt-d">Praksis og redskaber jeg kan bruge nu</span></span></button>
-              <button type="button" class="opt" data-q="5" data-v="teori" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">📚</span><span class="opt-body"><span class="opt-t">Forstå baggrunden</span><span class="opt-d">Teori og dybere forståelse</span></span></button>
-              <button type="button" class="opt" data-q="5" data-v="kreativitet" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">💡</span><span class="opt-body"><span class="opt-t">Kreativ udforskning</span><span class="opt-d">Eksperimenter og personlig stil</span></span></button>
-              <button type="button" class="opt" data-q="5" data-v="resultater" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🏆</span><span class="opt-body"><span class="opt-t">Se konkrete resultater</span><span class="opt-d">Mærkbare fremskridt og synlige succeser</span></span></button>
+            <h2 class="q-title" id="q5-title">Hvor meget erfaring har du inden for det område, du interesserer dig for?</h2>
+            <div class="opts single" id="q5-opts">
+              <button type="button" class="opt" data-q="5" data-v="nystart" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🌱</span><span class="opt-body"><span class="opt-t">Ingen, jeg starter helt fra bunden</span><span class="opt-d">Alt er nyt for mig</span></span></button>
+              <button type="button" class="opt" data-q="5" data-v="erfaring" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🔧</span><span class="opt-body"><span class="opt-t">Lidt, fra arbejde, hobby eller privat</span><span class="opt-d">Jeg har prøvet kræfter med det</span></span></button>
+              <button type="button" class="opt" data-q="5" data-v="professionel" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🎓</span><span class="opt-body"><span class="opt-t">Meget, jeg arbejder allerede professionelt inden for området</span><span class="opt-d">Jeg vil dygtiggøre mig og komme videre</span></span></button>
             </div>
-            <div class="btn-row"><button class="btn" onclick="goTo(4)">← Tilbage</button><button class="btn primary disabled" id="next-5" onclick="goTo(6)">Næste →</button></div>
+            <div class="btn-row"><button class="btn" onclick="goTo(4)">← Tilbage</button><button class="btn primary disabled" id="next-5" disabled aria-disabled="true" onclick="goTo(6)">Næste →</button></div>
           </div>
 
           <!-- Q6 -->
           <div class="step" id="step-6">
             <div class="q-meta"><span class="q-num">6</span><span class="q-meta-text">Sidste spørgsmål!</span></div>
-            <h2 class="q-title">Hvilken beskrivelse passer på dig?</h2>
-            <p class="q-hint">Og så er din anbefaling klar.</p>
-            <div class="opts single" id="q6-opts">
-              <button type="button" class="opt" data-q="6" data-v="empatisk" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">💛</span><span class="opt-body"><span class="opt-t">Empatisk og god til at lytte</span><span class="opt-d">Mennesker søger mig for råd — det giver mig mening</span></span></button>
-              <button type="button" class="opt" data-q="6" data-v="analytisk" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🔬</span><span class="opt-body"><span class="opt-t">Analytisk og løsningsorienteret</span><span class="opt-d">Jeg elsker at finde svar på komplekse problemer</span></span></button>
-              <button type="button" class="opt" data-q="6" data-v="aestetisk" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🌿</span><span class="opt-body"><span class="opt-t">Stærkt æstetisk blik</span><span class="opt-d">Jeg lægger mærke til detaljer andre overser</span></span></button>
-              <button type="button" class="opt" data-q="6" data-v="fortaeller" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">✍️</span><span class="opt-body"><span class="opt-t">Elsker at skabe og fortælle</span><span class="opt-d">Ord, billeder og historier er mit udtryksform</span></span></button>
+            <h2 class="q-title">Hvilken type opgave giver dig mest energi?</h2>
+            <p class="q-hint">Tænk på, hvad du glemmer tiden over.</p>
+            <div class="opts" id="q6-opts">
+              <button type="button" class="opt" data-q="6" data-v="lytte" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">👂</span><span class="opt-body"><span class="opt-t">At sidde 1:1 og lytte til andre</span><span class="opt-d">Hjælpe en person videre</span></span></button>
+              <button type="button" class="opt" data-q="6" data-v="analysere" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🔍</span><span class="opt-body"><span class="opt-t">At analysere og finde en løsning</span><span class="opt-d">Struktur, logik og detaljer</span></span></button>
+              <button type="button" class="opt" data-q="6" data-v="visuelt" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🖼️</span><span class="opt-body"><span class="opt-t">At forme noget visuelt</span><span class="opt-d">Rum, billeder eller video</span></span></button>
+              <button type="button" class="opt" data-q="6" data-v="skrive" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">✍️</span><span class="opt-body"><span class="opt-t">At skrive og fortælle historier</span><span class="opt-d">Ord, idéer og formidling</span></span></button>
+              <button type="button" class="opt" data-q="6" data-v="lede" onclick="selectOpt(this)" aria-pressed="false"><span class="opt-ic" aria-hidden="true">🗂️</span><span class="opt-body"><span class="opt-t">At planlægge, organisere og lede</span><span class="opt-d">Overblik, mennesker og processer</span></span></button>
             </div>
-            <div class="btn-row"><button class="btn" onclick="goTo(5)">← Tilbage</button><button class="btn primary disabled" id="next-6" onclick="goTo('gate')">Næste →</button></div>
+            <div class="btn-row"><button class="btn" onclick="goTo(5)">← Tilbage</button><button class="btn primary disabled" id="next-6" disabled aria-disabled="true" onclick="goTo('gate')">Næste →</button></div>
           </div>
 
           <!-- GATE: oplysninger før resultatet vises -->
@@ -1031,6 +1071,7 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
               <p class="profile-lead" id="profile-lead"></p>
               <ul class="profile-drivers" id="profile-drivers"></ul>
               <div class="profile-chips" id="profile-chips"></div>
+              <p class="profile-note">Profilen er vejledende og bygger kun på dine seks svar. Den er ikke en personlighedstest.</p>
             </div>
 
             <div class="result-hero-card">
@@ -1045,7 +1086,7 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
               <button class="btn" id="res-link" style="background:white;color:var(--green);border-color:white;font-weight:500;">Se uddannelsen →</button>
             </div>
 
-            <div class="alt-card">
+            <div class="alt-card" id="alt-card">
               <div class="alt-badge">Alternativ anbefaling</div>
               <div class="alt-title" id="alt-title"></div>
               <div class="alt-cat" id="alt-cat"></div>
@@ -1068,6 +1109,8 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
               <div class="alt-traits" id="alt2-traits"></div>
               <button class="btn" id="alt2-link">Se uddannelsen →</button>
             </div>
+
+            <p class="about-note">Alle uddannelser i testen udbydes af Nordic Online Academy ApS (<a href="https://onlineuddannelse.dk" target="_blank" rel="noopener">onlineuddannelse.dk</a>), som også står bag anbefalingerne. Anbefalingerne er vejledende og bygger kun på dine svar.</p>
 
             <div class="divider"></div>
 
@@ -1097,7 +1140,7 @@ input:focus-visible, select:focus-visible, .opt:focus-visible, .btn:focus-visibl
   <div class="footer-inner">
     <div>
       <div class="footer-logo">uddannelses<span>test</span>.dk</div>
-      <p class="footer-tagline">En gratis uddannelsesfinder — find din rette online uddannelse på under 2 minutter.</p>
+      <p class="footer-tagline">En gratis uddannelsesfinder — find din rette online uddannelse på under 2 minutter. Alle uddannelser udbydes af Nordic Online Academy ApS (onlineuddannelse.dk).</p>
     </div>
     <div>
       <div class="footer-col-title">Navigation</div>
@@ -1137,7 +1180,7 @@ const educations = {
   terapiiv: { title:"Terapeutisk iværksætter", category:"Terapeutisk", sales:1, desc:"Uddannelsen gør dig klar til at starte din egen virksomhed inden for det terapeutiske område. Den består af 8 moduler, som du gennemfører i dit eget tempo.", traits:["Egen praksis","Forretning","Selvstændig","Terapeutisk"], url:U+"terapeutisk-ivaerksaetter/" },
   indretningskonsulent: { title:"Indretningskonsulent", category:"Kreativitet", sales:56, desc:"Indretningskonsulent-uddannelsen giver dig et stærkt fundament i indretning, farvelære, ruminddeling og kundehåndtering. Mange studerende starter efterfølgende deres egen konsulentvirksomhed.", traits:["Æstetik","Rådgivning","Kreativitet","Selvstændig virksomhed"], url:U+"indretningskonsulent/" },
   indretningsarkitekt: { title:"Indretningsarkitekt", category:"Kreativitet", sales:61, desc:"Indretningsarkitekt-uddannelsen er en overbygning med dybere fokus på arkitektoniske principper, planløsninger og projektledelse — ideel til større professionelle indretningsprojekter.", traits:["Arkitektur","Projekter","Design","Professionel rådgivning"], url:U+"indretningsarkitekt/" },
-  dekoratoer: { title:"Dekoratør", category:"Kreativitet", sales:10, desc:"Dekoratør-uddannelsen giver dig grundlæggende kompetencer, der klæder dig på til at arbejde som professionel dekoratør. Uddannelsen består af 10 moduler, som du gennemfører i dit eget tempo.", traits:["Styling","Æstetik","Kreativitet","Selvstændig"], url:U+"dekoratoer/" },
+  dekoratoer: { title:"Dekoratør", category:"Kreativitet", sales:10, desc:"Dekoratør-uddannelsen giver dig grundlæggende kompetencer til at arbejde som professionel dekoratør — fx med butiks- og vinduesdekoration. Du lærer bl.a. om kundens behov, kampagner, skilte og dekorationsopbygning. Uddannelsen består af 10 moduler, som du gennemfører i dit eget tempo.", traits:["Butiksdekoration","Kampagner","Skilte","Æstetik"], url:U+"dekoratoer/" },
   programmor: { title:"Grundlæggende programmør", category:"Tech", sales:22, desc:"Programmør-uddannelsen introducerer dig til kodningens verden med fokus på praksisnære kompetencer. Du lærer at bygge digitale løsninger fra bunden — ideel for dig der vil skifte til tech-branchen.", traits:["Kode","Problemløsning","Tech","Digital fremtid"], url:U+"grundlaeggende-programmering/" },
   fotograf: { title:"Fotograf", category:"Medier og kommunikation", sales:54, desc:"Fotograf-uddannelsen giver dig tekniske og kreative kompetencer til professionelle billeder. Du lærer kameraindstillinger, komposition, lys og efterbehandling.", traits:["Kreativitet","Visuel fortælling","Freelance","Teknik"], url:U+"fotograf/" },
   videograf: { title:"Videograf", category:"Medier og kommunikation", sales:16, desc:"Videograf-uddannelsen dækker optagelse, redigering og produktion af professionelle videoer — en stærkt efterspurgt kompetence i en verden der elsker videoindhold.", traits:["Video","Historiefortælling","Kreativ produktion","Freelance"], url:U+"videograf/" },
@@ -1146,30 +1189,70 @@ const educations = {
   kostvejleder: { title:"Kostvejleder", category:"Sundhed og skønhed", sales:46, desc:"Kostvejleder-uddannelsen giver dig faglig viden om ernæring, kostplaner og sund livsstil. Du kan efterfølgende rådgive klienter som selvstændig kostvejleder.", traits:["Ernæring","Sundhed","Rådgivning","Velvære"], url:U+"kostvejleder/" }
 };
 
-// Hvert svar giver point til de uddannelser, det peger på. Vægtene afspejler, hvor meget spørgsmålet siger om retningen:
-// Q1 (interesse) og Q3 (hvem) og Q6 (personlighed) vejer tungest, Q2 (mål) mellem, Q4 (livssituation) og Q5 (læring) finjusterer.
+// Interesseområder (spørgsmål 1). Hver uddannelse hører til præcis ét område.
+const FIELDS = {
+  terapi:   ['parterapeut', 'sexolog', 'coach', 'familiebehandler', 'adhd', 'selvvaerd', 'terapiiv'],
+  kreativ:  ['indretningskonsulent', 'indretningsarkitekt', 'dekoratoer'],
+  tech:     ['programmor'],
+  medie:    ['fotograf', 'videograf', 'forfatter'],
+  sundhed:  ['kostvejleder'],
+  business: ['hr']
+};
+const FIELD_OF = {};
+Object.keys(FIELDS).forEach(f => FIELDS[f].forEach(k => { FIELD_OF[k] = f; }));
+
+// Spørgsmål 2 afhænger af spørgsmål 1 (opfølgning). Tech, sundhed og HR har kun ét kursus hver — her spørger vi i stedet, hvad man ellers kunne tænke sig.
+// Den sekundære interesse påvirker kun alternativerne, aldrig hovedinteressen.
+const BRANCHES = {
+  terapi:   ['t_par', 't_sex', 't_selv', 't_boern', 't_fam', 't_udv', 't_praksis', 't_ved'],
+  kreativ:  ['k_hjem', 'k_proj', 'k_butik', 'k_ved'],
+  medie:    ['m_foto', 'm_video', 'm_tekst', 'm_ved'],
+  tech:     ['x_terapi', 'x_kreativ', 'x_medie', 'x_sundhed', 'x_business', 'x_ingen'],
+  sundhed:  ['x_terapi', 'x_kreativ', 'x_medie', 'x_tech', 'x_business', 'x_ingen'],
+  business: ['x_terapi', 'x_kreativ', 'x_medie', 'x_tech', 'x_sundhed', 'x_ingen']
+};
+const SECOND_FIELD = { x_terapi: 'terapi', x_kreativ: 'kreativ', x_medie: 'medie', x_tech: 'tech', x_sundhed: 'sundhed', x_business: 'business' };
+
+// Pointmodellen: tydelig og deterministisk. Summen af
+//   · FELTBONUS til alle uddannelser i det valgte interesseområde (spørgsmål 1 — hovedinteressen vejer tungt),
+//   · emnet i spørgsmål 2 (kun inden for interesseområdet; sekundære interesser giver lave point),
+//   · mål, situation, erfaring og opgaver (spørgsmål 3-6, finjustering),
+//   · et salgsbonus (kvadratrod af gennemførte ordrer, maks. BOOST_MAX).
+// Vægtene til spørgsmål 3 og 5 er udledt af 1.031 studerendes egne motivationssvar (log-lift, glattet, med loft); erfaring vejer bevidst let og udelukker ingen.
+const FIELD_BONUS = 5;
+const fieldWeights = (f) => Object.fromEntries(FIELDS[f].map(k => [k, FIELD_BONUS]));
 const WEIGHTS = {
-  1: {
-    terapi:   { parterapeut:3, sexolog:3, coach:2.5, familiebehandler:3, adhd:3, selvvaerd:3, terapiiv:2.5 },
-    kreativ:  { indretningskonsulent:3.2, indretningsarkitekt:3, dekoratoer:3, fotograf:1, videograf:1, forfatter:1 },
-    tech:     { programmor:3 },
-    medie:    { fotograf:3, videograf:3, forfatter:3 },
-    sundhed:  { kostvejleder:3, coach:1, selvvaerd:1, sexolog:1 },
-    business: { hr:3, terapiiv:.7, coach:1.5 }
-  },
+  1: { terapi: fieldWeights('terapi'), kreativ: fieldWeights('kreativ'), tech: fieldWeights('tech'), medie: fieldWeights('medie'), sundhed: fieldWeights('sundhed'), business: fieldWeights('business') },
   2: {
-    selvstaendig:    { terapiiv:2.5, parterapeut:1.5, sexolog:1.5, coach:1.5, selvvaerd:1, kostvejleder:1.5, indretningskonsulent:1.5, dekoratoer:1.5, fotograf:1.4, videograf:1.1, forfatter:.5, familiebehandler:.5, adhd:.5 },
-    job:             { familiebehandler:2, hr:1.8, adhd:1.5, programmor:1.5, indretningsarkitekt:1, videograf:1, fotograf:.7 },
-    opkvalificering: { hr:1.5, familiebehandler:1.5, adhd:1.5, coach:1, indretningsarkitekt:1.5, programmor:1, selvvaerd:1, parterapeut:.5, videograf:.4 },
-    personlig:       { forfatter:2, fotograf:1.5, selvvaerd:1.5, dekoratoer:1.5, kostvejleder:1, sexolog:1.3, parterapeut:1, coach:1 }
+    t_par:    { parterapeut:3.5, sexolog:1, familiebehandler:.8 },
+    t_sex:    { sexolog:3.5, parterapeut:1.2 },
+    t_selv:   { selvvaerd:3.5, coach:1.2 },
+    t_boern:  { adhd:3.5, familiebehandler:1.5 },
+    t_fam:    { familiebehandler:3.5, adhd:1 },
+    t_udv:    { coach:3.5, selvvaerd:1 },
+    t_praksis:{ terapiiv:3.5, coach:.8, selvvaerd:.5, parterapeut:.3, sexolog:.3 },
+    t_ved:    { coach:.6, selvvaerd:.6, familiebehandler:.6, parterapeut:.4 },
+    k_hjem:   { indretningskonsulent:3.5, dekoratoer:.6 },
+    k_proj:   { indretningsarkitekt:3.5, indretningskonsulent:1 },
+    k_butik:  { dekoratoer:3.5, indretningskonsulent:.6 },
+    k_ved:    { indretningskonsulent:.6, dekoratoer:.4 },
+    m_foto:   { fotograf:3.5, videograf:1 },
+    m_video:  { videograf:3.5, fotograf:1 },
+    m_tekst:  { forfatter:3.5 },
+    m_ved:    { fotograf:.4, videograf:.4, forfatter:.4 },
+    x_terapi: { coach:1, selvvaerd:.8, familiebehandler:.6, sexolog:.4 },
+    x_kreativ:{ indretningskonsulent:.8, fotograf:.8, videograf:.7, dekoratoer:.5 },
+    x_medie:  { fotograf:1, videograf:.9, forfatter:.9 },
+    x_tech:   { programmor:1.2 },
+    x_sundhed:{ kostvejleder:1.2 },
+    x_business:{ hr:1.2 },
+    x_ingen:  {}
   },
   3: {
-    par:       { parterapeut:3, sexolog:2.3, familiebehandler:1, coach:.5 },
-    enkelt:    { coach:2.2, sexolog:2.6, selvvaerd:2.5, parterapeut:1.5, terapiiv:2, hr:1, kostvejleder:1.5 },
-    boern:     { adhd:3.6, familiebehandler:2.8, selvvaerd:1 },
-    kreativt:  { indretningskonsulent:2.4, indretningsarkitekt:2, dekoratoer:2, fotograf:2, videograf:1.7, forfatter:2 },
-    data:      { programmor:2.5, hr:.5, kostvejleder:.5 },
-    blandet:   { coach:1, hr:.5, kostvejleder:1, terapiiv:1, fotograf:.5, videograf:.5, forfatter:.5, indretningskonsulent:.5 }
+    selvstaendig:    { terapiiv:2, coach:1.2, selvvaerd:1, indretningskonsulent:.9, videograf:.8, indretningsarkitekt:.7, fotograf:.7, hr:.5 },
+    job:             { hr:1.1, coach:.8, familiebehandler:.7, indretningsarkitekt:.6, dekoratoer:.6, indretningskonsulent:.5, fotograf:.5, terapiiv:.4, parterapeut:.3 },
+    opkvalificering: { hr:1.2, familiebehandler:1, coach:.6, selvvaerd:.6, indretningsarkitekt:.5, videograf:.5, parterapeut:.4, adhd:.4, programmor:.4 },
+    personlig:       { indretningsarkitekt:.8, indretningskonsulent:.8, hr:.6, parterapeut:.5, fotograf:.4, kostvejleder:.4, coach:.4, dekoratoer:.4, selvvaerd:.3, videograf:.3, forfatter:.3 }
   },
   4: {
     job_og_studie:  { coach:.8, kostvejleder:.8, forfatter:.8, dekoratoer:.8, fotograf:.5, hr:.6, selvvaerd:.6, videograf:.4, programmor:.3 },
@@ -1178,16 +1261,16 @@ const WEIGHTS = {
     karriereskifte: { parterapeut:1, sexolog:1.3, familiebehandler:1, adhd:1, indretningsarkitekt:1, programmor:.8, indretningskonsulent:.8, hr:.6, terapiiv:.8, videograf:.4 }
   },
   5: {
-    praksis:     { fotograf:1, videograf:1, programmor:.8, indretningskonsulent:1, dekoratoer:1, kostvejleder:1, coach:.7, terapiiv:.8 },
-    teori:       { familiebehandler:1.2, parterapeut:1.2, sexolog:1.2, adhd:1.2, selvvaerd:1, hr:.8, indretningsarkitekt:.8 },
-    kreativitet: { forfatter:1.2, dekoratoer:1.2, fotograf:1.1, videograf:1.1, indretningskonsulent:1.2, indretningsarkitekt:1, selvvaerd:.5 },
-    resultater:  { coach:1.2, terapiiv:1.2, hr:.8, kostvejleder:1, programmor:.6, selvvaerd:.8, adhd:.5, familiebehandler:.5 }
+    nystart:      { forfatter:1, programmor:.9, videograf:.9, indretningsarkitekt:.7, indretningskonsulent:.7, kostvejleder:.7, dekoratoer:.7, coach:.5, selvvaerd:.5, fotograf:.4, sexolog:.4, terapiiv:.4, familiebehandler:.3, parterapeut:.3 },
+    erfaring:     { hr:.4, adhd:.4, familiebehandler:.4, parterapeut:.4, fotograf:.3, sexolog:.3, terapiiv:.3, coach:.3, selvvaerd:.3 },
+    professionel: { hr:.8, adhd:.8, familiebehandler:.7, parterapeut:.7, fotograf:.6, sexolog:.6, terapiiv:.9, coach:.5, selvvaerd:.5, indretningsarkitekt:.3, indretningskonsulent:.3, kostvejleder:.3, dekoratoer:.3 }
   },
   6: {
-    empatisk:   { familiebehandler:2.5, parterapeut:2.5, selvvaerd:2.5, adhd:2.5, coach:1.8, sexolog:2.3, hr:.5, kostvejleder:.5 },
-    analytisk:  { programmor:2.5, hr:2, kostvejleder:1.5, terapiiv:1.5, adhd:1.5, sexolog:1, indretningsarkitekt:1 },
-    aestetisk:  { indretningskonsulent:2.7, indretningsarkitekt:2.5, dekoratoer:2.5, fotograf:1.8, videograf:2 },
-    fortaeller: { forfatter:2.5, fotograf:1.8, videograf:2, coach:1, parterapeut:.5, selvvaerd:.5 }
+    lytte:     { parterapeut:2, sexolog:1.8, coach:2, familiebehandler:2, adhd:1.8, selvvaerd:2, kostvejleder:1, terapiiv:1 },
+    analysere: { programmor:2.5, hr:1.5, kostvejleder:1.2, adhd:.8 },
+    visuelt:   { indretningskonsulent:2, indretningsarkitekt:1.5, dekoratoer:2, fotograf:2, videograf:2 },
+    skrive:    { forfatter:2.5, videograf:.8, fotograf:.6, coach:.5 },
+    lede:      { hr:2.5, indretningsarkitekt:1.5, terapiiv:1.5, coach:1 }
   }
 };
 
@@ -1206,8 +1289,29 @@ function scoreAll(ans){
   return score;
 }
 
-// ── Resultatsiden: interesseprofil, op til tre matches og begrundelser ud fra brugerens egne svar ──
-// PITCH: hvad uddannelsen konkret giver dig (baseret på uddannelsernes egne beskrivelser på onlineuddannelse.dk).
+function rankAll(ans){
+  const score = scoreAll(ans);
+  const ranked = Object.keys(educations).sort((a, b) => (score[b] - score[a]) || (educations[b].sales - educations[a].sales));
+  return { score, ranked };
+}
+
+// ── Hvilke uddannelser er relevante at vise? ──
+// 1. Førstepladsen vises altid. 2. Alternativer skal være i hovedinteressen eller i den sekundære interesse, brugeren selv har valgt (spørgsmål 2).
+// 3. Uddannelser uden for disse områder vises kun, hvis to svar (emne og opgave) peger tydeligt på dem, og de ligger tæt på førstepladsen.
+// 4. Den tredje uddannelse vises kun, hvis den ligger højst THIRD_MATCH_MAX_GAP point efter førstepladsen.
+const THIRD_MATCH_MAX_GAP = 3;
+const CROSS_FIELD_MAX_GAP = 2;
+const TOPICAL_SUPPORT = 1.5;
+const POPULAR = Object.keys(educations).sort((a, b) => educations[b].sales - educations[a].sales).slice(0, 3);
+
+function isRelevantAlternative(key, ans, score, best){
+  const f = FIELD_OF[key];
+  if (f === ans[1] || f === SECOND_FIELD[ans[2]]) return true;
+  const topicalSupport = ((WEIGHTS[2][ans[2]] || {})[key] || 0) >= TOPICAL_SUPPORT && ((WEIGHTS[6][ans[6]] || {})[key] || 0) >= TOPICAL_SUPPORT;
+  return topicalSupport && (score[best] - score[key]) <= CROSS_FIELD_MAX_GAP;
+}
+
+// Brugerens svar formuleret som en begrundelse. Vises som ✓-punkter under hver anbefaling.
 const PITCH = {
   parterapeut: "Du lærer at hjælpe par med at kommunikere bedre og løse konflikter, bl.a. ud fra tilknytningsteori.",
   sexolog: "Du får terapeutiske værktøjer til at arbejde professionelt med seksuel sundhed og trivsel.",
@@ -1218,7 +1322,7 @@ const PITCH = {
   terapiiv: "Du bliver klar til at starte din egen virksomhed inden for det terapeutiske område.",
   indretningskonsulent: "Du lærer indretning, farvelære og ruminddeling — og hvordan du rådgiver kunder.",
   indretningsarkitekt: "Du får dybere indsigt i planløsninger og projektledelse til større indretningsprojekter.",
-  dekoratoer: "Du får grundlæggende kompetencer, der gør dig klar til at arbejde som professionel dekoratør.",
+  dekoratoer: "Du lærer at skabe dekorationer, skilte og præsentationer, der sælger — fx i butik og vindue.",
   programmor: "Du lærer at bygge digitale løsninger fra bunden og får et fundament til at skifte til tech.",
   fotograf: "Du lærer kamerateknik, komposition, lys og efterbehandling til professionelle billeder.",
   videograf: "Du lærer at optage, redigere og producere professionelle videoer.",
@@ -1226,34 +1330,24 @@ const PITCH = {
   hr: "Du får faglig viden og praktiske værktøjer til at arbejde professionelt med HR i erhvervslivet.",
   kostvejleder: "Du får faglig viden om ernæring og kostplaner, så du kan rådgive klienter om en sund livsstil."
 };
-
-// Brugerens svar formuleret som en begrundelse. Vises som ✓-punkter under hver anbefaling.
 const REASONS = {
-  1: { terapi: "Du er tiltrukket af at hjælpe mennesker", kreativ: "Du vil skabe og designe", tech: "Du vil bygge og kode", medie: "Du vil fortælle og vise noget til andre", sundhed: "Du brænder for sundhed og krop", business: "Du interesserer dig for ledelse og forretning" },
-  2: { selvstaendig: "Du drømmer om at arbejde for dig selv", job: "Du vil videre til et nyt job eller en ny branche", opkvalificering: "Du vil styrke din faglighed i dit nuværende job", personlig: "Du vil lære noget, der giver mening for dig personligt" },
-  3: { par: "Du vil arbejde med par og relationer", enkelt: "Du vil arbejde med voksne enkeltpersoner", boern: "Du vil arbejde med børn, unge og familier", kreativt: "Du vil arbejde med kreative projekter", data: "Du vil arbejde med systemer og teknologi", blandet: "Du vil have variation i din arbejdsdag" },
+  1: { terapi: "Du er tiltrukket af at hjælpe mennesker", kreativ: "Du vil skabe og designe", tech: "Du vil bygge og kode", medie: "Du vil fortælle og vise noget til andre", sundhed: "Du brænder for sundhed og krop", business: "Du interesserer dig for Rekruttering, medarbejdere og trivsel" },
+  2: {
+    t_par: "Du vil hjælpe med parforhold og relationer", t_sex: "Du vil arbejde med seksualitet og intimitet", t_selv: "Du vil styrke andres selvværd og trivsel",
+    t_boern: "Du vil hjælpe børn og unge med fx ADHD og autisme", t_fam: "Du vil støtte familier i sårbare situationer", t_udv: "Du vil hjælpe andre med mål og personlig udvikling",
+    t_praksis: "Du vil drive din egen terapeutiske praksis", t_ved: "Du vil hjælpe mennesker, og du er åben for retningen",
+    k_hjem: "Du vil indrette hjem og rum", k_proj: "Du vil arbejde med større indretningsprojekter", k_butik: "Du vil dekorere butikker og vinduer", k_ved: "Du vil skabe og designe, og du er åben for retningen",
+    m_foto: "Du vil fortælle gennem fotografi", m_video: "Du vil fortælle gennem video", m_tekst: "Du vil fortælle gennem tekst og historier", m_ved: "Du vil fortælle og vise noget, og du er åben for retningen",
+    x_terapi: "Du er også draget af at hjælpe mennesker", x_kreativ: "Du er også draget af at skabe og designe", x_medie: "Du er også draget af at fortælle og vise",
+    x_tech: "Du er også draget af teknologi", x_sundhed: "Du er også draget af sundhed og krop", x_business: "Du er også draget af HR og arbejdsliv", x_ingen: "Du er afklaret med din hovedinteresse"
+  },
+  3: { selvstaendig: "Du drømmer om at arbejde for dig selv", job: "Du vil videre til et nyt job, en ny rolle eller en ny branche", opkvalificering: "Du vil styrke din faglighed i det job, du har", personlig: "Du vil lære noget ud fra interesse og lyst" },
   4: { job_og_studie: "Du skal kunne studere ved siden af dit arbejde", ledig: "Du har tid til at komme i gang med noget nyt", familie: "Du studerer bedst i korte bidder, når hverdagen med familien tillader det", karriereskifte: "Du er klar til at investere seriøst i et karriereskifte" },
-  5: { praksis: "Du lærer bedst ved at gøre og vil have redskaber, du kan bruge nu", teori: "Du vil forstå baggrunden og have et solidt teoretisk fundament", kreativitet: "Du lærer bedst gennem kreativ udforskning", resultater: "Du motiveres af konkrete resultater og synlige fremskridt" },
-  6: { empatisk: "Du er empatisk og god til at lytte", analytisk: "Du er analytisk og løsningsorienteret", aestetisk: "Du har et stærkt æstetisk blik", fortaeller: "Du elsker at skabe og fortælle" }
+  5: { nystart: "Du starter fra bunden og vil tages ved hånden", erfaring: "Du har erfaring fra arbejde, hobby eller privat, du kan bygge videre på", professionel: "Du har professionel erfaring at bygge videre på" },
+  6: { lytte: "Du får energi af at sidde 1:1 og lytte til andre", analysere: "Du får energi af at analysere og finde løsninger", visuelt: "Du får energi af at forme noget visuelt", skrive: "Du får energi af at skrive og fortælle historier", lede: "Du får energi af at planlægge, organisere og lede" }
 };
 // Ved lige point vinder de spørgsmål, der siger mest om retningen.
-const REASON_ORDER = [1, 3, 6, 2, 5, 4];
-
-function rankAll(ans){
-  const score = scoreAll(ans);
-  const ranked = Object.keys(educations).sort((a, b) => (score[b] - score[a]) || (educations[b].sales - educations[a].sales));
-  return { score, ranked };
-}
-
-// Bevaret: bruges af Klaviyo-eventet (Anbefaling/Alternativ) og af testene.
-function getRecommendation(){
-  const r = rankAll(answers).ranked;
-  return [r[0], r[1]];
-}
-
-// Den tredje uddannelse vises kun, hvis den reelt er tæt på førstepladsen (højst 2 point efter).
-const THIRD_MATCH_MAX_GAP = 2;
-const POPULAR = Object.keys(educations).sort((a, b) => educations[b].sales - educations[a].sales).slice(0, 3);
+const REASON_ORDER = [1, 2, 6, 3, 5, 4];
 
 // De svar, der faktisk gav point til uddannelsen — de stærkeste først (maks. 3).
 function explain(key, ans, max){
@@ -1268,40 +1362,48 @@ function explain(key, ans, max){
   return picked.map(c => REASONS[c.q][c.a]);
 }
 
+// De 1-3 uddannelser, der vises. Første er det bedste match.
 function getMatches(ans){
   const { score, ranked } = rankAll(ans);
-  const keys = ranked.slice(0, 2);
-  if (score[ranked[0]] - score[ranked[2]] <= THIRD_MATCH_MAX_GAP) keys.push(ranked[2]);
+  const best = ranked[0];
+  const keys = [best];
+  for (let i = 1; i < ranked.length && keys.length < 3; i++) {
+    const k = ranked[i];
+    if (!isRelevantAlternative(k, ans, score, best)) continue;
+    if (keys.length === 2 && (score[best] - score[k]) > THIRD_MATCH_MAX_GAP) break;
+    keys.push(k);
+  }
   // Bedste match får op til 3 begrundelser, alternativerne 2 (så kortene ikke gentager sig, når uddannelserne ligger i samme fagområde)
   return keys.map((key, i) => ({ key: key, reasons: explain(key, ans, i === 0 ? 3 : 2), pitch: PITCH[key], popular: POPULAR.includes(key) }));
 }
 
+// Bevaret: bruges af testene. De to første viste uddannelser (alternativet kan mangle, hvis der ikke er et relevant).
+function getRecommendation(){
+  return getMatches(answers).slice(0, 2).map(m => m.key);
+}
+
 // ── Interesseprofil ──
+// Profilen er et vejledende bud ud fra seks svar, ikke en personlighedstest. Den følger det anbefalede interesseområde, så den aldrig modsiger resultatet.
 const PROFILES = {
-  omsorg: { name: "Den empatiske hjælper", lead: "Du får energi af at gøre en forskel for andre mennesker, og du er god til at lytte og skabe tillid." },
-  skaber: { name: "Den æstetiske skaber", lead: "Du ser muligheder i rum, former og detaljer, og du kan få idéer til at blive til noget, andre kan se og mærke." },
-  analyse: { name: "Den analytiske problemløser", lead: "Du går til komplekse problemer med struktur og logik og kan lide at finde løsninger, der virker." },
-  fortaeller: { name: "Den visuelle fortæller", lead: "Du udtrykker dig bedst gennem billeder, video og ord, og du elsker at give andre en oplevelse." },
-  sundhed: { name: "Den livsstilsorienterede vejleder", lead: "Du brænder for krop, kost og trivsel og vil gerne hjælpe andre til en sundere hverdag." },
-  leder: { name: "Den strategiske menneskekender", lead: "Du interesserer dig for, hvordan mennesker og organisationer fungerer, og vil gerne skabe struktur og retning." }
+  omsorg: { name: "Mennesker og relationer", lead: "Dine svar peger på, at du får energi af arbejde med andre mennesker og af at hjælpe dem videre." },
+  skaber: { name: "Skabende og visuelt arbejde", lead: "Dine svar peger på, at du trives med at forme rum, stemning og udtryk." },
+  analyse: { name: "Teknologi og problemløsning", lead: "Dine svar peger på, at du kan lide struktur, logik og at få tingene til at fungere." },
+  fortaeller: { name: "Formidling og historier", lead: "Dine svar peger på, at du gerne vil udtrykke dig gennem billeder, video eller ord." },
+  sundhed: { name: "Sundhed og livsstil", lead: "Dine svar peger på, at du interesserer dig for krop, kost og trivsel og for at hjælpe andre til en sundere hverdag." },
+  leder: { name: "Mennesker og arbejdsliv", lead: "Dine svar peger på, at du interesserer dig for, hvordan mennesker og organisationer fungerer." }
 };
-const MOTIV = { selvstaendig: "Din drøm er at arbejde for dig selv.", job: "Du vil videre til et nyt job eller en ny branche.", opkvalificering: "Du vil styrke din faglighed og komme videre i dit nuværende job.", personlig: "Du vil lære noget nyt, der giver mening for dig selv." };
+const FIELD_DIM = { terapi: "omsorg", kreativ: "skaber", tech: "analyse", medie: "fortaeller", sundhed: "sundhed", business: "leder" };
+const MOTIV = { selvstaendig: "Din drøm er at arbejde for dig selv.", job: "Du vil videre til et nyt job, en ny rolle eller en ny branche.", opkvalificering: "Du vil styrke din faglighed i det job, du har.", personlig: "Du vil lære noget nyt ud fra interesse og lyst." };
 const TEMPO = { job_og_studie: "Du skal kunne studere ved siden af dit arbejde, så fleksibilitet er vigtig.", ledig: "Du har tid og energi til at komme i gang med noget nyt.", familie: "Du studerer bedst i korte bidder, når hverdagen med familien tillader det.", karriereskifte: "Du er klar til at investere seriøst i et karriereskifte." };
-const LEARN = { praksis: "Du lærer bedst ved at gøre — med redskaber, du kan bruge med det samme.", teori: "Du vil gerne forstå baggrunden og have et solidt teoretisk fundament.", kreativitet: "Du lærer bedst gennem kreativ udforskning og din egen stil.", resultater: "Du motiveres af konkrete resultater og synlige fremskridt." };
+const EXPERIENCE = { nystart: "Du starter fra bunden.", erfaring: "Du har erfaring fra arbejde, hobby eller privat at bygge videre på.", professionel: "Du arbejder allerede professionelt inden for området." };
 const CHIPS = {
-  6: { empatisk: "Empatisk", analytisk: "Analytisk", aestetisk: "Æstetisk sans", fortaeller: "Fortæller" },
-  5: { praksis: "Praktisk", teori: "Dybdegående", kreativitet: "Kreativ", resultater: "Resultatorienteret" },
-  2: { selvstaendig: "Selvstændig", job: "Jobfokuseret", opkvalificering: "Ambitiøs", personlig: "Nysgerrig" }
+  6: { lytte: "Energi af 1:1-samtaler", analysere: "Energi af analyse og løsninger", visuelt: "Energi af visuelt arbejde", skrive: "Energi af at skrive og fortælle", lede: "Energi af at planlægge og lede" },
+  5: { nystart: "Erfaring: starter fra bunden", erfaring: "Erfaring: lidt", professionel: "Erfaring: professionel" },
+  3: { selvstaendig: "Mål: arbejde for mig selv", job: "Mål: nyt job eller ny rolle", opkvalificering: "Mål: dybere faglighed", personlig: "Mål: lære ud fra interesse" }
 };
-const Q1_DIM = { terapi: "omsorg", kreativ: "skaber", tech: "analyse", medie: "fortaeller", sundhed: "sundhed", business: "leder" };
-const Q3_DIM = { par: "omsorg", enkelt: "omsorg", boern: "omsorg", kreativt: "skaber", data: "analyse" };
-const Q6_DIM = { empatisk: "omsorg", analytisk: "analyse", aestetisk: "skaber", fortaeller: "fortaeller" };
 
 function profileDimension(ans){
-  const pts = { omsorg: 0, skaber: 0, analyse: 0, fortaeller: 0, sundhed: 0, leder: 0 };
-  [[Q1_DIM[ans[1]], 3], [Q3_DIM[ans[3]], 2], [Q6_DIM[ans[6]], 2]].forEach(p => { if (p[0]) pts[p[0]] += p[1]; });
-  const first = Q1_DIM[ans[1]];
-  return Object.keys(pts).sort((a, b) => (pts[b] - pts[a]) || ((b === first) - (a === first)))[0];
+  return FIELD_DIM[FIELD_OF[rankAll(ans).ranked[0]]];
 }
 
 function buildProfile(ans){
@@ -1309,8 +1411,8 @@ function buildProfile(ans){
   return {
     name: p.name,
     lead: p.lead,
-    drivers: [MOTIV[ans[2]], TEMPO[ans[4]], LEARN[ans[5]]].filter(Boolean),
-    chips: [CHIPS[6][ans[6]], CHIPS[5][ans[5]], CHIPS[2][ans[2]]].filter(Boolean)
+    drivers: [MOTIV[ans[3]], TEMPO[ans[4]], EXPERIENCE[ans[5]]].filter(Boolean),
+    chips: [CHIPS[6][ans[6]], CHIPS[3][ans[3]], CHIPS[5][ans[5]]].filter(Boolean)
   };
 }
 /* ANBEFALING:SLUT */
@@ -1347,11 +1449,12 @@ function showResult(){
   setList(document.getElementById('profile-drivers'), prof.drivers);
   document.getElementById('profile-chips').innerHTML = prof.chips.map(c => '<span class="profile-chip">'+c+'</span>').join('');
   fillMatch('res', matches[0], 'primaer', 'res-trait');
-  fillMatch('alt', matches[1], 'alternativ', 'alt-trait');
-  const third = matches[2];
+  const second = matches[1], third = matches[2];
+  document.getElementById('alt-card').hidden = !second;
+  if(second){ fillMatch('alt', second, 'alternativ', 'alt-trait'); }
   document.getElementById('alt2-card').hidden = !third;
   if(third){ fillMatch('alt2', third, 'tredje', 'alt-trait'); }
-  trackEvent('quiz_result',{recommended:matches[0].key,alternative:matches[1].key,third:third?third.key:'',profile:prof.name});
+  trackEvent('quiz_result',{recommended:matches[0].key,alternative:second?second.key:'',third:third?third.key:'',profile:prof.name,matches:matches.length});
   goTo('result');
 }
 
@@ -1366,6 +1469,7 @@ const KLAVIYO_COMPANY_ID = 'RtCNbE';
 const KLAVIYO_REVISION = '2024-10-15';
 const TEST_EVENT_NAME = 'Uddannelsestest gennemført';
 const CONSENT_VERSION = '2026-10-12';
+const TEST_VERSION = 'v2'; // v1 = første udgave (før opfølgningsspørgsmål); bruges til at holde gamle og nye svar adskilt i analysen
 const EDU_LISTS = {
   parterapeut:'XpgTt7', sexolog:'SpB2yZ', coach:'Urirfn', familiebehandler:'T6hzYb',
   indretningskonsulent:'Tp8QWi', indretningsarkitekt:'YatsTR', programmor:'XZMsnY',
@@ -1398,8 +1502,8 @@ function trackingParams(){
 }
 
 function sendLead(d){
-  const [pk,ak]=getRecommendation();
-  const third=getMatches(answers)[2];
+  const shown=getMatches(answers);
+  const pk=shown[0].key, ak=shown[1]?shown[1].key:'', third=shown[2];
   const profilNavn=buildProfile(answers).name;
   const profile={ data:{ type:'profile', attributes:{
     email:d.email, first_name:d.first, last_name:d.last,
@@ -1408,8 +1512,8 @@ function sendLead(d){
   const event={ data:{ type:'event', attributes:{
     properties:Object.assign({
       Email:d.email, Fornavn:d.first, Efternavn:d.last, 'Køn':d.gender||'',
-      Anbefaling:educations[pk].title, Alternativ:educations[ak].title, 'Tredje valg':third?educations[third.key].title:'', Profil:profilNavn, Svar:Object.assign({},answers),
-      'Samtykke marketing':d.consent, 'Samtykke tekst version':CONSENT_VERSION, Kilde:'uddannelsestest.dk'
+      Anbefaling:educations[pk].title, Alternativ:ak?educations[ak].title:'', 'Tredje valg':third?educations[third.key].title:'', Profil:profilNavn, Svar:Object.assign({},answers),
+      'Test-version':TEST_VERSION, 'Samtykke marketing':d.consent, 'Samtykke tekst version':CONSENT_VERSION, Kilde:'uddannelsestest.dk'
     }, trackingParams()),
     metric:{ data:{ type:'metric', attributes:{ name:TEST_EVENT_NAME }}},
     profile:profile
@@ -1454,19 +1558,61 @@ document.querySelectorAll('.opts').forEach(function(g){
   if(t){ if(!t.id){ t.id='qt-'+g.id; } g.setAttribute('role','group'); g.setAttribute('aria-labelledby',t.id); }
 });
 
+// "Næste" er rigtigt deaktiveret (ikke kun gråtonet), så tastaturbrugere ikke kan springe et spørgsmål over
+function setNext(btn, enabled){
+  if(!btn) return;
+  btn.classList.toggle('disabled', !enabled);
+  btn.disabled = !enabled;
+  btn.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+}
+
 function selectOpt(el){
   const q=el.dataset.q;
   document.querySelectorAll(`[data-q="${q}"]`).forEach(o=>{o.classList.remove('selected');o.setAttribute('aria-pressed','false');});
   el.classList.add('selected');
   el.setAttribute('aria-pressed','true');
   answers[q]=el.dataset.v;
+  if(q==='1' && answers[2] && !(BRANCHES[answers[1]] && BRANCHES[answers[1]].includes(answers[2]))){
+    // Man har ændret hovedinteresse: svaret på spørgsmål 2 hørte til et andet felt
+    delete answers[2];
+    document.querySelectorAll('[data-q="2"]').forEach(o=>{ o.classList.remove('selected'); o.setAttribute('aria-pressed','false'); });
+    setNext(document.getElementById('next-2'), false);
+  }
   const btn=document.getElementById('next-'+q);
-  if(btn) btn.classList.remove('disabled');
+  setNext(btn, true);
+}
+
+const BRANCH_TEXT = {
+  terapi:   ['Hvad vil du helst arbejde med?', 'Vælg det, der føles mest meningsfuldt.'],
+  kreativ:  ['Hvad vil du helst skabe?', 'Vælg det, der tiltrækker dig mest.'],
+  medie:    ['Hvordan vil du helst fortælle?', 'Vælg den form, du helst vil arbejde i.'],
+  other:    ['Er der noget andet, du også kunne tænke dig?', 'Det hjælper os med at finde gode alternativer til dig.']
+};
+// Spørgsmål 5 handler om at have arbejdet med mennesker, hvis man vil hjælpe andre (man kan godt starte fra bunden, men det hjælper)
+// Spørgsmål 5: eksemplerne i beskrivelserne afhænger af feltet (man kan sagtens starte fra bunden, men for terapi-uddannelserne hjælper det at have arbejdet med mennesker)
+const Q5_DESC = {
+  generic: { nystart:'Alt er nyt for mig', erfaring:'Jeg har prøvet kræfter med det', professionel:'Jeg vil dygtiggøre mig og komme videre' },
+  terapi:  { nystart:'Fx uden erfaring fra arbejde med mennesker', erfaring:'Fx som forælder, frivillig eller i et job med meget kontakt til mennesker', professionel:'Fx som pædagog, lærer, sygeplejerske eller i socialt arbejde' }
+};
+function prepareStep(step){
+  if(step===2){
+    const f=answers[1];
+    document.querySelectorAll('#step-2 [data-branch]').forEach(g=>{ g.hidden = g.dataset.branch!==f; });
+    const t=BRANCH_TEXT[f]||BRANCH_TEXT.other;
+    document.getElementById('q2-title').textContent=t[0]; document.getElementById('q2-hint').textContent=t[1];
+    const ok=!!(BRANCHES[f] && BRANCHES[f].includes(answers[2]));
+    setNext(document.getElementById('next-2'), ok);
+  }
+  if(step===5){
+    const d=Q5_DESC[answers[1]==='terapi'?'terapi':'generic'];
+    ['nystart','erfaring','professionel'].forEach(v=>{ document.querySelector('.opt[data-q="5"][data-v="'+v+'"] .opt-d').textContent=d[v]; });
+  }
 }
 
 function goTo(step){
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
   document.getElementById('step-'+step).classList.add('active');
+  prepareStep(step);
   const wrap=document.getElementById('progress-wrap-q');
   const fill=document.getElementById('qprogress-fill');
   const count=document.getElementById('qprogress-count');
@@ -1488,9 +1634,16 @@ function goTo(step){
 
 function resetQuiz(){
   Object.keys(answers).forEach(k=>delete answers[k]);
-  document.querySelectorAll('.opt').forEach(c=>c.classList.remove('selected'));
-  for(let i=1;i<=6;i++){ const b=document.getElementById('next-'+i); if(b) b.classList.add('disabled'); }
+  document.querySelectorAll('.opt').forEach(c=>{ c.classList.remove('selected'); c.setAttribute('aria-pressed','false'); });
+  for(let i=1;i<=6;i++){ setNext(document.getElementById('next-'+i), false); }
+  clearResult();
   goTo(0);
+}
+// Et gammelt resultat må ikke blive hængende i siden, når man tager testen igen
+function clearResult(){
+  ['profile-title','profile-lead','res-title','res-cat','res-desc','res-gain','alt-title','alt-cat','alt-desc','alt-gain','alt2-title','alt2-cat','alt2-desc','alt2-gain'].forEach(id=>{ document.getElementById(id).textContent=''; });
+  ['profile-drivers','profile-chips','res-why','res-traits','alt-why','alt-traits','alt2-why','alt2-traits'].forEach(id=>{ document.getElementById(id).textContent=''; });
+  document.getElementById('alt-card').hidden=false; document.getElementById('alt2-card').hidden=true;
 }
 </script>
 <!-- GA4: aktiveres af Cookiebot først efter samtykke til "Statistik" (kun hvis GA_MEASUREMENT_ID er sat) -->
