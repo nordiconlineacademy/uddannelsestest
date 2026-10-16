@@ -1496,7 +1496,7 @@ function klaviyoPost(path, body){
     headers:{ 'Content-Type':'application/vnd.api+json', 'revision':KLAVIYO_REVISION },
     body:JSON.stringify(body),
     keepalive:true
-  }).then(r=>{ if(!r.ok) throw new Error('Klaviyo '+r.status); return r; })
+  }).then(r=>{ if(!r.ok){ const e=new Error('Klaviyo '+r.status); e.status=r.status; throw e; } return r; })
     // Blokeret kald (annonceblokker, privatlivsbrowser, netværksfejl) = TypeError → prøv via vores eget domæne
     .catch(function(e){ return (e instanceof TypeError) ? klaviyoRelay(path, body) : Promise.reject(e); });
 }
@@ -1504,7 +1504,7 @@ function klaviyoRelay(path, body){
   return fetch('/.netlify/functions/klaviyo', {
     method:'POST', headers:{ 'Content-Type':'application/json' },
     body:JSON.stringify({ path:path, body:body }), keepalive:true
-  }).then(r=>{ if(!r.ok) throw new Error('Relay '+r.status); return r; });
+  }).then(r=>{ if(!r.ok){ const e=new Error('Relay '+r.status); e.status=r.status; throw e; } return r; });
 }
 
 function trackingParams(){
@@ -1514,30 +1514,94 @@ function trackingParams(){
   return out;
 }
 
-function sendLead(d){
-  const shown=getMatches(answers);
-  const pk=shown[0].key, ak=shown[1]?shown[1].key:'', third=shown[2];
-  const profilNavn=buildProfile(answers).name;
+/* LEAD:START — ren logik uden DOM/netværk, testes i tests/lead-payload.test.mjs. Egenskabsnavnene (snake_case) er kontrakten med backoffice (sync_test_leads) og Klaviyo-segmenter: ændres de, skal begge rettes. */
+// Bygger de Klaviyo-kald, en gennemført test giver: altid profil+event; kun ved samtykke også liste-tilmelding.
+// Uddannelser, interesser, profil og svar sendes som STABILE ID'er (fx 'parterapeut', 'terapi', 'omsorg'), ikke som visningstekster.
+// De danske egenskaber (Anbefaling, Svar m.fl.) sendes uændret ved siden af, så eksisterende flows og ældre sync virker.
+function buildLeadCalls(d, c){
+  const a=c.answers, m=c.matches;
+  const secondary=(a[2]||'').indexOf('x_')===0 && a[2]!=='x_ingen' ? a[2].slice(2) : ''; // kun "hvad ellers interesserer dig" (Q2 for dem, der valgte tech)
+  const stable={
+    lead_source:'uddannelsestest.dk',
+    test_version:c.testVersion,
+    test_completed_at:c.now,
+    primary_interest:a[1]||'',
+    secondary_interest:secondary,
+    interest_profile:c.profileKey,
+    primary_match:m[0].key,
+    secondary_match:m[1]?m[1].key:'',
+    third_match:m[2]?m[2].key:'',
+    education_goal:a[3]||''
+  };
   const profile={ data:{ type:'profile', attributes:{
     email:d.email, first_name:d.first, last_name:d.last,
-    properties:Object.assign({ 'Køn':d.gender||'', 'Kilde':'uddannelsestest.dk', 'Anbefalet uddannelse (test)':educations[pk].title, 'Interesseprofil (test)':profilNavn }, trackingParams())
+    properties:Object.assign({ 'Køn':d.gender||'', 'Kilde':'uddannelsestest.dk', 'Anbefalet uddannelse (test)':c.titles[m[0].key], 'Interesseprofil (test)':c.profileName }, stable, c.tracking)
   }}};
+  const answerProps={};
+  for(let i=1;i<=6;i++) answerProps['answer_q'+i]=a[i]||'';
   const event={ data:{ type:'event', attributes:{
     properties:Object.assign({
       Email:d.email, Fornavn:d.first, Efternavn:d.last, 'Køn':d.gender||'',
-      Anbefaling:educations[pk].title, Alternativ:ak?educations[ak].title:'', 'Tredje valg':third?educations[third.key].title:'', Profil:profilNavn, Svar:Object.assign({},answers),
-      'Test-version':TEST_VERSION, 'Samtykke marketing':d.consent, 'Samtykke tekst version':CONSENT_VERSION, Kilde:'uddannelsestest.dk'
-    }, trackingParams()),
-    metric:{ data:{ type:'metric', attributes:{ name:TEST_EVENT_NAME }}},
+      Anbefaling:c.titles[m[0].key], Alternativ:m[1]?c.titles[m[1].key]:'', 'Tredje valg':m[2]?c.titles[m[2].key]:'', Profil:c.profileName, Svar:Object.assign({},a),
+      'Test-version':c.testVersion, 'Samtykke marketing':d.consent, 'Samtykke tekst version':c.consentVersion, Kilde:'uddannelsestest.dk',
+      consent_marketing:d.consent, consent_text_version:c.consentVersion, consent_given_at:d.consent?c.now:'', submission_id:c.submissionId
+    }, stable, answerProps, c.tracking),
+    time:c.now,
+    unique_id:c.submissionId, // samme indsendelse sendt to gange (genforsøg) tælles kun én gang i Klaviyo
+    metric:{ data:{ type:'metric', attributes:{ name:c.eventName }}},
     profile:profile
   }}};
-  const calls=[klaviyoPost('events',event)];
-  if(d.consent && EDU_LISTS[pk]){
-    calls.push(klaviyoPost('subscriptions',{ data:{ type:'subscription', attributes:{
+  const calls=[{ path:'events', body:event }];
+  if(d.consent && c.lists[m[0].key]){
+    calls.push({ path:'subscriptions', body:{ data:{ type:'subscription', attributes:{
       custom_source:'uddannelsestest.dk', profile:profile
-    }, relationships:{ list:{ data:{ type:'list', id:EDU_LISTS[pk] }}}}}));
+    }, relationships:{ list:{ data:{ type:'list', id:c.lists[m[0].key] }}}}}});
   }
-  return Promise.allSettled(calls);
+  return calls;
+}
+
+// Udbakke: kaldene gemmes lokalt FØR de sendes og fjernes først, når Klaviyo har svaret ok. Fejler afsendelsen (netværk, 5xx, 429),
+// prøves igen næste gang siden åbnes (eller testen køres igen). Kald Klaviyo afviser som ugyldige (4xx) droppes. Maks. 5 kald, 8 forsøg, 7 døgn.
+function createOutbox(storage, post, nowMs, newId){
+  const KEY='ut_outbox_v1', MAX_ITEMS=5, MAX_TRIES=8, MAX_AGE=7*24*3600*1000;
+  function read(){ try{ const v=JSON.parse(storage.getItem(KEY)||'[]'); return Array.isArray(v)?v:[]; }catch(e){ return []; } }
+  function write(list){ try{ if(list.length) storage.setItem(KEY,JSON.stringify(list)); else storage.removeItem(KEY); }catch(e){} }
+  function drop(id){ write(read().filter(function(x){ return x.id!==id; })); }
+  function fail(id,err){
+    const permanent=err && err.status>=400 && err.status<500 && err.status!==429 && err.status!==408;
+    write(read().map(function(x){ if(x.id===id) x.tries=(x.tries||0)+1; return x; }).filter(function(x){ return !(x.id===id && permanent) && x.tries<MAX_TRIES; }));
+  }
+  function attempt(item){ return Promise.resolve().then(function(){ return post(item.path,item.body); }).then(function(){ drop(item.id); }, function(e){ fail(item.id,e); throw e; }); }
+  return {
+    pending:function(){ return read().length; },
+    send:function(calls){
+      const items=calls.map(function(c){ return { id:newId(), path:c.path, body:c.body, tries:0, ts:nowMs() }; });
+      write(read().concat(items).slice(-MAX_ITEMS));
+      return Promise.allSettled(items.map(attempt));
+    },
+    flush:function(){
+      const old=read().filter(function(x){ return nowMs()-x.ts<MAX_AGE && x.tries<MAX_TRIES; });
+      write(old);
+      return Promise.allSettled(old.map(attempt));
+    }
+  };
+}
+/* LEAD:SLUT */
+
+function newId(){ return (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now().toString(36)+Math.random().toString(36).slice(2)); }
+let outbox;
+try{ outbox=createOutbox(window.localStorage, klaviyoPost, Date.now, newId); }catch(e){ outbox=createOutbox({ getItem:function(){return null;}, setItem:function(){}, removeItem:function(){} }, klaviyoPost, Date.now, newId); }
+window.addEventListener('load', function(){ setTimeout(function(){ outbox.flush(); }, 1500); });
+
+function sendLead(d){
+  const titles={};
+  Object.keys(educations).forEach(function(k){ titles[k]=educations[k].title; });
+  return outbox.send(buildLeadCalls(d,{
+    answers:answers, matches:getMatches(answers), titles:titles, lists:EDU_LISTS,
+    profileKey:profileDimension(answers), profileName:buildProfile(answers).name,
+    testVersion:TEST_VERSION, consentVersion:CONSENT_VERSION, eventName:TEST_EVENT_NAME,
+    now:new Date().toISOString(), submissionId:newId(), tracking:trackingParams()
+  }));
 }
 
 function showGateError(msg, field){

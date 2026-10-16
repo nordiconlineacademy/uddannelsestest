@@ -289,8 +289,9 @@ test('resultatet afsløres først efter leadformularen: resultatkortene er tomme
 });
 
 test('Klaviyo-eventet har stadig Anbefaling og Alternativ (kan være tom) — og Profil, Tredje valg og Test-version', () => {
-  for (const key of ['Anbefaling:educations[pk].title', "Alternativ:ak?educations[ak].title:''", "'Tredje valg':", 'Profil:profilNavn', "'Test-version':TEST_VERSION", "'Samtykke marketing':d.consent", "Svar:Object.assign({},answers)"]) {
-    assert.ok(html.includes(key), 'mangler i sendLead: ' + key);
+  // Selve indholdet testes i tests/lead-payload.test.mjs; her vogter vi bare, at navnene stadig står i builderen.
+  for (const key of ['Anbefaling:c.titles[m[0].key]', "Alternativ:m[1]?c.titles[m[1].key]:''", "'Tredje valg':", 'Profil:c.profileName', "'Test-version':c.testVersion", "'Samtykke marketing':d.consent", "Svar:Object.assign({},a)"]) {
+    assert.ok(html.includes(key), 'mangler i buildLeadCalls: ' + key);
   }
   assert.match(html, /const TEST_VERSION = 'v2'/);
 });

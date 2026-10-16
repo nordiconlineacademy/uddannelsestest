@@ -16,10 +16,16 @@ Statisk side (én `index.html`, ingen build). Deployes af Netlify ved push til `
 4. Backoffice henter eventet og opretter et lead af typen `uddannelsestest` (fanen "Uddannelsestest.dk" under leads).
    **Event-egenskaberne** (`Email`, `Fornavn`, `Efternavn`, `Køn`, `Anbefaling`, `Alternativ` (kan være tom), `Tredje valg`, `Profil`, `Svar`, `Test-version`, `Samtykke marketing`)
    er kontrakten mellem `sendLead()` i `index.html` og `sync_test_leads` i noabackoffice — ændres de ét sted, skal begge rettes.
+   Ved siden af dem sender `buildLeadCalls()` **stabile snake_case-egenskaber** (både på eventet og, for de første ni, på Klaviyo-profilen): `lead_source`, `test_version`, `test_completed_at`,
+   `primary_interest`, `secondary_interest`, `interest_profile`, `primary_match`, `secondary_match`, `third_match`, `education_goal` (alle som tekniske ID'er, fx `parterapeut`/`terapi`/`omsorg`, aldrig visningstekster),
+   og på eventet `answer_q1`–`answer_q6`, `consent_marketing`, `consent_text_version`, `consent_given_at`, `submission_id` samt `unique_id` (samme indsendelse tælles kun én gang i Klaviyo).
+   Backoffice gemmer dem i tabellen `test_results` (én række pr. test). Detaljerede svar ligger kun på eventet (historik pr. test), ikke på profilen, som overskrives ved ny test.
+5. **Udbakke:** kaldene gemmes i browserens `localStorage` (`ut_outbox_v1`) før de sendes og fjernes først, når Klaviyo har svaret ok. Fejler afsendelsen, prøves igen ved næste sideindlæsning
+   (maks. 8 forsøg/7 døgn; 4xx-afvisninger droppes). Det indeholder midlertidigt navn og e-mail på den besøgendes egen enhed — skal med i privatlivsgennemgangen.
 
 ## Tests
 ```
-node --test tests/recommendation.test.mjs tests/klaviyo-relay.test.mjs tests/personas.test.mjs   # Node 18+, ingen afhængigheder
+node --test tests/recommendation.test.mjs tests/klaviyo-relay.test.mjs tests/personas.test.mjs tests/lead-payload.test.mjs   # Node 18+, ingen afhængigheder
 LINKS=1 node --test tests/recommendation.test.mjs                           # tjekker også at alle 16 links virker
 ```
 `tests/personas.mjs` er 33 fiktive personer (bygget på de studerendes motivationssvar) med den uddannelse, en studievejleder ville anbefale — **kladde, skal gennemlæses af Kristoffer og Mikkel**. Testene sikrer bl.a. at hovedinteressen vejer tungt, at sekundære interesser kun påvirker alternativer, at profil og begrundelser aldrig modsiger resultatet, at alle uddannelser kan blive anbefalet, at alle svarmuligheder har point, at hver uddannelse har en
