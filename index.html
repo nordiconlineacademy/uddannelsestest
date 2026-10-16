@@ -444,6 +444,7 @@ body { font-family: var(--font-body); background: var(--cream); color: var(--ink
 
 /* options */
 .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 1.75rem; }
+.opts[hidden] { display: none; }
 .opts.single { grid-template-columns: 1fr; }
 @media (max-width: 480px) { .opts { grid-template-columns: 1fr; } }
 .opt {
@@ -1331,7 +1332,7 @@ const PITCH = {
   kostvejleder: "Du får faglig viden om ernæring og kostplaner, så du kan rådgive klienter om en sund livsstil."
 };
 const REASONS = {
-  1: { terapi: "Du er tiltrukket af at hjælpe mennesker", kreativ: "Du vil skabe og designe", tech: "Du vil bygge og kode", medie: "Du vil fortælle og vise noget til andre", sundhed: "Du brænder for sundhed og krop", business: "Du interesserer dig for Rekruttering, medarbejdere og trivsel" },
+  1: { terapi: "Du er tiltrukket af at hjælpe mennesker", kreativ: "Du vil skabe og designe", tech: "Du vil bygge og kode", medie: "Du vil fortælle og vise noget til andre", sundhed: "Du brænder for sundhed og krop", business: "Du interesserer dig for HR og arbejdsliv" },
   2: {
     t_par: "Du vil hjælpe med parforhold og relationer", t_sex: "Du vil arbejde med seksualitet og intimitet", t_selv: "Du vil styrke andres selvværd og trivsel",
     t_boern: "Du vil hjælpe børn og unge med fx ADHD og autisme", t_fam: "Du vil støtte familier i sårbare situationer", t_udv: "Du vil hjælpe andre med mål og personlig udvikling",

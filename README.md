@@ -53,3 +53,7 @@ Cookiebot. Hændelser: `quiz_start`, `quiz_step` (step), `quiz_gate_view`, `quiz
 ## Samtykke
 Cookiebot (auto-blocking, NOA's konto). Intercom aktiveres kun ved samtykke til "Præferencer", GA4 til "Statistik".
 `privatliv.html` viser Cookiebots cookieliste.
+
+## Simulation
+
+`node tools/simulate.mjs` kører alle 8.160 svarkombinationer med og uden salgsbonus og viser førstevalg pr. uddannelse, afvigelser fra interesseområdet og tætte resultater. Kør den, før vægte ændres.

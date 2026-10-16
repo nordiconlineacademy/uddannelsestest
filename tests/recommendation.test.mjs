@@ -327,6 +327,16 @@ test('Dekoratør beskrives som butiks- og vinduesdekoration', () => {
   assert.ok(html.includes('Butikker og vinduer'));
 });
 
+test('spørgsmål 2 viser kun én gren ad gangen: CSS må ikke overstyre hidden-attributten (fejl 12.-16. okt.: 30 svarmuligheder på én gang)', () => {
+  assert.match(html, /\.opts\[hidden\]\s*\{\s*display:\s*none/, '.opts[hidden] { display: none } mangler — display:grid på .opts overstyrer hidden');
+  const groups = [...html.matchAll(/<div class="opts" id="q2-opts-[a-z]+" data-branch="[a-z]+" hidden>/g)];
+  assert.equal(groups.length, Object.keys(BRANCHES).length, 'alle grene skal starte skjult');
+});
+
+test('begrundelsen for hovedinteressen bruger samme navn som svarmuligheden', () => {
+  assert.equal(REASONS[1].business, 'Du interesserer dig for HR og arbejdsliv');
+});
+
 test('linkene virker (kun med LINKS=1)', { skip: !process.env.LINKS }, async () => {
   for (const [k, e] of Object.entries(educations)) {
     const r = await fetch(e.url, { redirect: 'follow' });

@@ -37,5 +37,13 @@ export const PERSONAS = [
   { id: 30, tekst: 'Fitnessentusiast der vil rådgive andre om kost og træning', svar: { 1: 'sundhed', 2: 'x_ingen', 3: 'selvstaendig', 4: 'job_og_studie', 5: 'nystart', 6: 'analysere' }, forventet: ['kostvejleder'] },
   { id: 31, tekst: 'Mor på barsel der vil starte som selvstændig kostvejleder', svar: { 1: 'sundhed', 2: 'x_terapi', 3: 'selvstaendig', 4: 'familie', 5: 'nystart', 6: 'lytte' }, forventet: ['kostvejleder'] },
   { id: 32, tekst: 'Tech først, men også draget af ledelse og HR', svar: { 1: 'tech', 2: 'x_business', 3: 'job', 4: 'ledig', 5: 'nystart', 6: 'analysere' }, forventet: ['programmor', 'hr'] },
-  { id: 33, tekst: 'Sundhedsinteresseret der også gerne vil hjælpe mennesker med personlig udvikling', svar: { 1: 'sundhed', 2: 'x_terapi', 3: 'personlig', 4: 'job_og_studie', 5: 'erfaring', 6: 'lytte' }, forventet: ['kostvejleder', 'coach'] }
+  { id: 33, tekst: 'Sundhedsinteresseret der også gerne vil hjælpe mennesker med personlig udvikling', svar: { 1: 'sundhed', 2: 'x_terapi', 3: 'personlig', 4: 'job_og_studie', 5: 'erfaring', 6: 'lytte' }, forventet: ['kostvejleder', 'coach'] },
+  // Blandede profiler og "ved ikke endnu"
+  { id: 34, tekst: 'Vil bygge og kode, men er også draget af at skabe og designe', svar: { 1: 'tech', 2: 'x_kreativ', 3: 'job', 4: 'job_og_studie', 5: 'nystart', 6: 'visuelt' }, forventet: ['programmor'] },
+  { id: 35, tekst: 'Brænder for sundhed og krop, og vil gerne formidle det i tekst og på video', svar: { 1: 'sundhed', 2: 'x_medie', 3: 'selvstaendig', 4: 'job_og_studie', 5: 'erfaring', 6: 'skrive' }, forventet: ['kostvejleder'] },
+  { id: 36, tekst: 'Vil arbejde med HR, men har også lyst til at hjælpe mennesker 1:1', svar: { 1: 'business', 2: 'x_terapi', 3: 'job', 4: 'job_og_studie', 5: 'erfaring', 6: 'lytte' }, forventet: ['hr', 'coach'] },
+  { id: 37, tekst: 'Vil hjælpe mennesker, men ved ikke hvilken retning og starter fra bunden', svar: { 1: 'terapi', 2: 't_ved', 3: 'personlig', 4: 'karriereskifte', 5: 'nystart', 6: 'lytte' }, forventet: ['coach', 'selvvaerd', 'familiebehandler'] },
+  { id: 38, tekst: 'Vil skabe og designe, men ved ikke om det er hjem eller butik', svar: { 1: 'kreativ', 2: 'k_ved', 3: 'personlig', 4: 'job_og_studie', 5: 'nystart', 6: 'visuelt' }, forventet: ['indretningskonsulent', 'dekoratoer'] },
+  { id: 39, tekst: 'Vil fortælle og vise, men ved ikke om det er foto eller video', svar: { 1: 'medie', 2: 'm_ved', 3: 'personlig', 4: 'job_og_studie', 5: 'nystart', 6: 'visuelt' }, forventet: ['fotograf', 'videograf'] },
+  { id: 40, tekst: 'Afklaret teknologi-interesse, vil planlægge og lede projekter', svar: { 1: 'tech', 2: 'x_ingen', 3: 'opkvalificering', 4: 'job_og_studie', 5: 'professionel', 6: 'lede' }, forventet: ['programmor'] }
 ];
