@@ -57,3 +57,5 @@ Cookiebot (auto-blocking, NOA's konto). Intercom aktiveres kun ved samtykke til 
 ## Simulation
 
 `node tools/simulate.mjs` kører alle 8.160 svarkombinationer med og uden salgsbonus og viser førstevalg pr. uddannelse, afvigelser fra interesseområdet og tætte resultater. Kør den, før vægte ændres.
+
+`node tools/check-links.mjs` henter alle 16 uddannelsessider og tjekker status/titel. `tools/check-results-in-browser.js` indsættes i browserens konsol og kører alle 8.160 kombinationer gennem resultatsiden (sender intet til Klaviyo).
