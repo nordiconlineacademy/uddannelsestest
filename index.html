@@ -1225,7 +1225,7 @@ const fieldWeights = (f) => Object.fromEntries(FIELDS[f].map(k => [k, FIELD_BONU
 const WEIGHTS = {
   1: { terapi: fieldWeights('terapi'), kreativ: fieldWeights('kreativ'), tech: fieldWeights('tech'), medie: fieldWeights('medie'), sundhed: fieldWeights('sundhed'), business: fieldWeights('business') },
   2: {
-    t_par:    { parterapeut:3.5, sexolog:1, familiebehandler:.8 },
+    t_par:    { parterapeut:3.5, sexolog:2.5, familiebehandler:0.3 },
     t_sex:    { sexolog:3.5, parterapeut:1.2 },
     t_selv:   { selvvaerd:3.5, coach:1.2 },
     t_boern:  { adhd:3.5, familiebehandler:1.5 },

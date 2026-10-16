@@ -337,6 +337,18 @@ test('begrundelsen for hovedinteressen bruger samme navn som svarmuligheden', ()
   assert.equal(REASONS[1].business, 'Du interesserer dig for HR og arbejdsliv');
 });
 
+test('parforhold: Sexolog er oftere alternativ end Familiebehandler, og Familiebehandler er aldrig førstevalg', () => {
+  let sex = 0, fam = 0, famFirst = 0;
+  everyCombination((a) => {
+    if (a[2] !== 't_par') return;
+    setAnswers(a); const m = getMatches(a).map(x => x.key);
+    if (m[0] === 'familiebehandler') famFirst++;
+    if (m[1] === 'sexolog') sex++; if (m[1] === 'familiebehandler') fam++;
+  });
+  assert.equal(famFirst, 0);
+  assert.ok(sex > fam * 2, 'Sexolog (' + sex + ') bør være alternativ langt oftere end Familiebehandler (' + fam + ') for parforhold');
+});
+
 test('linkene virker (kun med LINKS=1)', { skip: !process.env.LINKS }, async () => {
   for (const [k, e] of Object.entries(educations)) {
     const r = await fetch(e.url, { redirect: 'follow' });
