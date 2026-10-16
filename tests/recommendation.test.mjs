@@ -349,6 +349,71 @@ test('parforhold: Sexolog er oftere alternativ end Familiebehandler, og Familieb
   assert.ok(sex > fam * 2, 'Sexolog (' + sex + ') bør være alternativ langt oftere end Familiebehandler (' + fam + ') for parforhold');
 });
 
+// ───────────────────────── Brugerrejsen: forside → test → formular → resultat ─────────────────────────
+test('forsiden: konkret overskrift, gratis og ca. 2 minutter, og startknappen starter testen direkte', () => {
+  assert.match(html, /<h1 class="hero-h1">Hvilken uddannelse passer <em>bedst til dig\?<\/em><\/h1>/);
+  assert.match(html, /Det tager cirka 2 minutter og er gratis/);
+  assert.match(html, /class="btn-hero primary" onclick="return startQuiz\(event\)"/);
+  assert.ok(html.includes('function startQuiz(ev)'));
+  assert.doesNotMatch(html, /personlighed(?!stest)/i, 'siden må ikke love at måle personlighed');
+  assert.doesNotMatch(html, /Empatisk · Kreativ · Selvstændig/);
+});
+
+test('overgangen til formularen: tydelig overskrift og undertekst, uændret samtykketekst og felter', () => {
+  assert.ok(html.includes('Din personlige <em>uddannelsesprofil</em> er klar!'));
+  assert.ok(html.includes('Vi har fundet de uddannelsesretninger, der passer bedst til dine svar. Udfyld dine oplysninger for at se dine anbefalinger.'));
+  assert.ok(html.includes('Ja tak, send mig nyheder og tilbud om online uddannelser fra Nordic Online Academy ApS (onlineuddannelse.dk) på e-mail. Du kan til enhver tid afmelde dig.'));
+  assert.match(html, /const CONSENT_VERSION = '2026-10-12'/, 'samtykketeksten er ikke ændret, så versionen skal være den samme');
+  for (const id of ['g-first', 'g-last', 'g-email', 'g-gender', 'g-consent', 'g-website']) assert.ok(html.includes('id="' + id + '"'), id);
+  for (const id of ['g-first', 'g-last', 'g-email']) assert.match(html, new RegExp('<label for="' + id + '">'), 'label til ' + id);
+});
+
+test('formularen: e-mail-kontrol, fejlmeddelelser pr. felt, loadingtilstand og ingen dubletter ved gentagne klik eller tilbage-knap', () => {
+  const re = new Function('return ' + html.match(/if\(!(\/\^\[\^[^\n]*?\/)\.test\(d\.email\)\)/)[1])();
+  for (const ok of ['navn@eksempel.dk', 'a.b@c.co', 'mikkel+test1@onlineuddannelse.dk']) assert.ok(re.test(ok), ok);
+  for (const bad of ['forkert', 'a@b', 'a b@c.dk', '@c.dk', 'a@.dk']) assert.ok(!re.test(bad), bad);
+  for (const msg of ['Skriv dit fornavn.', 'Skriv dit efternavn.', 'Skriv en gyldig e-mailadresse']) assert.ok(html.includes(msg), msg);
+  assert.ok(html.includes("setAttribute('aria-invalid','true')") && html.includes('field.focus()'));
+  assert.ok(html.includes("btn.textContent='Et øjeblik…'") && html.includes("setAttribute('aria-busy','true')"));
+  assert.ok(html.includes('if(leadSubmitting) return;') && html.includes('key!==lastLeadKey'), 'gentagne klik og gensendelse må ikke give dubletter');
+  const submit = html.slice(html.indexOf("getElementById('gate-form').addEventListener('submit'"));
+  assert.ok(submit.indexOf('leadDone = true') < submit.indexOf('showResult();'));
+});
+
+test('tilbage-knappen i browseren følger testens trin og viser aldrig resultatet uden formular', () => {
+  assert.ok(html.includes("history.pushState({ step: step }, '')") && html.includes("window.addEventListener('popstate'"));
+  assert.ok(html.includes("if(step==='result') return leadDone ? 'result' : allowedStep('gate');"));
+  assert.ok(html.includes('leadDone = false;'), '"Tag testen igen" skal nulstille formularstatus');
+});
+
+test('resultatsidens uddannelseslinks er rigtige links (<a>) med UTM og sporing', () => {
+  for (const id of ['res-link', 'alt-link', 'alt2-link']) assert.match(html, new RegExp('<a class="btn" id="' + id + '" target="_blank" rel="noopener"'), id);
+  assert.ok(html.includes('link.href = withUtm(e.url, slot);'));
+  assert.ok(html.includes("trackEvent('quiz_click_education'"));
+});
+
+test('tilgængelighed: synlige fokustilstande, tilstrækkelig kontrast og reduced-motion også i scroll', () => {
+  assert.match(html, /a:focus-visible, button:focus-visible/);
+  assert.match(html, /--ink-3:\s+#6F685F/);
+  const lum = (hex) => { const c = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255).map(v => v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+  assert.ok(ratio('#6F685F', '#F9F6F1') >= 4.5, 'lille tekst (ink-3) på cremefarvet baggrund');
+  assert.ok(ratio('#6F685F', '#FFFFFF') >= 4.5);
+  assert.ok(html.includes("matchMedia('(prefers-reduced-motion: reduce)')"));
+});
+
+test('svar med mus/berøring går videre af sig selv; tastatur og skærmlæser skifter ikke side uden "Næste"', () => {
+  assert.ok(html.includes('ev.detail>0'), 'kun klik med mus/berøring (detail>0) må gå automatisk videre');
+  assert.ok(html.includes("goTo(q==='6' ? 'gate' : Number(q)+1)"));
+  assert.ok(html.includes('clearTimeout(advanceTimer);\n  document.querySelectorAll'), 'goTo skal afbryde en ventende automatisk overgang');
+  for (let i = 1; i <= 6; i++) assert.ok(html.includes('id="next-' + i + '"'), 'Næste-knappen skal findes som alternativ til automatisk videre');
+});
+
+test('"Om testen" er ærlig om afsenderen og lover ikke, at der intet salg er', () => {
+  assert.doesNotMatch(html, /ikke sælge dig noget/);
+  assert.match(html, /Anbefalingerne er vejledende og kommer fra Nordic Online Academy, som udbyder uddannelserne i testen\./);
+});
+
 test('linkene virker (kun med LINKS=1)', { skip: !process.env.LINKS }, async () => {
   for (const [k, e] of Object.entries(educations)) {
     const r = await fetch(e.url, { redirect: 'follow' });
