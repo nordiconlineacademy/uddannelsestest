@@ -1474,9 +1474,8 @@ function showResult(){
 /* ── Klaviyo (DK-kontoen, offentlig client-nøgle — den er beregnet til at ligge i frontend) ──
    Deltagere tilmeldes brochure-listen for den anbefalede uddannelse (kun hvis de har givet
    samtykke), og eventet "Uddannelsestest gennemført" gør, at de dukker op som lead i backoffice. */
-// GA4-måle-ID (G-XXXXXXXXXX). Tomt = ingen måling. Indlæses kun efter samtykke til "Statistik" i Cookiebot.
-const GA_MEASUREMENT_ID = '';
-function trackEvent(name, params){ if(typeof window.gtag==='function'){ try{ window.gtag('event', name, params||{}); }catch(e){} } }
+// Events til Google Tag Manager (dataLayer). Kun når GTM er indlæst, dvs. efter samtykke til "Statistik" i Cookiebot.
+function trackEvent(name, params){ if(window.gtmLoaded){ try{ window.dataLayer.push(Object.assign({event:name}, params||{})); }catch(e){} } }
 
 const KLAVIYO_COMPANY_ID = 'RtCNbE';
 const KLAVIYO_REVISION = '2024-10-15';
@@ -1775,17 +1774,15 @@ function clearResult(){
   document.getElementById('alt-card').hidden=false; document.getElementById('alt2-card').hidden=true;
 }
 </script>
-<!-- GA4: aktiveres af Cookiebot først efter samtykke til "Statistik" (kun hvis GA_MEASUREMENT_ID er sat) -->
+<!-- Google Tag Manager (GTM-PK38NHQN): aktiveres af Cookiebot først efter samtykke til "Statistik". Tags og triggere sættes op i GTM. -->
 <script type="text/plain" data-cookieconsent="statistics">
-  (function(){
-    var id = (typeof GA_MEASUREMENT_ID === 'string') ? GA_MEASUREMENT_ID : '';
-    if(!id) return;
-    var s=document.createElement('script'); s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(id); document.head.appendChild(s);
-    window.dataLayer=window.dataLayer||[]; window.gtag=function(){ window.dataLayer.push(arguments); };
-    window.gtag('js', new Date());
-    window.gtag('config', id, { anonymize_ip:true, allow_google_signals:false, allow_ad_personalization_signals:false });
-  })();
+  window.dataLayer = window.dataLayer || [];
+  window.gtmLoaded = true;
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'}); // GTM's standardstart, så containeren fyrer sine sidevisnings-triggere
 </script>
+<script type="text/plain" data-cookieconsent="statistics" async src="https://www.googletagmanager.com/gtm.js?id=GTM-PK38NHQN"></script>
 <!-- Intercom: aktiveres af Cookiebot først efter samtykke til "Præferencer" -->
 <script type="text/plain" data-cookieconsent="preferences">
   window.intercomSettings = { api_base: "https://api-iam.intercom.io", app_id: "v1hmg946" };
