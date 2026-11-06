@@ -275,7 +275,7 @@ test('resultatsiden har pladser til alle tre kort, profil, begrundelser og afsen
     assert.ok(html.includes('id="' + id + '"'), 'mangler #' + id);
   }
   assert.match(html, /Alle uddannelser i testen udbydes af Nordic Online Academy ApS/, 'afsender skal fremgå af resultatsiden');
-  assert.match(html, /Alle uddannelser udbydes af Nordic Online Academy ApS \(onlineuddannelse\.dk\)\./, 'afsender skal fremgå af footeren');
+  assert.match(html, /Alle uddannelser udbydes af Nordic Online Academy ApS \(onlineuddannelse\.dk\)(\.|, CVR-nr\. 43315897)/, 'afsender skal fremgå af footeren');
   assert.doesNotMatch(html, /\d\d?\s?%\s?match/i, 'ingen fiktive matchprocenter');
 });
 
