@@ -360,11 +360,13 @@ test('forsiden: konkret overskrift, gratis og ca. 2 minutter, og startknappen st
   assert.doesNotMatch(html, /Empatisk · Kreativ · Selvstændig/);
 });
 
-test('overgangen til formularen: tydelig overskrift og undertekst, uændret samtykketekst og felter', () => {
+test('overgangen til formularen: tydelig overskrift og undertekst, samtykketekst og felter', () => {
   assert.ok(html.includes('Din personlige <em>uddannelsesprofil</em> er klar!'));
   assert.ok(html.includes('Vi har fundet de uddannelsesretninger, der passer bedst til dine svar. Udfyld dine oplysninger for at se dine anbefalinger.'));
-  assert.ok(html.includes('Ja tak, send mig nyheder og information om online uddannelser fra Nordic Online Academy på e-mail (Du kan til enhver tid afmelde dig)'));
-  assert.match(html, /const CONSENT_VERSION = '2026-10-12'/, 'samtykketeksten er ikke ændret, så versionen skal være den samme');
+  assert.ok(html.includes('For at modtage mit resultat accepterer jeg at modtage yderligere information om uddannelsen på mail'));
+  assert.match(html, /id="g-consent"[^>]*\brequired\b/, 'samtykket er obligatorisk');
+  assert.match(html, /if\(!d\.consent\)\{ showGateError\(/, 'formularen stopper uden samtykke');
+  assert.match(html, /const CONSENT_VERSION = '2026-11-11'/, 'samtykketeksten er ændret, så versionen er opdateret');
   for (const id of ['g-first', 'g-last', 'g-email', 'g-gender', 'g-consent', 'g-website']) assert.ok(html.includes('id="' + id + '"'), id);
   for (const id of ['g-first', 'g-last', 'g-email']) assert.match(html, new RegExp('<label for="' + id + '">'), 'label til ' + id);
 });
