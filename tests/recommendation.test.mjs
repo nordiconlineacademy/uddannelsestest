@@ -373,7 +373,7 @@ test('forsiden: konkret overskrift, gratis og ca. 2 minutter, og startknappen st
 });
 
 test('overgangen til formularen: tydelig overskrift og undertekst, samtykketekst og felter', () => {
-  assert.ok(html.includes('Din personlige <em>uddannelsesprofil</em> er klar!'));
+  assert.ok(html.includes('Dit personlige <em>resultat</em> er klar!'));
   assert.ok(html.includes('Vi har fundet de uddannelsesretninger, der passer bedst til dine svar. Udfyld dine oplysninger for at se dine anbefalinger.'));
   assert.ok(html.includes('For at modtage mit resultat accepterer jeg at modtage yderligere information om uddannelsen på mail'));
   assert.match(html, /id="g-consent"[^>]*\brequired\b/, 'samtykket er obligatorisk');
