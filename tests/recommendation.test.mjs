@@ -225,12 +225,23 @@ test('hver begrundelse stammer fra et svar, brugeren faktisk gav, og som reelt g
   });
 });
 
-test('begrundelserne er de stærkeste svar først, og ved lige vægt går spørgsmål 1 før 2 før 6', () => {
+test('begrundelserne dækker interesse, mål og hverdag/erfaring — aldrig to interesse-pointer', () => {
   const a = { 1: 'terapi', 2: 't_par', 3: 'opkvalificering', 4: 'job_og_studie', 5: 'professionel', 6: 'lytte' };
-  // Parterapeut: feltet terapi 5 · t_par 3,5 · lytte 2 · professionel .7 · opkvalificering .4
-  assert.deepEqual(explain('parterapeut', a), [REASONS[1].terapi, REASONS[2].t_par, REASONS[6].lytte]);
+  // Parterapeut: interesse = emnet (t_par 3,5) · mål = opkvalificering (.4) · hverdag/erfaring = det af 4/5 med mest vægt (professionel .7)
+  assert.deepEqual(explain('parterapeut', a), [REASONS[2].t_par, REASONS[3].opkvalificering, REASONS[5].professionel]);
   const prog = explain('programmor', { ...a, 1: 'tech', 2: 'x_ingen', 6: 'analysere' });
   assert.equal(prog[0], REASONS[1].tech);
+  const INTEREST = (text) => [1, 2, 6].some(q => Object.values(REASONS[q]).includes(text));
+  const GOAL = (text) => Object.values(REASONS[3]).includes(text);
+  const DAILY = (text) => [4, 5].some(q => Object.values(REASONS[q]).includes(text));
+  everyCombination((ans) => {
+    setAnswers(ans);
+    getMatches(ans).forEach((m, i) => {
+      assert.ok(m.reasons.filter(INTEREST).length <= 1, m.key + ': højst én interesse-begrundelse, fik ' + JSON.stringify(m.reasons));
+      assert.ok(m.reasons.filter(GOAL).length <= 1);
+      if (i === 0 && m.reasons.length === 3 && FIELD_OF[m.key] === ans[1]) assert.ok(INTEREST(m.reasons[0]), 'første begrundelse handler om interesse');
+    });
+  });
 });
 
 test('interesseprofilen er komplet og følger altid det anbefalede interesseområde (ingen modstrid mellem profil og resultat)', () => {
@@ -259,7 +270,8 @@ test('profilen lover ikke mere, end seks svar kan bære: ingen påstande om pers
   for (const v of Object.values(CHIPS[6])) assert.match(v, /^Energi af /);
   for (const v of Object.values(CHIPS[5])) assert.match(v, /^Erfaring: /);
   for (const v of Object.values(CHIPS[3])) assert.match(v, /^Mål: /);
-  assert.match(html, /Profilen er vejledende og bygger kun på dine seks svar\. Den er ikke en personlighedstest\./);
+  // Profilen vises ikke længere på resultatsiden, men bruges stadig som interesseprofil i Klaviyo-leadet (buildProfile).
+  assert.doesNotMatch(html, /Din interesseprofil/);
 });
 
 test('"populær" gælder de tre mest solgte uddannelser', () => {
@@ -268,7 +280,7 @@ test('"populær" gælder de tre mest solgte uddannelser', () => {
 });
 
 test('resultatsiden har pladser til alle tre kort, profil, begrundelser og afsender-note (og de gamle id\'er er bevaret)', () => {
-  for (const id of ['profile-card', 'profile-title', 'profile-lead', 'profile-drivers', 'profile-chips',
+  for (const id of ['result-intro', 'ri-label', 'ri-title', 'ri-sub', 'ri-bullets', 'ri-note', 'ri-link', 'res-facts', 'res-book', 'advisor-card',
     'res-title', 'res-cat', 'res-desc', 'res-why', 'res-gain', 'res-traits', 'res-link',
     'alt-card', 'alt-title', 'alt-cat', 'alt-desc', 'alt-why', 'alt-gain', 'alt-traits', 'alt-link',
     'alt2-card', 'alt2-title', 'alt2-cat', 'alt2-desc', 'alt2-why', 'alt2-gain', 'alt2-traits', 'alt2-link']) {
@@ -280,7 +292,7 @@ test('resultatsiden har pladser til alle tre kort, profil, begrundelser og afsen
 });
 
 test('resultatet afsløres først efter leadformularen: resultatkortene er tomme i markup, og showResult kaldes kun fra formularen', () => {
-  for (const id of ['res-title', 'alt-title', 'alt2-title', 'profile-title']) assert.match(html, new RegExp('id="' + id + '"></div>'), id + ' skal være tom, før formularen er udfyldt');
+  for (const id of ['res-title', 'alt-title', 'alt2-title', 'ri-title']) assert.match(html, new RegExp('id="' + id + '"></div>'), id + ' skal være tom, før formularen er udfyldt');
   const calls = html.match(/showResult\(\)/g) || [];
   assert.equal(calls.length, 2, 'showResult() må kun findes som definition og som ét kald (efter formularen)'); // definition + ét kald
   const submit = html.slice(html.indexOf("getElementById('gate-form').addEventListener('submit'"));
@@ -361,7 +373,7 @@ test('forsiden: konkret overskrift, gratis og ca. 2 minutter, og startknappen st
 });
 
 test('overgangen til formularen: tydelig overskrift og undertekst, samtykketekst og felter', () => {
-  assert.ok(html.includes('Din personlige <em>uddannelsesprofil</em> er klar!'));
+  assert.ok(html.includes('Dit personlige <em>resultat</em> er klar!'));
   assert.ok(html.includes('Vi har fundet de uddannelsesretninger, der passer bedst til dine svar. Udfyld dine oplysninger for at se dine anbefalinger.'));
   assert.ok(html.includes('For at modtage mit resultat accepterer jeg at modtage yderligere information om uddannelsen på mail'));
   assert.match(html, /id="g-consent"[^>]*\brequired\b/, 'samtykket er obligatorisk');
@@ -429,7 +441,7 @@ test('"Tag testen igen" rydder det gamle resultat og alle valg', () => {
   assert.ok(reset.includes('clearResult()'), 'resetQuiz skal rydde resultatet');
   assert.ok(reset.includes("setAttribute('aria-pressed','false')"), 'valgte knapper skal nulstilles for skærmlæsere');
   const clear = html.slice(html.indexOf('function clearResult()'));
-  for (const id of ['res-title', 'alt-title', 'alt2-title', 'profile-title', 'res-why', 'alt-why', 'alt2-why']) assert.ok(clear.slice(0, 900).includes("'" + id + "'"), id + ' skal ryddes');
+  for (const id of ['res-title', 'alt-title', 'alt2-title', 'ri-title', 'res-why', 'alt-why', 'alt2-why']) assert.ok(clear.slice(0, 900).includes("'" + id + "'"), id + ' skal ryddes');
 });
 
 test('tastatur: "Næste" er rigtigt deaktiveret, til der er svaret, og alle svarmuligheder er rigtige knapper i naturlig tabrækkefølge', () => {
@@ -438,4 +450,17 @@ test('tastatur: "Næste" er rigtigt deaktiveret, til der er svaret, og alle svar
   assert.equal((html.match(/classList\.(add|remove|toggle)\('disabled'/g) || []).length, 1, 'kun setNext() må ændre klassen "disabled"');
   assert.ok(!html.includes('<div class="opt"'), 'svarmuligheder skal være <button>');
   assert.ok(!/class="opt"[^>]*tabindex="-1"/.test(html), 'ingen svarmulighed må være udelukket fra tabrækkefølgen');
+});
+
+test('resultatsidens intro-boks er konfigurerbar, og nøglefakta falder tilbage til "100 % online"', () => {
+  const cfg = new Function(html.slice(html.indexOf('const GUIDANCE_URL'), html.indexOf('// Booking-links får samme UTM-mønster')) + '; return { GUIDANCE_URL, RESULT_INTRO_CONFIG };')();
+  assert.equal(cfg.GUIDANCE_URL, 'https://onlineuddannelse.dk/studievejledning/');
+  assert.equal(cfg.RESULT_INTRO_CONFIG.bullets.length, 4);
+  assert.match(cfg.RESULT_INTRO_CONFIG.title, /\{uddannelse\}/);
+  assert.match(cfg.RESULT_INTRO_CONFIG.buttonText, /\{uddannelse\}/);
+  for (const e of Object.values(educations)) assert.ok('modules' in e && 'episodes' in e, e.title + ' mangler modules/episodes');
+  const keyFacts = new Function(html.slice(html.indexOf('function keyFacts'), html.indexOf('function fillResultIntro')) + '; return keyFacts;')();
+  assert.equal(keyFacts({ modules: 10, episodes: 42 }), '10 moduler · 42 afsnit · 100 % online');
+  assert.equal(keyFacts({ modules: 10, episodes: null }), '100 % online');
+  assert.equal(keyFacts({ modules: null, episodes: null }), '100 % online');
 });
