@@ -23,6 +23,13 @@ Statisk side (én `index.html`, ingen build). Deployes af Netlify ved push til `
 5. **Udbakke:** kaldene gemmes i browserens `localStorage` (`ut_outbox_v1`) før de sendes og fjernes først, når Klaviyo har svaret ok. Fejler afsendelsen, prøves igen ved næste sideindlæsning
    (maks. 8 forsøg/7 døgn; 4xx-afvisninger droppes). Det indeholder midlertidigt navn og e-mail på den besøgendes egen enhed — skal med i privatlivsgennemgangen.
 
+## Resultatsiden
+- Intro-boksen øverst ("Dit resultat … Om onlineuddannelse.dk") styres af `RESULT_INTRO_CONFIG` i `index.html` (overskrift, underoverskrift, bullets, brochuretekst, knaptekst; `{uddannelse}` erstattes). Vejledningslinket er `GUIDANCE_URL`.
+- Interesseprofilen vises ikke længere, men `buildProfile` bruges stadig til `interest_profile`/`Profil` i Klaviyo.
+- Nøglefakta på bedste match kommer af `modules` og `episodes` i `educations{}`. Er begge udfyldt, vises "N moduler · M afsnit · 100 % online"; ellers kun "100 % online".
+- "Hvorfor passer den til dig?" (`explain()`) giver højst én begrundelse om interesse, én om mål og én om hverdag/erfaring.
+- Nye målehændelser: `quiz_click_booking` (slot: matchkort, sidekort, nav) og `quiz_click_education` med slot `intro`. Booking-links bruger `utm_content=vejledning_<slot>`.
+
 ## Tests
 ```
 node --test tests/recommendation.test.mjs tests/klaviyo-relay.test.mjs tests/personas.test.mjs tests/lead-payload.test.mjs   # Node 18+, ingen afhængigheder

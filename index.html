@@ -463,7 +463,7 @@ button.opt { font: inherit; color: inherit; width: 100%; appearance: none; -webk
 .opt-t, .opt-d { display: block; }
 .skip-link { position: absolute; left: 8px; top: -60px; z-index: 400; background: var(--ink); color: #fff; padding: 10px 14px; border-radius: 8px; font-size: 14px; text-decoration: none; }
 .skip-link:focus { top: 8px; }
-.q-title:focus, .qi-title:focus, .profile-title:focus { outline: none; }
+.q-title:focus, .qi-title:focus, .result-intro-title:focus { outline: none; }
 .quiz-box { scroll-margin-top: 76px; }
 #om { scroll-margin-top: 76px; }
 @media (max-width: 520px) { .quiz-box-top { padding-top: .8rem; padding-bottom: .8rem; } .quiz-box-top-sub, .quiz-box-badge { display: none; } }
@@ -547,21 +547,63 @@ button.opt { font: inherit; color: inherit; width: 100%; appearance: none; -webk
 
 /* ── Resultat: interesseprofil + begrundelser ── */
 .alt-card[hidden] { display: none; }
-.profile-note { font-size: 12px; color: var(--ink-3); line-height: 1.5; margin: 0.85rem 0 0; }
 .about-note { font-size: 12px; color: var(--ink-3); line-height: 1.6; margin: 0.5rem 0 0; }
 .about-note a { color: var(--green); }
-.profile-card {
+.result-intro {
   background: var(--amber-light); border: 1px solid rgba(196,123,26,0.22);
   border-radius: var(--r); padding: 1.25rem 1.5rem; margin-bottom: 1rem;
 }
-.profile-eyebrow { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber); margin-bottom: 6px; }
-.profile-title { font-family: var(--font-display); font-size: clamp(22px, 4vw, 28px); font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 6px; }
-.profile-lead { font-size: 14px; color: var(--ink-2); font-weight: 300; line-height: 1.7; margin-bottom: 0.85rem; }
-.profile-drivers { list-style: none; display: grid; gap: 6px; margin-bottom: 0.9rem; }
-.profile-drivers li { position: relative; padding-left: 20px; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
-.profile-drivers li::before { content: ''; position: absolute; left: 3px; top: 8px; width: 7px; height: 7px; border-radius: 50%; background: var(--amber); }
-.profile-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.profile-chip { background: rgba(196,123,26,0.14); color: var(--amber); font-size: 12px; font-weight: 500; padding: 4px 11px; border-radius: var(--r-pill); }
+.result-intro-eyebrow { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber); margin-bottom: 6px; }
+.result-intro-title { font-family: var(--font-display); font-size: clamp(22px, 4vw, 28px); font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 0.85rem; }
+.result-intro-about > summary { list-style: none; cursor: pointer; font-size: 14px; font-weight: 500; color: var(--ink); display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 28px; }
+.result-intro-about > summary::-webkit-details-marker { display: none; }
+.result-intro-about > summary::after { content: ''; width: 8px; height: 8px; border-right: 2px solid var(--amber); border-bottom: 2px solid var(--amber); transform: rotate(45deg); margin: -4px 4px 0 0; flex-shrink: 0; transition: transform .2s var(--ease); }
+.result-intro-about[open] > summary::after { transform: rotate(-135deg); margin-top: 4px; }
+.result-intro-bullets { list-style: none; display: grid; gap: 7px; margin: 0.75rem 0 0.9rem; }
+.result-intro-bullets li { position: relative; padding-left: 24px; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+.result-intro-bullets li .ic { position: absolute; left: 0; top: 0; color: var(--amber); font-weight: 600; }
+.result-intro-note { font-size: 13px; color: var(--ink-2); font-weight: 300; line-height: 1.6; margin: 0 0 0.9rem; }
+.result-intro-btn { background: var(--green); color: white; border-color: var(--green); font-weight: 500; }
+.result-intro-btn:hover { background: var(--green-dark); border-color: var(--green-dark); }
+.res-facts { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.92); margin: 0 0 1rem; }
+.res-actions { display: flex; flex-wrap: wrap; gap: 9px; position: relative; }
+.btn.outline-white { background: transparent; color: white; border-color: white; font-weight: 500; }
+.btn.outline-white:hover { background: rgba(255,255,255,0.12); }
+@media (max-width: 700px) {
+  /* På mobil kommer knapperne lige efter nøglefakta, så første CTA er synlig uden scroll */
+  .result-hero-card { display: flex; flex-direction: column; padding: 1.25rem; }
+  .result-hero-card > * { order: 20; }
+  .result-hero-card > .res-badge { order: 1; align-self: flex-start; }
+  .result-hero-card > .res-title { order: 2; }
+  .result-hero-card > .res-cat { order: 3; }
+  .result-hero-card > .res-facts { order: 4; }
+  .result-hero-card > .res-actions { order: 5; margin-bottom: 1.1rem; }
+  .result-hero-card > .res-desc { order: 6; }
+  .result-hero-card > .why-title { order: 7; }
+  .result-hero-card > .why-list { order: 8; }
+  .result-hero-card > .why-gain { order: 9; }
+  .result-hero-card > .res-traits { order: 10; }
+  .result-intro { padding: 1rem 1.15rem; }
+  .res-actions .btn { flex: 1 1 100%; justify-content: center; text-align: center; }
+}
+
+/* Vejlederkort (venstre kolonne på resultatvisningen) */
+.advisor-card { background: var(--cream-2); border: 1px solid var(--border); border-radius: var(--r); padding: 1.25rem 1.35rem; }
+.advisor-card-title { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--ink); line-height: 1.3; margin-bottom: 0.9rem; }
+.advisor-card .advisor-strip { background: var(--white); margin-bottom: 0.9rem; }
+.advisor-card-tel { font-size: 15px; font-weight: 500; margin: 0 0 1rem; }
+.advisor-card-tel a { color: var(--green); text-decoration: none; }
+.advisor-card .btn { width: 100%; justify-content: center; text-align: center; }
+.quiz-sidebar .sidebar-result { display: none; }
+.quiz-layout.is-result .quiz-sidebar .sidebar-default { display: none; }
+.quiz-layout.is-result .quiz-sidebar .sidebar-result { display: block; }
+@media (max-width: 900px) {
+  /* På mobil vises vejlederkortet under matchene (efter quiz-boksen) i stedet for at skjules */
+  .quiz-layout.is-result .quiz-sidebar { display: block; position: static; order: 2; }
+}
+.quiz-box-top .qt-result { display: none; }
+.quiz-layout.is-result .quiz-box-top .qt-default { display: none; }
+.quiz-layout.is-result .quiz-box-top .qt-result { display: block; }
 
 .why-title { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 6px; }
 .why-list { list-style: none; display: grid; gap: 5px; margin: 0 0 0.75rem; }
@@ -731,9 +773,9 @@ input[aria-invalid="true"] { border-color: #B3321F; }
       <li class="nav-links-dup"><a href="#quiz">Tag testen</a></li>
 
     </ul>
-    <a href="#quiz" class="nav-cta">
+    <a href="#quiz" class="nav-cta" id="nav-cta">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Tag testen
+      <span id="nav-cta-label">Tag testen</span>
     </a>
   </div>
 </nav>
@@ -863,10 +905,22 @@ input[aria-invalid="true"] { border-color: #B3321F; }
 <!-- ══ QUIZ SECTION ══ -->
 <section class="quiz-section" id="quiz">
   <div class="quiz-section-inner">
-    <div class="quiz-layout">
+    <div class="quiz-layout" id="quiz-layout">
 
       <!-- sidebar -->
       <aside class="quiz-sidebar">
+        <div class="sidebar-result">
+          <div class="advisor-card" id="advisor-card">
+            <div class="advisor-card-title">Er du i tvivl? Få en gratis snak med en studievejleder</div>
+            <div class="advisor-strip">
+              <div class="av-wrap"><div class="av">K</div><div class="av">M</div></div>
+              <div class="av-text"><strong>Kristoffer &amp; Mikkel</strong><br>Studievejledere, klar på hverdage kl. 9–15</div>
+            </div>
+            <p class="advisor-card-tel"><a href="tel:+4570604948">Tlf. +45 70 60 49 48</a></p>
+            <a class="btn primary" href="https://onlineuddannelse.dk/studievejledning/" target="_blank" rel="noopener" data-booking="sidekort">Book gratis vejledning</a>
+          </div>
+        </div>
+        <div class="sidebar-default">
         <div class="sidebar-heading">Find din vej</div>
         <p class="sidebar-sub">Testen tager under 2 minutter og giver dig en personlig anbefaling baseret på dine interesser, mål og hverdag.</p>
         <ul class="sidebar-list">
@@ -876,16 +930,18 @@ input[aria-invalid="true"] { border-color: #B3321F; }
           <li class="sidebar-item"><span class="sidebar-icon">💬</span>Gratis vejledning bagefter</li>
           <li class="sidebar-item"><span class="sidebar-icon">🆓</span>Helt gratis og uforpligtende</li>
         </ul>
+        </div>
       </aside>
 
       <!-- quiz box -->
       <div class="quiz-box">
         <div class="quiz-box-top">
           <div>
-            <div class="quiz-box-top-title">Uddannelsesfinder</div>
-            <div class="quiz-box-top-sub">Find din personlige match på under 2 minutter</div>
+            <div class="quiz-box-top-title qt-default">Uddannelsesfinder</div>
+            <div class="quiz-box-top-title qt-result">Dit personlige resultat</div>
+            <div class="quiz-box-top-sub qt-default">Find din personlige match på under 2 minutter</div>
           </div>
-          <div class="quiz-box-badge">Gratis test</div>
+          <div class="quiz-box-badge qt-default">Gratis test</div>
         </div>
 
         <div class="quiz-body">
@@ -1077,25 +1133,31 @@ input[aria-invalid="true"] { border-color: #B3321F; }
 
           <!-- RESULT -->
           <div class="step" id="step-result">
-            <div class="profile-card" id="profile-card">
-              <div class="profile-eyebrow">Din interesseprofil</div>
-              <div class="profile-title" id="profile-title"></div>
-              <p class="profile-lead" id="profile-lead"></p>
-              <ul class="profile-drivers" id="profile-drivers"></ul>
-              <div class="profile-chips" id="profile-chips"></div>
-              <p class="profile-note">Profilen er vejledende og bygger kun på dine seks svar. Den er ikke en personlighedstest.</p>
+            <div class="result-intro" id="result-intro">
+              <div class="result-intro-eyebrow" id="ri-label"></div>
+              <div class="result-intro-title" id="ri-title"></div>
+              <details class="result-intro-about" id="ri-about">
+                <summary id="ri-sub"></summary>
+                <ul class="result-intro-bullets" id="ri-bullets"></ul>
+                <p class="result-intro-note" id="ri-note"></p>
+                <a class="btn result-intro-btn" id="ri-link" target="_blank" rel="noopener">Læs mere →</a>
+              </details>
             </div>
 
             <div class="result-hero-card">
               <div class="res-badge">★ Bedste match</div>
               <div class="res-title" id="res-title"></div>
               <div class="res-cat" id="res-cat"></div>
+              <div class="res-facts" id="res-facts"></div>
               <div class="res-desc" id="res-desc"></div>
               <div class="why-title">Hvorfor passer den til dig?</div>
               <ul class="why-list" id="res-why"></ul>
               <p class="why-gain" id="res-gain"></p>
               <div class="res-traits" id="res-traits"></div>
-              <a class="btn" id="res-link" target="_blank" rel="noopener" style="background:white;color:var(--green);border-color:white;font-weight:500;">Se uddannelsen →</a>
+              <div class="res-actions">
+                <a class="btn" id="res-link" target="_blank" rel="noopener" style="background:white;color:var(--green);border-color:white;font-weight:500;">Se uddannelsen →</a>
+                <a class="btn outline-white" id="res-book" href="https://onlineuddannelse.dk/studievejledning/" target="_blank" rel="noopener" data-booking="matchkort">Book gratis vejledning</a>
+              </div>
             </div>
 
             <div class="alt-card" id="alt-card">
@@ -1182,24 +1244,25 @@ const answers = {};
 let advanceTimer = null;
 /* ANBEFALING:START — data + pointmodel. Testes af tests/recommendation.test.mjs (udtrækker blokken mellem START/SLUT). */
 const U = 'https://onlineuddannelse.dk/online-uddannelser/';
+// modules/episodes = antal moduler og afsnit (null = ikke udfyldt endnu; så vises kun "100 % online" på resultatkortet). Se README.
 // sales = gennemførte ordrer seneste 12 mdr. (backoffice, okt. 2026). Bruges til at fremhæve de mest solgte. Opdatér et par gange om året: se README (tools/update-sales.mjs).
 const educations = {
-  parterapeut: { title:"Parterapeut", category:"Terapeutisk", sales:36, desc:"Parterapeut-uddannelsen giver dig kompetencer til at hjælpe par med at styrke deres relation, kommunikere bedre og overvinde udfordringer. Du lærer om kommunikation, tilknytningsteorier og konfliktløsning — og mange etablerer efterfølgende egen klinik.", traits:["Menneskekontakt","Selvstændig praksis","Kommunikation","Psykologi"], url:U+"parterapeut/" },
-  sexolog: { title:"Sexolog", category:"Terapeutisk", sales:48, desc:"Sexolog-uddannelsen dækker seksuel sundhed og terapeutiske tilgange til det hele menneske. Velegnet til dig, der ønsker at arbejde professionelt med menneskers velvære og seksualitet.", traits:["Seksuel sundhed","Terapi","Menneskekontakt","Selvstændig praksis"], url:U+"sexolog/" },
-  coach: { title:"Coach", category:"Terapeutisk", sales:40, desc:"Coaching-uddannelsen giver dig redskaber til at guide mennesker mod personlig og professionel vækst. Du lærer coachingmetoder, motivationspsykologi og samtaleværktøjer — og kan arbejde som coach ved siden af dit nuværende job.", traits:["Personlig udvikling","Motivation","Fleksibel","Selvstændig"], url:U+"coach/" },
-  familiebehandler: { title:"Familiebehandler", category:"Terapeutisk", sales:129, desc:"Familiebehandler-uddannelsen klæder dig på til at arbejde med familier i sårbare situationer. Du får viden om familiemønstre, systemisk tænkning og professionelle interventioner.", traits:["Socialt arbejde","Familier","Empati","Systemisk tænkning"], url:U+"familiebehandler/" },
-  adhd: { title:"ADHD- og autismevejleder", category:"Terapeutisk", sales:33, desc:"ADHD- og autismevejleder-uddannelsen giver dig både et teoretisk og et praktisk fundament med direkte anvendelige værktøjer til at skabe forandring for børn og unge med ADHD og autisme. Uddannelsen består af 10 moduler, du gennemfører i dit eget tempo.", traits:["ADHD","Autisme","Børn og unge","Praksisnær"], url:U+"adhd-og-autismevejleder/" },
-  selvvaerd: { title:"Selvværdsvejleder", category:"Terapeutisk", sales:16, desc:"Selvværdsvejleder-uddannelsen er til dig, der vil arbejde professionelt med mennesker og hjælpe dem med at styrke deres selvværd. Du får et teoretisk fundament og praktiske værktøjer fordelt på 8 moduler, som du gennemfører i dit eget tempo.", traits:["Selvværd","Menneskekontakt","Rådgivning","Praksisnær"], url:U+"selvvaerdsvejleder/" },
-  terapiiv: { title:"Terapeutisk iværksætter", category:"Terapeutisk", sales:1, desc:"Uddannelsen gør dig klar til at starte din egen virksomhed inden for det terapeutiske område. Den består af 8 moduler, som du gennemfører i dit eget tempo.", traits:["Egen praksis","Forretning","Selvstændig","Terapeutisk"], url:U+"terapeutisk-ivaerksaetter/" },
-  indretningskonsulent: { title:"Indretningskonsulent", category:"Kreativitet", sales:56, desc:"Indretningskonsulent-uddannelsen giver dig et stærkt fundament i indretning, farvelære, ruminddeling og kundehåndtering. Mange studerende starter efterfølgende deres egen konsulentvirksomhed.", traits:["Æstetik","Rådgivning","Kreativitet","Selvstændig virksomhed"], url:U+"indretningskonsulent/" },
-  indretningsarkitekt: { title:"Indretningsarkitekt", category:"Kreativitet", sales:61, desc:"Indretningsarkitekt-uddannelsen er en overbygning med dybere fokus på arkitektoniske principper, planløsninger og projektledelse — ideel til større professionelle indretningsprojekter.", traits:["Arkitektur","Projekter","Design","Professionel rådgivning"], url:U+"indretningsarkitekt/" },
-  dekoratoer: { title:"Dekoratør", category:"Kreativitet", sales:10, desc:"Dekoratør-uddannelsen giver dig grundlæggende kompetencer til at arbejde som professionel dekoratør — fx med butiks- og vinduesdekoration. Du lærer bl.a. om kundens behov, kampagner, skilte og dekorationsopbygning. Uddannelsen består af 10 moduler, som du gennemfører i dit eget tempo.", traits:["Butiksdekoration","Kampagner","Skilte","Æstetik"], url:U+"dekoratoer/" },
-  programmor: { title:"Grundlæggende programmør", category:"Tech", sales:22, desc:"Programmør-uddannelsen introducerer dig til kodningens verden med fokus på praksisnære kompetencer. Du lærer at bygge digitale løsninger fra bunden — ideel for dig der vil skifte til tech-branchen.", traits:["Kode","Problemløsning","Tech","Digital fremtid"], url:U+"grundlaeggende-programmering/" },
-  fotograf: { title:"Fotograf", category:"Medier og kommunikation", sales:54, desc:"Fotograf-uddannelsen giver dig tekniske og kreative kompetencer til professionelle billeder. Du lærer kameraindstillinger, komposition, lys og efterbehandling.", traits:["Kreativitet","Visuel fortælling","Freelance","Teknik"], url:U+"fotograf/" },
-  videograf: { title:"Videograf", category:"Medier og kommunikation", sales:16, desc:"Videograf-uddannelsen dækker optagelse, redigering og produktion af professionelle videoer — en stærkt efterspurgt kompetence i en verden der elsker videoindhold.", traits:["Video","Historiefortælling","Kreativ produktion","Freelance"], url:U+"videograf/" },
-  forfatter: { title:"Forfatter", category:"Medier og kommunikation", sales:14, desc:"Forfatter-uddannelsen guider dig igennem manuskriptets opbygning, karakterudvikling og fortælleteknik — for dig der drømmer om at skrive romaner, novellesamlinger eller scripts.", traits:["Kreativ skrivning","Storytelling","Manuskript","Udtryk"], url:U+"forfatter/" },
-  hr: { title:"HR-konsulent", category:"Medier og kommunikation", sales:51, desc:"HR-konsulent-uddannelsen giver dig faglig viden og praktiske værktøjer til at arbejde professionelt med HR. Uddannelsen består af 10 moduler, du gennemfører i dit eget tempo, og er skræddersyet til erhvervslivet.", traits:["HR","Erhvervsliv","Rådgivning","Eget tempo"], url:U+"hr-konsulent/" },
-  kostvejleder: { title:"Kostvejleder", category:"Sundhed og skønhed", sales:46, desc:"Kostvejleder-uddannelsen giver dig faglig viden om ernæring, kostplaner og sund livsstil. Du kan efterfølgende rådgive klienter som selvstændig kostvejleder.", traits:["Ernæring","Sundhed","Rådgivning","Velvære"], url:U+"kostvejleder/" }
+  parterapeut: { title:"Parterapeut", category:"Terapeutisk", sales:36, modules:null, episodes:null, desc:"Parterapeut-uddannelsen giver dig kompetencer til at hjælpe par med at styrke deres relation, kommunikere bedre og overvinde udfordringer. Du lærer om kommunikation, tilknytningsteorier og konfliktløsning — og mange etablerer efterfølgende egen klinik.", traits:["Menneskekontakt","Selvstændig praksis","Kommunikation","Psykologi"], url:U+"parterapeut/" },
+  sexolog: { title:"Sexolog", category:"Terapeutisk", sales:48, modules:null, episodes:null, desc:"Sexolog-uddannelsen dækker seksuel sundhed og terapeutiske tilgange til det hele menneske. Velegnet til dig, der ønsker at arbejde professionelt med menneskers velvære og seksualitet.", traits:["Seksuel sundhed","Terapi","Menneskekontakt","Selvstændig praksis"], url:U+"sexolog/" },
+  coach: { title:"Coach", category:"Terapeutisk", sales:40, modules:null, episodes:null, desc:"Coaching-uddannelsen giver dig redskaber til at guide mennesker mod personlig og professionel vækst. Du lærer coachingmetoder, motivationspsykologi og samtaleværktøjer — og kan arbejde som coach ved siden af dit nuværende job.", traits:["Personlig udvikling","Motivation","Fleksibel","Selvstændig"], url:U+"coach/" },
+  familiebehandler: { title:"Familiebehandler", category:"Terapeutisk", sales:129, modules:null, episodes:null, desc:"Familiebehandler-uddannelsen klæder dig på til at arbejde med familier i sårbare situationer. Du får viden om familiemønstre, systemisk tænkning og professionelle interventioner.", traits:["Socialt arbejde","Familier","Empati","Systemisk tænkning"], url:U+"familiebehandler/" },
+  adhd: { title:"ADHD- og autismevejleder", category:"Terapeutisk", sales:33, modules:10, episodes:null, desc:"ADHD- og autismevejleder-uddannelsen giver dig både et teoretisk og et praktisk fundament med direkte anvendelige værktøjer til at skabe forandring for børn og unge med ADHD og autisme. Uddannelsen består af 10 moduler, du gennemfører i dit eget tempo.", traits:["ADHD","Autisme","Børn og unge","Praksisnær"], url:U+"adhd-og-autismevejleder/" },
+  selvvaerd: { title:"Selvværdsvejleder", category:"Terapeutisk", sales:16, modules:8, episodes:null, desc:"Selvværdsvejleder-uddannelsen er til dig, der vil arbejde professionelt med mennesker og hjælpe dem med at styrke deres selvværd. Du får et teoretisk fundament og praktiske værktøjer fordelt på 8 moduler, som du gennemfører i dit eget tempo.", traits:["Selvværd","Menneskekontakt","Rådgivning","Praksisnær"], url:U+"selvvaerdsvejleder/" },
+  terapiiv: { title:"Terapeutisk iværksætter", category:"Terapeutisk", sales:1, modules:8, episodes:null, desc:"Uddannelsen gør dig klar til at starte din egen virksomhed inden for det terapeutiske område. Den består af 8 moduler, som du gennemfører i dit eget tempo.", traits:["Egen praksis","Forretning","Selvstændig","Terapeutisk"], url:U+"terapeutisk-ivaerksaetter/" },
+  indretningskonsulent: { title:"Indretningskonsulent", category:"Kreativitet", sales:56, modules:null, episodes:null, desc:"Indretningskonsulent-uddannelsen giver dig et stærkt fundament i indretning, farvelære, ruminddeling og kundehåndtering. Mange studerende starter efterfølgende deres egen konsulentvirksomhed.", traits:["Æstetik","Rådgivning","Kreativitet","Selvstændig virksomhed"], url:U+"indretningskonsulent/" },
+  indretningsarkitekt: { title:"Indretningsarkitekt", category:"Kreativitet", sales:61, modules:null, episodes:null, desc:"Indretningsarkitekt-uddannelsen er en overbygning med dybere fokus på arkitektoniske principper, planløsninger og projektledelse — ideel til større professionelle indretningsprojekter.", traits:["Arkitektur","Projekter","Design","Professionel rådgivning"], url:U+"indretningsarkitekt/" },
+  dekoratoer: { title:"Dekoratør", category:"Kreativitet", sales:10, modules:10, episodes:null, desc:"Dekoratør-uddannelsen giver dig grundlæggende kompetencer til at arbejde som professionel dekoratør — fx med butiks- og vinduesdekoration. Du lærer bl.a. om kundens behov, kampagner, skilte og dekorationsopbygning. Uddannelsen består af 10 moduler, som du gennemfører i dit eget tempo.", traits:["Butiksdekoration","Kampagner","Skilte","Æstetik"], url:U+"dekoratoer/" },
+  programmor: { title:"Grundlæggende programmør", category:"Tech", sales:22, modules:null, episodes:null, desc:"Programmør-uddannelsen introducerer dig til kodningens verden med fokus på praksisnære kompetencer. Du lærer at bygge digitale løsninger fra bunden — ideel for dig der vil skifte til tech-branchen.", traits:["Kode","Problemløsning","Tech","Digital fremtid"], url:U+"grundlaeggende-programmering/" },
+  fotograf: { title:"Fotograf", category:"Medier og kommunikation", sales:54, modules:null, episodes:null, desc:"Fotograf-uddannelsen giver dig tekniske og kreative kompetencer til professionelle billeder. Du lærer kameraindstillinger, komposition, lys og efterbehandling.", traits:["Kreativitet","Visuel fortælling","Freelance","Teknik"], url:U+"fotograf/" },
+  videograf: { title:"Videograf", category:"Medier og kommunikation", sales:16, modules:null, episodes:null, desc:"Videograf-uddannelsen dækker optagelse, redigering og produktion af professionelle videoer — en stærkt efterspurgt kompetence i en verden der elsker videoindhold.", traits:["Video","Historiefortælling","Kreativ produktion","Freelance"], url:U+"videograf/" },
+  forfatter: { title:"Forfatter", category:"Medier og kommunikation", sales:14, modules:null, episodes:null, desc:"Forfatter-uddannelsen guider dig igennem manuskriptets opbygning, karakterudvikling og fortælleteknik — for dig der drømmer om at skrive romaner, novellesamlinger eller scripts.", traits:["Kreativ skrivning","Storytelling","Manuskript","Udtryk"], url:U+"forfatter/" },
+  hr: { title:"HR-konsulent", category:"Medier og kommunikation", sales:51, modules:10, episodes:null, desc:"HR-konsulent-uddannelsen giver dig faglig viden og praktiske værktøjer til at arbejde professionelt med HR. Uddannelsen består af 10 moduler, du gennemfører i dit eget tempo, og er skræddersyet til erhvervslivet.", traits:["HR","Erhvervsliv","Rådgivning","Eget tempo"], url:U+"hr-konsulent/" },
+  kostvejleder: { title:"Kostvejleder", category:"Sundhed og skønhed", sales:46, modules:null, episodes:null, desc:"Kostvejleder-uddannelsen giver dig faglig viden om ernæring, kostplaner og sund livsstil. Du kan efterfølgende rådgive klienter som selvstændig kostvejleder.", traits:["Ernæring","Sundhed","Rådgivning","Velvære"], url:U+"kostvejleder/" }
 };
 
 // Interesseområder (spørgsmål 1). Hver uddannelse hører til præcis ét område.
@@ -1359,20 +1422,22 @@ const REASONS = {
   5: { nystart: "Du starter fra bunden og vil tages ved hånden", erfaring: "Du har erfaring fra arbejde, hobby eller privat, du kan bygge videre på", professionel: "Du har professionel erfaring at bygge videre på" },
   6: { lytte: "Du får energi af at sidde 1:1 og lytte til andre", analysere: "Du får energi af at analysere og finde løsninger", visuelt: "Du får energi af at forme noget visuelt", skrive: "Du får energi af at skrive og fortælle historier", lede: "Du får energi af at planlægge, organisere og lede" }
 };
-// Ved lige point vinder de spørgsmål, der siger mest om retningen.
-const REASON_ORDER = [1, 2, 6, 3, 5, 4];
-
-// De svar, der faktisk gav point til uddannelsen — de stærkeste først (maks. 3).
+// Begrundelserne dækker tre forskellige pointer, så de ikke gentager sig: én om interesse, én om mål og én om hverdag/erfaring.
+// Kun svar, der reelt gav point til uddannelsen, bruges. Mangler en slot (0 point), springes den over, og pladsen fyldes kun op med mål/hverdag/erfaring — aldrig med endnu en interesse-pointe.
 function explain(key, ans, max){
-  const contrib = [];
-  REASON_ORDER.forEach(q => {
-    const w = (WEIGHTS[q] && WEIGHTS[q][ans[q]] && WEIGHTS[q][ans[q]][key]) || 0;
-    if (w > 0) contrib.push({ q: q, a: ans[q], w: w });
-  });
-  contrib.sort((x, y) => y.w - x.w);
-  const strong = contrib.filter(c => c.w >= 0.8);
-  const picked = (strong.length >= 2 ? strong : contrib).slice(0, max || 3);
-  return picked.map(c => REASONS[c.q][c.a]);
+  const wt = q => (WEIGHTS[q] && WEIGHTS[q][ans[q]] && WEIGHTS[q][ans[q]][key]) || 0;
+  const reason = q => REASONS[q][ans[q]];
+  const used = [];
+  const take = q => { used.push(q); return reason(q); };
+  // Interesse: det specifikke emne (spørgsmål 2), når det tydeligt peger på uddannelsen; ellers interesseområdet (1), ellers opgaven der giver energi (6)
+  const interestQ = (wt(2) >= 0.8) ? 2 : [1, 6, 2].find(q => wt(q) > 0);
+  // Mål (3) og hverdag/erfaring (5 før 4 ved lige vægt)
+  const goalQ = wt(3) > 0 ? 3 : undefined;
+  const dailyQ = [5, 4].filter(q => wt(q) > 0).sort((x, y) => wt(y) - wt(x))[0];
+  const picked = [interestQ, goalQ, dailyQ].filter(q => q !== undefined).map(take);
+  // Fyld op (fx hvis mål manglede) med øvrige mål/hverdag/erfaring, stærkeste først
+  [3, 5, 4].filter(q => !used.includes(q) && wt(q) > 0).sort((x, y) => wt(y) - wt(x)).forEach(q => picked.push(take(q)));
+  return picked.slice(0, max || 3);
 }
 
 // De 1-3 uddannelser, der vises. Første er det bedste match.
@@ -1432,6 +1497,55 @@ function buildProfile(ans){
 
 function withUtm(url,slot){ return url+'?utm_source=uddannelsestest.dk&utm_medium=test&utm_campaign=anbefaling&utm_content='+slot; }
 
+// Tekster på resultatsidens intro-boks. {uddannelse} erstattes med navnet på bedste match. Ret her — ikke i HTML'en.
+const GUIDANCE_URL = 'https://onlineuddannelse.dk/studievejledning/';
+const RESULT_INTRO_CONFIG = {
+  label: 'Dit resultat',
+  title: 'Du matcher bedst med {uddannelse} hos onlineuddannelse.dk',
+  subtitle: 'Om onlineuddannelse.dk',
+  bullets: [
+    { icon: '★', text: '4,62/5 fra 430 anmeldelser' },
+    { icon: '✓', text: '100 % online – studér hvor og hvornår du vil, i dit eget tempo' },
+    { icon: '✓', text: 'Udviklet sammen med nøje udvalgte eksperter fra branchen' },
+    { icon: '✓', text: 'Personlig støtte og sparring hele vejen – vejledere klar hverdage kl. 9–15' }
+  ],
+  brochureText: 'Vi har sendt dig en brochure med mere info til din e-mail. Du kan også læse mere på uddannelsens hjemmeside.',
+  buttonText: 'Læs mere om {uddannelse} →'
+};
+
+// Booking-links får samme UTM-mønster som uddannelseslinkene (utm_content = hvor på siden knappen sidder) og måles som quiz_click_booking.
+function bookingUrl(slot){ return GUIDANCE_URL+'?utm_source=uddannelsestest.dk&utm_medium=test&utm_campaign=anbefaling&utm_content=vejledning_'+slot; }
+function wireBooking(el, slot){
+  el.href = bookingUrl(slot);
+  el.onclick = () => { trackEvent('quiz_click_booking',{slot:slot}); };
+}
+
+// Nøglefakta på bedste match: kun hvis både moduler og afsnit er udfyldt, ellers blot "100 % online"
+function keyFacts(e){
+  if(e.modules && e.episodes){ return e.modules+' moduler · '+e.episodes+' afsnit · 100 % online'; }
+  return '100 % online';
+}
+
+function fillResultIntro(key, e){
+  const c = RESULT_INTRO_CONFIG;
+  document.getElementById('ri-label').textContent = c.label;
+  document.getElementById('ri-title').textContent = c.title.replace('{uddannelse}', e.title);
+  document.getElementById('ri-sub').textContent = c.subtitle;
+  const ul = document.getElementById('ri-bullets'); ul.textContent = '';
+  c.bullets.forEach(function(b){
+    const li = document.createElement('li');
+    const ic = document.createElement('span'); ic.className = 'ic'; ic.setAttribute('aria-hidden','true'); ic.textContent = b.icon;
+    li.appendChild(ic); li.appendChild(document.createTextNode(b.text)); ul.appendChild(li);
+  });
+  document.getElementById('ri-note').textContent = c.brochureText;
+  const a = document.getElementById('ri-link');
+  a.textContent = c.buttonText.replace('{uddannelse}', e.title);
+  a.href = withUtm(e.url, 'intro'); // samme uddannelses-URL som bedste match-kortets "Se …"-knap; utm_content skiller klikkene ad
+  a.onclick = () => { trackEvent('quiz_click_education',{slot:'intro',education:key}); };
+  // Åben på desktop; foldet sammen på små skærme, så overskriften og første CTA ses uden scroll
+  document.getElementById('ri-about').open = !(window.matchMedia && matchMedia('(max-width: 700px)').matches);
+}
+
 function setList(ul, items){
   ul.textContent = '';
   items.forEach(function(t){ const li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
@@ -1453,15 +1567,16 @@ function fillMatch(prefix, m, slot, traitClass){
   link.textContent = 'Se ' + e.title + ' →';
   link.href = withUtm(e.url, slot);
   link.onclick = () => { trackEvent('quiz_click_education',{slot:slot,education:m.key}); };
+  if(prefix==='res'){
+    document.getElementById('res-facts').textContent = keyFacts(e);
+    wireBooking(document.getElementById('res-book'), 'matchkort');
+    fillResultIntro(m.key, e);
+  }
 }
 
 function showResult(){
   const matches = getMatches(answers);
   const prof = buildProfile(answers);
-  document.getElementById('profile-title').textContent = prof.name;
-  document.getElementById('profile-lead').textContent = prof.lead;
-  setList(document.getElementById('profile-drivers'), prof.drivers);
-  document.getElementById('profile-chips').innerHTML = prof.chips.map(c => '<span class="profile-chip">'+c+'</span>').join('');
   fillMatch('res', matches[0], 'primaer', 'res-trait');
   const second = matches[1], third = matches[2];
   document.getElementById('alt-card').hidden = !second;
@@ -1716,6 +1831,19 @@ function prepareStep(step){
   }
 }
 
+// Resultatvisningen: egen header, vejlederkort i venstre kolonne og "Book gratis vejledning" i top-navigationen
+function setResultChrome(on){
+  const layout=document.getElementById('quiz-layout');
+  if(layout){ layout.classList.toggle('is-result', on); }
+  const cta=document.getElementById('nav-cta'), label=document.getElementById('nav-cta-label');
+  if(cta && label){
+    if(on){ label.textContent='Book gratis vejledning'; cta.target='_blank'; cta.rel='noopener'; wireBooking(cta,'nav'); }
+    else { label.textContent='Tag testen'; cta.setAttribute('href','#quiz'); cta.removeAttribute('target'); cta.removeAttribute('rel'); cta.onclick=null; }
+  }
+  const side=document.querySelector('[data-booking="sidekort"]');
+  if(side && on){ wireBooking(side,'sidekort'); }
+}
+
 function goTo(step, fromHistory){
   clearTimeout(advanceTimer);
   document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
@@ -1726,12 +1854,13 @@ function goTo(step, fromHistory){
   const count=document.getElementById('qprogress-count');
   if(step===0){ wrap.style.display='none'; }
   else if(step==='gate'){ wrap.style.display='block'; fill.style.width='100%'; count.textContent='Næsten færdig'; }
-  else if(step==='result'){ wrap.style.display='block'; fill.style.width='100%'; count.textContent='Fuldfør!'; }
+  else if(step==='result'){ wrap.style.display='none'; fill.style.width='100%'; count.textContent='Fuldfør!'; }
   else{ wrap.style.display='block'; fill.style.width=Math.round((step/6)*100)+'%'; count.textContent=`Spørgsmål ${step} af 6`; }
   const track=document.getElementById('qprogress-track');
   if(track){ track.setAttribute('aria-valuenow', step===0?'0':(step==='gate'||step==='result')?'100':String(Math.round((step/6)*100))); }
   const stepEl=document.getElementById('step-'+step);
-  const heading=stepEl.querySelector('.q-title, .qi-title, .profile-title');
+  setResultChrome(step==='result');
+  const heading=stepEl.querySelector('.q-title, .qi-title, .result-intro-title');
   if(heading){ heading.setAttribute('tabindex','-1'); heading.focus({preventScroll:true}); }
   if(!fromHistory){ try{ history.pushState({ step: step }, ''); }catch(e){} }
   if(step===1){ trackEvent('quiz_start'); }
@@ -1771,8 +1900,8 @@ function resetQuiz(){
 }
 // Et gammelt resultat må ikke blive hængende i siden, når man tager testen igen
 function clearResult(){
-  ['profile-title','profile-lead','res-title','res-cat','res-desc','res-gain','alt-title','alt-cat','alt-desc','alt-gain','alt2-title','alt2-cat','alt2-desc','alt2-gain'].forEach(id=>{ document.getElementById(id).textContent=''; });
-  ['profile-drivers','profile-chips','res-why','res-traits','alt-why','alt-traits','alt2-why','alt2-traits'].forEach(id=>{ document.getElementById(id).textContent=''; });
+  ['ri-label','ri-title','ri-sub','ri-note','res-facts','res-title','res-cat','res-desc','res-gain','alt-title','alt-cat','alt-desc','alt-gain','alt2-title','alt2-cat','alt2-desc','alt2-gain'].forEach(id=>{ document.getElementById(id).textContent=''; });
+  ['ri-bullets','res-why','res-traits','alt-why','alt-traits','alt2-why','alt2-traits'].forEach(id=>{ document.getElementById(id).textContent=''; });
   document.getElementById('alt-card').hidden=false; document.getElementById('alt2-card').hidden=true;
 }
 </script>
